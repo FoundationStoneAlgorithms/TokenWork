@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    name: docs-and-repo-checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify required planning files exist
+        run: |
+          set -euo pipefail
+          for f in README.md LICENSE CONTRIBUTING.md CODE_OF_CONDUCT.md SECURITY.md docs/PRD.md docs/roadmap.md; do
+            test -s "$f" || { echo "Missing or empty: $f"; exit 1; }
+          done
+          echo "Required planning files present."
+
+      - name: Markdown link check (best effort)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --exclude-mail --accept 200,204,206,429 './**/*.md'
+          fail: false
+
+  # Placeholder jobs: enable and expand in Week 1/2 as the workspace lands.
+  # rust:
+  #   if: hashFiles('Cargo.toml') != ''
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: cargo fmt --all --check
+  #     - run: cargo clippy --workspace --all-targets -- -D warnings
+  #     - run: cargo test --workspace
+  #
+  # web:
+  #   if: hashFiles('package.json') != ''
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: npm ci && npm test && npm run build
