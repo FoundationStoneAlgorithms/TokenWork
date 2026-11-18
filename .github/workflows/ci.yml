@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Verify required planning files exist
         run: |
@@ -36,7 +36,7 @@ jobs:
   #   if: hashFiles('Cargo.toml') != ''
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v7
   #     - run: cargo fmt --all --check
   #     - run: cargo clippy --workspace --all-targets -- -D warnings
   #     - run: cargo test --workspace
@@ -45,5 +45,5 @@ jobs:
   #   if: hashFiles('package.json') != ''
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v7
   #     - run: npm ci && npm test && npm run build
