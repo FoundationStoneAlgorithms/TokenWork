@@ -17,7 +17,7 @@
 - Work on branch `issue-2-phase0-discovery-design`. `main` is protected: changes land by PR, one CODEOWNERS approval required, authors cannot self-approve. Nze authors, Yod approves.
 - Status values are exactly `planned`, `awaiting evidence`, `in review`, `validated`. Evidence documents start at `awaiting evidence` and never use `planned`.
 - Raw interview notes, counsel memos, personal identifiers and partner contact details NEVER enter the repo. Repo documents contain redacted conclusions and a reference to Nze's private store only.
-- PRD references use code spans, for example `PRD `#13``. The section-sign character is not used anywhere.
+- PRD references are written as PRD `#13` (the issue number in a code span). The section-sign character is not used anywhere.
 - Every PR uses `.github/PULL_REQUEST_TEMPLATE.md` with real verification output, evidence for each Done-when item, and the no-secrets/no-PII box checked after scanning the diff.
 - `docs-and-repo-checks` must pass before merge. No new automation is added.
 - If real evidence is unavailable, the owning document stays at `awaiting evidence`, its Done-when box stays unchecked, and issue #2 stays open. No conclusion is invented.
@@ -185,6 +185,14 @@ The highest-scoring candidates are proposed as design partners only after Nze re
 
 Run the Step 1 command. Expected: no `missing` lines.
 
+- [ ] **Step 7b: Scan for sensitive data**
+
+Run:
+```bash
+grep -inE 'gmail|phone|tel:|confidential|privileged|@[a-z0-9.-]+\.(com|org|co)' docs/phase0/*.md | grep -v 'Anonymized identifier' || echo "no sensitive patterns"
+```
+Expected: `no sensitive patterns`. Capture the output for the PR body.
+
 - [ ] **Step 8: Commit**
 
 ```bash
@@ -204,7 +212,7 @@ Verification:
 
 **Files:**
 - Create: `docs/phase0/decisions-register.md`
-- Modify: `docs/phase0/README.md` (decisions-register row stays `planned` until this task is approved)
+- No README change in this task: the decisions-register row stays `planned` here and is promoted to `validated` in Task 7, Step 1b, after the Track 1 PR is approved.
 
 **Interfaces:**
 - Consumes: the README index from Task 1.
@@ -252,6 +260,14 @@ grep -c '§' docs/phase0/decisions-register.md || true
 grep -n 'blocked' docs/phase0/decisions-register.md
 ```
 Expected: `10`, no section-sign lines, and exactly one line defining the blocked-status rule.
+
+- [ ] **Step 3b: Scan for sensitive data**
+
+Run:
+```bash
+grep -inE 'gmail|phone|tel:|confidential|privileged|@[a-z0-9.-]+\.(com|org|co)' docs/phase0/*.md | grep -v 'Anonymized identifier' || echo "no sensitive patterns"
+```
+Expected: `no sensitive patterns`. Capture the output for the PR body.
 
 - [ ] **Step 4: Commit**
 
@@ -339,6 +355,14 @@ grep -c '§' docs/phase0/mvp-scope-mapping.md || true
 ```
 Expected: `21`, then no section-sign lines.
 
+- [ ] **Step 3b: Scan for sensitive data**
+
+Run:
+```bash
+grep -inE 'gmail|phone|tel:|confidential|privileged|@[a-z0-9.-]+\.(com|org|co)' docs/phase0/*.md | grep -v 'Anonymized identifier' || echo "no sensitive patterns"
+```
+Expected: `no sensitive patterns`. Capture the output for the PR body.
+
 - [ ] **Step 4: Commit**
 
 ```bash
@@ -384,7 +408,7 @@ Expected: the Done-when line for interview notes is unchecked (`- [ ]`). Ask Nze
 
 - [ ] **Step 3: Write the redacted synthesis**
 
-Replace the `## Synthesis` section of `docs/phase0/interview-synthesis.md` with the real synthesis supplied by Nze, containing: the validated problem statement, the three most repeated financing pain points with anonymized evidence quotes, willingness-to-use findings by participant category, and the private evidence reference. Do not include names, emails, phone numbers or employer identifiers.
+Replace the `## Synthesis` section of `docs/phase0/interview-synthesis.md` with the real synthesis supplied by Nze, containing: the validated problem statement, the three most repeated financing pain points with anonymized evidence quotes, willingness-to-use findings by participant category, and the private evidence reference. Do not include names, emails, phone numbers or employer identifiers. In `docs/phase0/decisions-register.md`, set the D9 Status cell to `validated`, or `blocked` with the affected issues named in Resolution if the evidence contradicts the PRD.
 
 - [ ] **Step 4: Advance status**
 
@@ -457,7 +481,7 @@ Ask Nze for the qualified counsel memo. If it is not available, stop this task a
 
 - [ ] **Step 3: Write the redacted findings**
 
-Replace the `## Findings summary` section with the actual counsel findings covering: instrument classification, permitted operating roles, authoritative register and company-law process, the proposed first issuance structure, marketing restrictions, payment permissions and tax/reporting obligations. Include the private memo reference. Do not paste memo text or identify counsel without permission.
+Replace the `## Findings summary` section with the actual counsel findings covering: instrument classification, permitted operating roles, authoritative register and company-law process, the proposed first issuance structure, marketing restrictions, payment permissions and tax/reporting obligations. Include the private memo reference. Do not paste memo text or identify counsel without permission. In `docs/phase0/decisions-register.md`, set the Status cells of D1, D2, D3, D5 and D7 to `validated`, or `blocked` with affected issues named in Resolution where counsel contradicts the PRD.
 
 - [ ] **Step 4: Record escalation if needed**
 
@@ -540,7 +564,7 @@ Ask Nze for real candidate information. If no candidates have been assessed, sto
 
 - [ ] **Step 3: Fill the shortlist**
 
-Replace the `## Shortlist` table with anonymized candidates, scores, readiness notes and private references supplied by Nze. Replace `## Shortlist decision` with the actual prioritization outcome. No contact details, names or employer identifiers enter the repo.
+Replace the `## Shortlist` table with anonymized candidates, scores, readiness notes and private references supplied by Nze. Replace `## Shortlist decision` with the actual prioritization outcome. No contact details, names or employer identifiers enter the repo. In `docs/phase0/decisions-register.md`, set the Status cells of D4, D6, D8, D9 and D10 to `validated`, or `blocked` with affected issues named in Resolution where the evidence contradicts the PRD.
 
 - [ ] **Step 4: Finalize scope gaps**
 
@@ -604,7 +628,7 @@ Verification:
 - No new files.
 
 **Interfaces:**
-- Consumes: validated statuses from Tasks 4, 5 and 6 and the planned artifacts from Tasks 2 and 3.
+- Consumes: validated statuses from Tasks 4, 5 and 6, the two repository-side artifacts from Tasks 2 and 3 (promoted in Step 1b), and the owner-agreement outcomes from Task 6.
 - Produces: closed issue #2 with all five Done-when items checked.
 
 - [ ] **Step 1: Write the failing check**
@@ -614,6 +638,27 @@ Run:
 grep -c '| validated |' docs/phase0/README.md
 ```
 Expected: fewer than `5` while any artifact remains unvalidated.
+
+- [ ] **Step 1b: Validate the two repository-side artifacts**
+
+The Track 1 PR (index, register, scope mapping) must first be approved by Yod and `docs-and-repo-checks` green. These two rows are not evidence-dependent; they become `validated` on that approval. Run:
+
+```bash
+sed -i 's#| \[mvp-scope-mapping.md\](mvp-scope-mapping.md) | planned |#| [mvp-scope-mapping.md](mvp-scope-mapping.md) | validated |#' docs/phase0/README.md
+sed -i 's#| \[decisions-register.md\](decisions-register.md) | planned |#| [decisions-register.md](decisions-register.md) | validated |#' docs/phase0/README.md
+git add docs/phase0/README.md
+GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: validate Phase 0 repository-side artifacts for issue #2
+
+Changes:
+- Promote mvp-scope-mapping and decisions-register README rows to validated
+- Record CODEOWNERS approval of the Track 1 PR
+
+Verification:
+- Track 1 PR approved by Yod
+- docs-and-repo-checks pass"
+```
+
+Expected: both repository-side rows read `validated` in the README index. Do not run this step before approval.
 
 - [ ] **Step 2: Verify all five rows are validated**
 

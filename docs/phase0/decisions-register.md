@@ -7,7 +7,7 @@ Owner: NzeNdiWamanyi
 | D1 | Legal and regulatory classification of each proposed instrument in Uganda | NzeNdiWamanyi | Qualified counsel analysis summary, private reference | Before issue #2 closes | planned | — |
 | D2 | Entity acting as issuer, platform operator, placement agent, broker, custodian or payment provider | NzeNdiWamanyi | Qualified counsel analysis summary, private reference | Before issue #2 closes | planned | — |
 | D3 | Legal register and company-law process for tokenized equity | NzeNdiWamanyi | Qualified counsel analysis summary, private reference | Before issue #2 closes | planned | — |
-| D4 | Whether an SPV is required for asset-backed structures | NzeNdiWamanyi | Counsel note on asset-backed structures, private reference | Before issue #15 starts | planned | — |
+| D4 | Whether an SPV is required for asset-backed structures | NzeNdiWamanyi | Counsel note on asset-backed structures, private reference | Before issue #15 starts (deferred for MVP) | planned | — |
 | D5 | Permitted scope of marketing and distribution per investor class | NzeNdiWamanyi | Counsel analysis summary, private reference | Before issue #2 closes | planned | — |
 | D6 | Payment, FX and stablecoin permissions and provider availability | NzeNdiWamanyi | Provider or counsel evidence, private reference | Before issue #8 starts | planned | — |
 | D7 | Applicable tax treatment and reporting obligations | NzeNdiWamanyi | Counsel or adviser analysis, private reference | Before issue #2 closes | planned | — |

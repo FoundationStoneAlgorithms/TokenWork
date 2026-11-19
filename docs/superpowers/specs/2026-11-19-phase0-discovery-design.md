@@ -1,7 +1,7 @@
 # Phase 0 Discovery and Legal/Market Validation — Design
 
 - Date: 2026-11-19
-- Status: proposed
+- Status: approved
 - Owner: NzeNdiWamanyi (accountable for issue #2 end to end)
 - Related issue: #2 — Phase 0: Discovery and legal/market validation
 - Related planning: PRD `#13`, `#14`, `#18`, `#19`; issues #3–#12
