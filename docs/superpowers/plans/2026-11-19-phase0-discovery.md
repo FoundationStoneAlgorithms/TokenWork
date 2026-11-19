@@ -4,7 +4,7 @@
 
 **Goal:** Execute issue #2 through the two-track design: land the repo-side Phase 0 artifacts first, then ingest real evidence one artifact at a time, and close #2 only when all five Done-when items are validated.
 
-**Architecture:** Six focused Markdown files under `docs/phase0/` — one README index, a decisions register, an MVP scope mapping, and three evidence documents. The README is the single status view; each evidence document owns one Done-when item and transitions `awaiting evidence → in review → validated` through a PR reviewed by the other CODEOWNER.
+**Architecture:** Six focused Markdown files under `docs/phase0/` — one README index, a decisions register, an MVP scope mapping, and three evidence documents. The README is the single status view; each evidence document owns one Done-when item and is written at its final `validated` (or `blocked`) status before a PR is opened, so the diff Yod approves is the diff that merges.
 
 **Tech Stack:** Markdown, Git, GitHub CLI (`gh`), existing `docs-and-repo-checks` CI. No new automation or dependencies.
 
@@ -15,9 +15,10 @@
 - This is Nze's task. Every commit MUST be authored AND committed by `Nze Ndi Wamanyi <nzendiwamanyi@gmail.com>`. Use the explicit identity frontmatter shown in every commit step below; do not rely on global or local git config.
 - Before any `gh` command, confirm the active account is `NzeNdiWamanyi` with `gh api user --jq .login`; if not, run `gh auth switch -u NzeNdiWamanyi`.
 - Work on branch `issue-2-phase0-discovery-design`. `main` is protected: changes land by PR, one CODEOWNERS approval required, authors cannot self-approve. Nze authors, Yod approves.
-- Status values are exactly `planned`, `awaiting evidence`, `in review`, `validated`. Evidence documents start at `awaiting evidence` and never use `planned`.
+- Status values are exactly `planned`, `awaiting evidence`, `in review`, `blocked`, `validated`. Evidence documents start at `awaiting evidence` and never use `planned`.
+- Each evidence artifact uses a fresh branch cut from merged `main` (`issue-2-phase0-<artifact>`); never continue on an earlier artifact's branch. Set final `validated` text before opening the PR and push no commits after approval, because `dismiss_stale_reviews` would dismiss it and the merged diff would differ from the reviewed one.
 - Raw interview notes, counsel memos, personal identifiers and partner contact details NEVER enter the repo. Repo documents contain redacted conclusions and a reference to Nze's private store only.
-- PRD references are written as PRD `#13` (the issue number in a code span). The section-sign character is not used anywhere.
+- PRD references are written as PRD `#13` (the PRD section number in a code span, not a GitHub issue number). The section-sign character is not used anywhere.
 - Every PR uses `.github/PULL_REQUEST_TEMPLATE.md` with real verification output, evidence for each Done-when item, and the no-secrets/no-PII box checked after scanning the diff.
 - `docs-and-repo-checks` must pass before merge. No new automation is added.
 - If real evidence is unavailable, the owning document stays at `awaiting evidence`, its Done-when box stays unchecked, and issue #2 stays open. No conclusion is invented.
@@ -256,7 +257,7 @@ Status `blocked` is used when evidence contradicts a PRD assumption; the affecte
 Run:
 ```bash
 grep -c '^| D[0-9]' docs/phase0/decisions-register.md
-grep -c '§' docs/phase0/decisions-register.md || true
+grep -c $'\u00a7' docs/phase0/decisions-register.md || true
 grep -n 'blocked' docs/phase0/decisions-register.md
 ```
 Expected: `10`, no section-sign lines, and exactly one line defining the blocked-status rule.
@@ -351,7 +352,7 @@ No scope change is made here. This mapping records where PRD `#14` and `#19` cri
 Run:
 ```bash
 grep -c '^| [0-9]' docs/phase0/mvp-scope-mapping.md
-grep -c '§' docs/phase0/mvp-scope-mapping.md || true
+grep -c $'\u00a7' docs/phase0/mvp-scope-mapping.md || true
 ```
 Expected: `21`, then no section-sign lines.
 
@@ -394,9 +395,9 @@ Verification:
 
 Run:
 ```bash
-grep -n '^Status: in review$' docs/phase0/interview-synthesis.md || echo "not in review"
+grep -n '^Status: validated$' docs/phase0/interview-synthesis.md || echo "not validated"
 ```
-Expected: `not in review`.
+Expected: `not validated`.
 
 - [ ] **Step 2: Check the stop condition**
 
@@ -408,53 +409,55 @@ Expected: the Done-when line for interview notes is unchecked (`- [ ]`). Ask Nze
 
 - [ ] **Step 3: Write the redacted synthesis**
 
-Replace the `## Synthesis` section of `docs/phase0/interview-synthesis.md` with the real synthesis supplied by Nze, containing: the validated problem statement, the three most repeated financing pain points with anonymized evidence quotes, willingness-to-use findings by participant category, and the private evidence reference. Do not include names, emails, phone numbers or employer identifiers. In `docs/phase0/decisions-register.md`, set the D9 Status cell to `validated`, or `blocked` with the affected issues named in Resolution if the evidence contradicts the PRD.
+Replace the `## Synthesis` section of `docs/phase0/interview-synthesis.md` with the real synthesis supplied by Nze, containing: the validated problem statement, the three most repeated financing pain points with anonymized evidence quotes, willingness-to-use findings by participant category, and the private evidence reference. Do not include names, emails, phone numbers or employer identifiers. D9 depends on both interview synthesis and the partner shortlist, so its register status is set in Task 6, not here.
 
 - [ ] **Step 4: Advance status**
 
-Run:
+Set the final status before review — no commit is pushed after Yod approves, because
+`dismiss_stale_reviews` would dismiss the approval. Run:
 ```bash
-sed -i 's/^Status: awaiting evidence$/Status: in review/' docs/phase0/interview-synthesis.md
-sed -i 's#| \[interview-synthesis.md\](interview-synthesis.md) | awaiting evidence |#| [interview-synthesis.md](interview-synthesis.md) | in review |#' docs/phase0/README.md
+sed -i 's/^Status: awaiting evidence$/Status: validated/' docs/phase0/interview-synthesis.md
+sed -i 's#| \[interview-synthesis.md\](interview-synthesis.md) | awaiting evidence |#| [interview-synthesis.md](interview-synthesis.md) | validated |#' docs/phase0/README.md
 ```
-Expected: both files now show `in review` for the interview artifact.
+Expected: both files now show `validated` for the interview artifact.
 
 - [ ] **Step 5: Run the check again**
 
-Run the Step 1 command. Expected: a matching `Status: in review` line.
+Run the Step 1 command. Expected: a matching `Status: validated` line.
 
-- [ ] **Step 6: Commit the review-ready artifact**
+- [ ] **Step 6: Commit and open the PR**
+
+Cut a fresh branch from the merged `main` for this artifact, commit, push, and open a PR
+with Yod requested as reviewer. No further commits are pushed to this branch.
 
 ```bash
+git switch main && git pull --ff-only
+git switch -c issue-2-phase0-interview-synthesis
 git add docs/phase0/interview-synthesis.md docs/phase0/README.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: add interview synthesis for issue #2
+GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: add validated interview synthesis for issue #2
 
 Changes:
 - Record redacted synthesis and validated problem statement from real interviews
-- Advance interview artifact and README index to in review
+- Set interview artifact and README index to validated before review
 - Leave raw notes in Nze's private store
 
 Verification:
-- Status check: in review present after change
+- Status check: validated present after change
 - Diff scan: no personal identifiers"
+git push -u origin issue-2-phase0-interview-synthesis
+gh pr create --base main --head issue-2-phase0-interview-synthesis --title "Phase 0: Interview synthesis (issue #2)" --body "Refs #2. Redacted synthesis from real interview notes supplied by Nze; raw notes stay in the private store. Final status is set before review so the approved diff is the merged diff." --reviewer YodHeVauHe
 ```
 
-- [ ] **Step 7: Get approval and mark validated**
+- [ ] **Step 7: Tick the Done-when box after merge**
 
-After Yod approves the PR and CI is green, run:
+After Yod approves and CI is green, Yod merges. Then, with no further commits to the branch:
+
 ```bash
-sed -i 's/^Status: in review$/Status: validated/' docs/phase0/interview-synthesis.md
-sed -i 's#| \[interview-synthesis.md\](interview-synthesis.md) | in review |#| [interview-synthesis.md](interview-synthesis.md) | validated |#' docs/phase0/README.md
-git add docs/phase0/interview-synthesis.md docs/phase0/README.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: validate interview synthesis for issue #2
-
-Changes:
-- Mark interview synthesis validated after CODEOWNERS approval
-- Update README index to validated
-
-Verification:
-- CI: docs-and-repo-checks pass"
+gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body > /tmp/issue-2-body.md
+sed -i 's/^- \[ \] Interview notes/- [x] Interview notes/' /tmp/issue-2-body.md
+gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issue-2-body.md
 ```
+Expected: the interview-notes Done-when box is checked in issue #2.
 
 ### Task 5: Ingest legal analysis evidence
 
@@ -471,9 +474,9 @@ Verification:
 
 Run:
 ```bash
-grep -n '^Status: in review$' docs/phase0/legal-analysis-summary.md || echo "not in review"
+grep -n '^Status: validated$' docs/phase0/legal-analysis-summary.md || echo "not validated"
 ```
-Expected: `not in review`.
+Expected: `not validated`.
 
 - [ ] **Step 2: Check the stop condition**
 
@@ -489,12 +492,12 @@ If counsel rejected the proposed structure, append one sentence under `## Escala
 
 - [ ] **Step 5: Advance status**
 
-Run:
+Set the final status before review; no commit is pushed after approval. Run:
 ```bash
-sed -i 's/^Status: awaiting evidence$/Status: in review/' docs/phase0/legal-analysis-summary.md
-sed -i 's#| \[legal-analysis-summary.md\](legal-analysis-summary.md) | awaiting evidence |#| [legal-analysis-summary.md](legal-analysis-summary.md) | in review |#' docs/phase0/README.md
+sed -i 's/^Status: awaiting evidence$/Status: validated/' docs/phase0/legal-analysis-summary.md
+sed -i 's#| \[legal-analysis-summary.md\](legal-analysis-summary.md) | awaiting evidence |#| [legal-analysis-summary.md](legal-analysis-summary.md) | validated |#' docs/phase0/README.md
 ```
-Expected: both files now show `in review` for the legal artifact.
+Expected: both files now show `validated` for the legal artifact.
 
 - [ ] **Step 6: Run the check again**
 
@@ -502,41 +505,41 @@ Run the Step 1 command, then:
 ```bash
 grep -n '^## Escalation$' docs/phase0/legal-analysis-summary.md
 ```
-Expected: a matching `Status: in review` line and the escalation section. If counsel rejected the structure, that section names the rejected structure and affected issues, and the corresponding register rows read `blocked` with no MVP scope change.
+Expected: a matching `Status: validated` line and the escalation section. If counsel rejected the structure, that section names the rejected structure and affected issues, and the corresponding register rows read `blocked` with no MVP scope change.
 
-- [ ] **Step 7: Commit the review-ready artifact**
+- [ ] **Step 7: Commit and open the PR**
+
+Cut a fresh branch from the merged `main`, commit, push, and open a PR with Yod requested
+as reviewer. No further commits are pushed to this branch.
 
 ```bash
+git switch main && git pull --ff-only
+git switch -c issue-2-phase0-legal-analysis
 git add docs/phase0/legal-analysis-summary.md docs/phase0/README.md docs/phase0/decisions-register.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: add Uganda legal analysis summary for issue #2
+GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: add validated Uganda legal analysis summary for issue #2
 
 Changes:
 - Record redacted counsel findings and first viable issuance structure
 - Mark decisions D1, D2, D3, D5 and D7 with evidence-based outcomes
-- Record blocked status and escalation if counsel rejected the structure
+- Set legal artifact and README index to validated before review
 
 Verification:
-- Status check: in review present after change
+- Status check: validated present after change
 - Diff scan: no full counsel text or identifiers"
+git push -u origin issue-2-phase0-legal-analysis
+gh pr create --base main --head issue-2-phase0-legal-analysis --title "Phase 0: Uganda legal analysis (issue #2)" --body "Refs #2. Redacted counsel findings supplied privately by Nze; no memo text or identifiers in the repo. Final status is set before review so the approved diff is the merged diff." --reviewer YodHeVauHe
 ```
 
-- [ ] **Step 8: Get approval and mark validated**
+- [ ] **Step 8: Tick the Done-when box after merge**
 
-After Yod approves and CI is green, run:
+After Yod approves and CI is green, Yod merges. Then, with no further commits to the branch:
 
 ```bash
-sed -i 's/^Status: in review$/Status: validated/' docs/phase0/legal-analysis-summary.md
-sed -i 's#| \[legal-analysis-summary.md\](legal-analysis-summary.md) | in review |#| [legal-analysis-summary.md](legal-analysis-summary.md) | validated |#' docs/phase0/README.md
-git add docs/phase0/legal-analysis-summary.md docs/phase0/README.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: validate legal analysis summary for issue #2
-
-Changes:
-- Mark legal analysis summary validated after CODEOWNERS approval
-- Update README index to validated
-
-Verification:
-- CI: docs-and-repo-checks pass"
+gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body > /tmp/issue-2-body.md
+sed -i 's/^- \[ \] Written legal analysis/- [x] Written legal analysis/' /tmp/issue-2-body.md
+gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issue-2-body.md
 ```
+Expected: the legal-analysis Done-when box is checked in issue #2.
 
 ### Task 6: Ingest design-partner shortlist and finalize scope
 
@@ -554,9 +557,9 @@ Verification:
 
 Run:
 ```bash
-grep -n '^Status: in review$' docs/phase0/design-partner-shortlist.md || echo "not in review"
+grep -n '^Status: validated$' docs/phase0/design-partner-shortlist.md || echo "not validated"
 ```
-Expected: `not in review`.
+Expected: `not validated`.
 
 - [ ] **Step 2: Check the stop condition**
 
@@ -568,7 +571,16 @@ Replace the `## Shortlist` table with anonymized candidates, scores, readiness n
 
 - [ ] **Step 4: Finalize scope gaps**
 
-In `docs/phase0/mvp-scope-mapping.md`, replace each gap sentence under `## Gaps requiring owner agreement` with the agreed outcome from Nze and Yod. If an outcome is still disputed, keep the gap and stop before claiming the scope is agreed.
+In `docs/phase0/mvp-scope-mapping.md`, replace each gap sentence under `## Gaps requiring owner agreement` with the agreed outcome from Nze and Yod. If an outcome is still disputed, keep the gap and stop before claiming the scope is agreed. Then record the finalized criterion on each owning issue so #3–#12 reflect the scope, not only the local mapping:
+
+```bash
+AGREED_TEXT="the agreed outcome recorded in docs/phase0/mvp-scope-mapping.md"
+gh issue comment 4 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criterion 15: $AGREED_TEXT"
+gh issue comment 9 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criterion 21: $AGREED_TEXT"
+gh issue comment 8 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criteria 9 and 10: $AGREED_TEXT"
+gh issue comment 11 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criteria 9 and 10: $AGREED_TEXT"
+```
+Expected: comments posted on #4, #8, #9 and #11. Without these, the scope gaps remain unagreed in the issues that own delivery.
 
 - [ ] **Step 5: Scan the diff for sensitive data**
 
@@ -580,46 +592,46 @@ Expected: `no sensitive patterns`. If anything matches, remove it from the docum
 
 - [ ] **Step 6: Advance status**
 
-Run:
+Set the final status before review; no commit is pushed after approval. Run:
 ```bash
-sed -i 's/^Status: awaiting evidence$/Status: in review/' docs/phase0/design-partner-shortlist.md
-sed -i 's#| \[design-partner-shortlist.md\](design-partner-shortlist.md) | awaiting evidence |#| [design-partner-shortlist.md](design-partner-shortlist.md) | in review |#' docs/phase0/README.md
+sed -i 's/^Status: awaiting evidence$/Status: validated/' docs/phase0/design-partner-shortlist.md
+sed -i 's#| \[design-partner-shortlist.md\](design-partner-shortlist.md) | awaiting evidence |#| [design-partner-shortlist.md](design-partner-shortlist.md) | validated |#' docs/phase0/README.md
 ```
-Expected: both files show `in review` for the partner artifact.
+Expected: both files show `validated` for the partner artifact.
 
-- [ ] **Step 7: Commit the review-ready artifacts**
+- [ ] **Step 7: Commit and open the PR**
+
+Cut a fresh branch from the merged `main`, commit, push, and open a PR with Yod requested
+as reviewer. No further commits are pushed to this branch.
 
 ```bash
+git switch main && git pull --ff-only
+git switch -c issue-2-phase0-design-partners
 git add docs/phase0/design-partner-shortlist.md docs/phase0/README.md docs/phase0/decisions-register.md docs/phase0/mvp-scope-mapping.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: add design-partner shortlist and finalize scope for issue #2
+GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: add validated design-partner shortlist and finalize scope for issue #2
 
 Changes:
 - Record anonymized shortlist and readiness notes from real candidate assessments
 - Resolve scope gaps in the PRD #19 mapping after Nze + Yod agreement
-- Advance partner artifact and README index to in review
+- Set partner artifact and README index to validated before review
 
 Verification:
-- Status check: in review present after change
+- Status check: validated present after change
 - Sensitive-data scan: no matches"
+git push -u origin issue-2-phase0-design-partners
+gh pr create --base main --head issue-2-phase0-design-partners --title "Phase 0: Design partners and scope (issue #2)" --body "Refs #2. Anonymized shortlist from real candidate assessments supplied privately by Nze; no contact details in the repo. Final status is set before review so the approved diff is the merged diff." --reviewer YodHeVauHe
 ```
 
-- [ ] **Step 8: Get approval and mark validated**
+- [ ] **Step 8: Tick the Done-when box after merge**
 
-After Yod approves and CI is green, run:
+After Yod approves and CI is green, Yod merges. Then, with no further commits to the branch:
 
 ```bash
-sed -i 's/^Status: in review$/Status: validated/' docs/phase0/design-partner-shortlist.md
-sed -i 's#| \[design-partner-shortlist.md\](design-partner-shortlist.md) | in review |#| [design-partner-shortlist.md](design-partner-shortlist.md) | validated |#' docs/phase0/README.md
-git add docs/phase0/design-partner-shortlist.md docs/phase0/README.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: validate design-partner shortlist for issue #2
-
-Changes:
-- Mark design-partner shortlist validated after CODEOWNERS approval
-- Update README index to validated
-
-Verification:
-- CI: docs-and-repo-checks pass"
+gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body > /tmp/issue-2-body.md
+sed -i 's/^- \[ \] A prioritized design-partner/- [x] A prioritized design-partner/' /tmp/issue-2-body.md
+gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issue-2-body.md
 ```
+Expected: the design-partner Done-when box is checked in issue #2.
 
 ### Task 7: Close issue #2
 
@@ -628,7 +640,7 @@ Verification:
 - No new files.
 
 **Interfaces:**
-- Consumes: validated statuses from Tasks 4, 5 and 6, the two repository-side artifacts from Tasks 2 and 3 (promoted in Step 1b), and the owner-agreement outcomes from Task 6.
+- Consumes: validated statuses from Tasks 4, 5 and 6, the two repository-side artifacts from Tasks 2 and 3 (already validated in the Track 1 PR), and the owner-agreement outcomes recorded on #4, #8, #9 and #11 by Task 6.
 - Produces: closed issue #2 with all five Done-when items checked.
 
 - [ ] **Step 1: Write the failing check**
@@ -639,26 +651,15 @@ grep -c '| validated |' docs/phase0/README.md
 ```
 Expected: fewer than `5` while any artifact remains unvalidated.
 
-- [ ] **Step 1b: Validate the two repository-side artifacts**
+- [ ] **Step 1b: Confirm the repository-side rows are already validated**
 
-The Track 1 PR (index, register, scope mapping) must first be approved by Yod and `docs-and-repo-checks` green. These two rows are not evidence-dependent; they become `validated` on that approval. Run:
+The Track 1 PR ships the register and scope mapping with `validated` README rows, so no
+promotion commit is needed here. A later commit would dismiss Yod's approval. Run:
 
 ```bash
-sed -i 's#| \[mvp-scope-mapping.md\](mvp-scope-mapping.md) | planned |#| [mvp-scope-mapping.md](mvp-scope-mapping.md) | validated |#' docs/phase0/README.md
-sed -i 's#| \[decisions-register.md\](decisions-register.md) | planned |#| [decisions-register.md](decisions-register.md) | validated |#' docs/phase0/README.md
-git add docs/phase0/README.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: validate Phase 0 repository-side artifacts for issue #2
-
-Changes:
-- Promote mvp-scope-mapping and decisions-register README rows to validated
-- Record CODEOWNERS approval of the Track 1 PR
-
-Verification:
-- Track 1 PR approved by Yod
-- docs-and-repo-checks pass"
+grep -n 'mvp-scope-mapping.md.*validated\|decisions-register.md.*validated' docs/phase0/README.md
 ```
-
-Expected: both repository-side rows read `validated` in the README index. Do not run this step before approval.
+Expected: both rows shown as validated. If either is still `planned`, stop — the Track 1 PR was not completed as specified.
 
 - [ ] **Step 2: Verify all five rows are validated**
 
@@ -671,22 +672,14 @@ Expected: `all validated` and `5`. If anything else appears, stop and report whi
 
 - [ ] **Step 3: Verify the Done-when boxes**
 
-Run:
+Each box is ticked by its owning artifact task after that PR merges. Run:
 ```bash
 gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body | grep -c '^- \[x\]'
 ```
-Expected: `5`. If fewer, do not tick boxes whose artifacts are not validated. If all artifacts are validated but boxes are stale, tick the matching boxes in issue #2 and record the update in the next commit:
-
-```bash
-git add docs/phase0/README.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: check completed Phase 0 Done-when items for issue #2
-
-Changes:
-- Record final README status after issue #2 box update
-
-Verification:
-- Done-when check count: 5"
-```
+Expected: `5`. If fewer, identify the stale task from the unchecked line and re-run its
+"Tick the Done-when box after merge" step. Do not tick a box whose artifact is not
+`validated`, and do not rewrite the issue body with a bare `git commit` that only claims the
+box was updated — use `gh issue edit` with the real body as that step specifies.
 
 - [ ] **Step 4: Verify PR and approval state**
 

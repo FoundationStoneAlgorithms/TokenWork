@@ -18,6 +18,8 @@ Score each candidate 1–5 on:
 
 | Anonymized candidate | Sector | Scores | Readiness notes | Private reference |
 |---|---|---|---|---|
+| Awaiting real candidate assessments from Nze | — | — | — | Private store reference recorded by Nze |
+
 Populated only from real candidate information supplied by Nze. Contact details and identifiers stay in the private store.
 
 ## Shortlist decision

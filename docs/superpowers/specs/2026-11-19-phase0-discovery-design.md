@@ -1,7 +1,7 @@
 # Phase 0 Discovery and Legal/Market Validation — Design
 
 - Date: 2026-11-19
-- Status: approved
+- Status: proposed
 - Owner: NzeNdiWamanyi (accountable for issue #2 end to end)
 - Related issue: #2 — Phase 0: Discovery and legal/market validation
 - Related planning: PRD `#13`, `#14`, `#18`, `#19`; issues #3–#12
@@ -62,19 +62,30 @@ All artifacts live under `docs/phase0/`:
 | `legal-analysis-summary.md` | Counsel findings summary; instrument: question list for counsel, mapped to PRD `#10` and `#18` |
 | `design-partner-shortlist.md` | Prioritized shortlist and readiness notes; instrument: scoring rubric, sectors from PRD `#12.2` |
 
-Status values are `planned`, `awaiting evidence`, `in review`, `validated`. For evidence
-artifacts, `planned` is not used: they begin at `awaiting evidence`.
+Status values are `planned`, `awaiting evidence`, `in review`, `blocked`, `validated`. For
+evidence artifacts, `planned` is not used: they begin at `awaiting evidence`. `blocked` means
+evidence contradicts a PRD assumption and is used only with a named owner decision.
 
 ## Workflow and gating
 
 **Track 1 — repo-side (first PR).** Add the index, decisions register and scope mapping.
 Seed the three evidence docs with their empty instruments and status `awaiting evidence`.
-Nze opens the PR; Yod reviews and merges it. `docs-and-repo-checks` must pass.
+The two repository-side README rows are written at `validated` in this PR, so the final text
+is what Yod reviews. Nze opens the PR; Yod reviews and merges it. `docs-and-repo-checks` must
+pass.
 
-**Track 2 — evidence-side (one PR per artifact).** For each evidence doc, Nze gathers the
-source privately, writes only redacted conclusions plus a reference to the private source,
-opens a PR that moves the doc to `in review`, and Yod approves. On merge the status becomes
-`validated` and the matching Done-when box in issue #2 is ticked.
+**Track 2 — evidence-side (one branch and PR per artifact).** For each evidence doc, Nze
+cuts a fresh `issue-2-phase0-<artifact>` branch from `main` **after the previous PR has
+merged**, so each PR contains only that artifact's diff. Continuing on the Track 1 branch
+would re-present already-merged commits in every later PR.
+
+For each artifact, Nze gathers the source privately, writes only redacted conclusions plus a
+reference to the private source, and sets the document and README row to their final
+`validated` (or `blocked`) text before opening the PR. Yod then reviews and approves that
+exact final diff. No commit is pushed after approval: with `dismiss_stale_reviews` enabled,
+a later push dismisses the approval and the merged diff would differ from the reviewed one.
+On merge, the matching Done-when box in issue #2 is ticked using `gh issue edit` in the same
+artifact's workflow.
 
 **Closure rule.** Issue #2 closes only when all five artifacts are `validated` in the README
 index and every Done-when box is checked. A PR must not contain raw notes, personal
@@ -102,6 +113,16 @@ Deadlines use repository milestones:
 | Registry, identity, accounting and banking integration availability | Before issue #5 (Week 2) starts |
 | Commercial willingness of SMEs, investors and institutions | Before issue #2 closes |
 | Production hosting, custody and security architecture | Before issue #11 (Week 7) security review |
+
+## Owner decisions recorded
+
+- **Staged PR closure.** This flow deliberately uses `Refs #2` on the Track 1 PR instead of
+  CONTRIBUTING's usual `Closes #N`. Yod asked for this deviation to be recorded explicitly in
+  his review of PR #26 (2026-11-19); it is retained because claiming to close #2 before the
+  three evidence items exist would violate the anti-fabrication rule.
+- **Ownership and deadlines.** Assigning every Done-when item and every PRD `#18` decision
+  to Nze, and expressing deadlines as issue milestones rather than dates, are judgment calls.
+  Yod's review of PR #26 accepted both at this stage.
 
 ## Failure modes and sensitive-data handling
 
