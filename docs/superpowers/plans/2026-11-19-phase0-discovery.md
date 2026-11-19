@@ -14,7 +14,7 @@
 
 - This is Nze's task. Every commit MUST be authored AND committed by `Nze Ndi Wamanyi <nzendiwamanyi@gmail.com>`. Use the explicit identity frontmatter shown in every commit step below; do not rely on global or local git config.
 - Before any `gh` command, confirm the active account is `NzeNdiWamanyi` with `gh api user --jq .login`; if not, run `gh auth switch -u NzeNdiWamanyi`.
-- Work on branch `issue-2-phase0-discovery-design`. `main` is protected: changes land by PR, one CODEOWNERS approval required, authors cannot self-approve. Nze authors, Yod approves.
+- Work on branch `issue-2-phase0-discovery-design` for Track 1 only; each evidence artifact uses its own fresh branch from merged `main` (see below). `main` is protected: changes land by PR, one CODEOWNERS approval required, authors cannot self-approve. Nze authors, Yod approves.
 - Status values are exactly `planned`, `awaiting evidence`, `in review`, `blocked`, `validated`. Evidence documents start at `awaiting evidence` and never use `planned`.
 - Each evidence artifact uses a fresh branch cut from merged `main` (`issue-2-phase0-<artifact>`); never continue on an earlier artifact's branch. Set final `validated` text before opening the PR and push no commits after approval, because `dismiss_stale_reviews` would dismiss it and the merged diff would differ from the reviewed one.
 - Raw interview notes, counsel memos, personal identifiers and partner contact details NEVER enter the repo. Repo documents contain redacted conclusions and a reference to Nze's private store only.
@@ -76,8 +76,8 @@ Owner: NzeNdiWamanyi
 | Interview synthesis and validated problem statement | [interview-synthesis.md](interview-synthesis.md) | awaiting evidence | Recorded by Nze in the private store |
 | Written legal analysis summary | [legal-analysis-summary.md](legal-analysis-summary.md) | awaiting evidence | Recorded by Nze in the private store |
 | Prioritized design-partner shortlist | [design-partner-shortlist.md](design-partner-shortlist.md) | awaiting evidence | Recorded by Nze in the private store |
-| MVP scope and acceptance criteria in #3–#12 | [mvp-scope-mapping.md](mvp-scope-mapping.md) | planned | Not evidence-dependent |
-| PRD `#18` items tracked | [decisions-register.md](decisions-register.md) | planned | Not evidence-dependent |
+| MVP scope and acceptance criteria in #3–#12 | [mvp-scope-mapping.md](mvp-scope-mapping.md) | validated | Not evidence-dependent |
+| PRD `#18` items tracked | [decisions-register.md](decisions-register.md) | validated | Not evidence-dependent |
 
 Raw interview notes, counsel memos and partner contact details stay in Nze's private store. This repository holds redacted conclusions and references only.
 
@@ -175,6 +175,8 @@ Score each candidate 1–5 on:
 
 | Anonymized candidate | Sector | Scores | Readiness notes | Private reference |
 |---|---|---|---|---|
+| Awaiting real candidate assessments from Nze | — | — | — | Private store reference recorded by Nze |
+
 Populated only from real candidate information supplied by Nze. Contact details and identifiers stay in the private store.
 
 ## Shortlist decision
@@ -213,7 +215,7 @@ Verification:
 
 **Files:**
 - Create: `docs/phase0/decisions-register.md`
-- No README change in this task: the decisions-register row stays `planned` here and is promoted to `validated` in Task 7, Step 1b, after the Track 1 PR is approved.
+- No README row edit in this task beyond the template in Task 1: the decisions-register row is written at `validated` in Track 1 and confirmed in Task 7, Step 1b.
 
 **Interfaces:**
 - Consumes: the README index from Task 1.
@@ -241,13 +243,13 @@ Owner: NzeNdiWamanyi
 | D1 | Legal and regulatory classification of each proposed instrument in Uganda | NzeNdiWamanyi | Qualified counsel analysis summary, private reference | Before issue #2 closes | planned | — |
 | D2 | Entity acting as issuer, platform operator, placement agent, broker, custodian or payment provider | NzeNdiWamanyi | Qualified counsel analysis summary, private reference | Before issue #2 closes | planned | — |
 | D3 | Legal register and company-law process for tokenized equity | NzeNdiWamanyi | Qualified counsel analysis summary, private reference | Before issue #2 closes | planned | — |
-| D4 | Whether an SPV is required for asset-backed structures | NzeNdiWamanyi | Counsel note on asset-backed structures, private reference | Before issue #15 starts | planned | — |
+| D4 | Whether an SPV is required for asset-backed structures | NzeNdiWamanyi | Counsel note on asset-backed structures, private reference | Before issue #15 (Phase 3) starts; deferred for MVP | planned | — |
 | D5 | Permitted scope of marketing and distribution per investor class | NzeNdiWamanyi | Counsel analysis summary, private reference | Before issue #2 closes | planned | — |
 | D6 | Payment, FX and stablecoin permissions and provider availability | NzeNdiWamanyi | Provider or counsel evidence, private reference | Before issue #8 starts | planned | — |
 | D7 | Applicable tax treatment and reporting obligations | NzeNdiWamanyi | Counsel or adviser analysis, private reference | Before issue #2 closes | planned | — |
-| D8 | Availability of business registry, identity, accounting and banking integrations | NzeNdiWamanyi | Vendor or integration evidence, private reference | Before issue #5 starts | planned | — |
+| D8 | Availability and reliability of business registry, identity, accounting and banking integrations | NzeNdiWamanyi | Vendor or integration evidence, private reference | Before issue #5 starts | planned | — |
 | D9 | Commercial willingness of SMEs, investors and institutions to adopt the model | NzeNdiWamanyi | Interview synthesis and partner shortlist, private references | Before issue #2 closes | planned | — |
-| D10 | Final production hosting, custody and security architecture | NzeNdiWamanyi | Architecture decision evidence, private reference | Before issue #11 starts | planned | — |
+| D10 | Final production hosting, custody and security architecture | NzeNdiWamanyi | Architecture decision evidence, private reference | Before issue #11 (Week 7) security review | planned | — |
 
 Status `blocked` is used when evidence contradicts a PRD assumption; the affected issues are named in the resolution cell and in the PR notes. No PRD text is changed without an explicit Nze + Yod decision.
 ```
@@ -286,6 +288,17 @@ Verification:
 - Section-sign scan: no matches"
 ```
 
+- [ ] **Step 5: Tick the tracked-decisions Done-when box after the Track 1 PR merges**
+
+After Yod approves and merges the Track 1 PR, tick the matching box in issue #2:
+
+```bash
+gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body > /tmp/issue-2-body.md
+sed -i 's/^- \[ \] PRD `#18` items are tracked/- [x] PRD `#18` items are tracked/' /tmp/issue-2-body.md
+gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issue-2-body.md
+```
+Expected: the "PRD `#18` items are tracked with owners, evidence requirements and deadlines" Done-when box is checked in issue #2.
+
 ### Task 3: MVP scope and acceptance mapping
 
 **Files:**
@@ -316,7 +329,7 @@ Each PRD `#19` criterion is mapped to the issue that owns its delivery.
 
 | Criterion | Acceptance criterion (abridged) | Owning issue |
 |---|---|---|
-| 1 | Business registers and creates a profile | #6 |
+| 1 | Business registers and creates a profile | #5 and #6 |
 | 2 | Reviewer records verification status and evidence | #6 |
 | 3 | Business creates equity offering with versioned terms | #6 |
 | 4 | Authorized reviewer approves or rejects demo offering | #6 |
@@ -328,21 +341,25 @@ Each PRD `#19` criterion is mapped to the issue that owns its delivery.
 | 10 | Chain transaction reconciled with allocation record | #11 |
 | 11 | Dashboards show consistent holdings and offering data | #10 |
 | 12 | Investor report or corporate action created and recorded | #10 |
-| 13 | Material actions auditable | #5 |
-| 14 | Automated tests cover state transitions and authorization | #5 |
+| 13 | Material actions auditable | #10 and #11 |
+| 14 | Automated tests cover state transitions and authorization | #11 |
 | 15 | Demonstration distinguishes simulated from production activity | #4 and #12 |
 | 16 | Business Onboarding Agent guides profile completion | #9 |
 | 17 | Financial Analysis Agent extracts figures with sources | #9 |
 | 18 | Due Diligence Assistant runs checklist and flags inconsistencies | #9 |
-| 19 | Agent tools enforce role and tenant permissions server-side | #5 and #9 |
-| 20 | Agent prompts, calls, outputs and human corrections auditable | #5 and #9 |
-| 21 | No MVP agent approves offerings, certifies valuations or executes transactions | #9 |
+| 19 | Agent tools enforce role and tenant permissions server-side | #9 and #11 |
+| 20 | Agent prompts, calls, outputs and human corrections auditable | #9 and #11 |
+| 21 | No MVP agent approves offerings, certifies valuations or executes transactions | #9 and #11 |
+
+Ownership follows each issue's stated PRD `#19` coverage: issue #11 claims criteria 10, 13, 14, 19, 20 and 21; issue #10's Done-when covers auditability (13); issue #5's Done-when covers basic account/profile creation (1). Issue #9 is the Phase 1 epic that tracks all 21 criteria.
 
 ## Gaps requiring owner agreement
 
 - Criterion 15 needs issue #4 to define the simulated-flow labelling before issue #12 demonstrates it.
 - Criterion 21 needs issue #9 to define agent permission boundaries before implementation starts.
 - Criteria 9 and 10 need issue #8 and issue #11 to agree the Devnet evidence format before either is closed.
+
+When a gap is agreed, Nze records the outcome as a comment on each owning issue (see Task 6 of the implementation plan) and replaces the gap line above with the agreed outcome before issue #2 is closed.
 
 No scope change is made here. This mapping records where PRD `#14` and `#19` criteria are already owned and where Nze and Yod must agree before scope is finalized.
 ```
@@ -380,16 +397,26 @@ Verification:
 - Section-sign scan: no matches"
 ```
 
+- [ ] **Step 5: Tick the MVP scope Done-when box after the Track 1 PR merges**
+
+After Yod approves and merges the Track 1 PR, tick the matching box in issue #2:
+
+```bash
+gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body > /tmp/issue-2-body.md
+sed -i 's/^- \[ \] MVP scope and acceptance criteria/- [x] MVP scope and acceptance criteria/' /tmp/issue-2-body.md
+gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issue-2-body.md
+```
+Expected: the "MVP scope and acceptance criteria are agreed and reflected in #3–#12" Done-when box is checked in issue #2.
+
 ### Task 4: Ingest interview synthesis evidence
 
 **Files:**
 - Modify: `docs/phase0/interview-synthesis.md`
 - Modify: `docs/phase0/README.md`
-- Modify: `docs/phase0/decisions-register.md` (rows D9)
 
 **Interfaces:**
 - Consumes: the interview guide from Task 1; real interview notes supplied privately by Nze.
-- Produces: a validated problem statement; resolution text for decision D9.
+- Produces: a validated problem statement. Decision D9 is resolved in Task 6, after the partner shortlist is available.
 
 - [ ] **Step 1: Write the failing check**
 
@@ -571,16 +598,9 @@ Replace the `## Shortlist` table with anonymized candidates, scores, readiness n
 
 - [ ] **Step 4: Finalize scope gaps**
 
-In `docs/phase0/mvp-scope-mapping.md`, replace each gap sentence under `## Gaps requiring owner agreement` with the agreed outcome from Nze and Yod. If an outcome is still disputed, keep the gap and stop before claiming the scope is agreed. Then record the finalized criterion on each owning issue so #3–#12 reflect the scope, not only the local mapping:
+In `docs/phase0/mvp-scope-mapping.md`, replace each gap sentence under `## Gaps requiring owner agreement` with the agreed outcome from Nze and Yod. If an outcome is still disputed, keep the gap and stop before claiming the scope is agreed. Capture the actual agreed text for criterion 15, criterion 21 and criteria 9/10 from the finalized mapping; it is posted to the owning issues after this PR merges (Step 9), not before review.
 
-```bash
-AGREED_TEXT="the agreed outcome recorded in docs/phase0/mvp-scope-mapping.md"
-gh issue comment 4 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criterion 15: $AGREED_TEXT"
-gh issue comment 9 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criterion 21: $AGREED_TEXT"
-gh issue comment 8 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criteria 9 and 10: $AGREED_TEXT"
-gh issue comment 11 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criteria 9 and 10: $AGREED_TEXT"
-```
-Expected: comments posted on #4, #8, #9 and #11. Without these, the scope gaps remain unagreed in the issues that own delivery.
+Expected: all three gap lines replaced with real outcomes and no placeholder text left in the mapping.
 
 - [ ] **Step 5: Scan the diff for sensitive data**
 
@@ -633,6 +653,22 @@ gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issu
 ```
 Expected: the design-partner Done-when box is checked in issue #2.
 
+- [ ] **Step 9: Record the finalized criteria on the owning issues after merge**
+
+After Yod merges this PR, post the real agreed text captured in Step 4 to each owning issue. Replace the three variables with the actual outcome text from `docs/phase0/mvp-scope-mapping.md` — do not post placeholder text:
+
+```bash
+C15="<real agreed outcome for criterion 15 from the mapping>"
+C21="<real agreed outcome for criterion 21 from the mapping>"
+C910="<real agreed outcome for criteria 9 and 10 from the mapping>"
+gh issue comment 4 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criterion 15: $C15"
+gh issue comment 9 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criterion 21: $C21"
+gh issue comment 8 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criteria 9 and 10: $C910"
+gh issue comment 11 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criteria 9 and 10: $C910"
+gh issue comment 12 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 outcome (issue #2), PRD #19 criterion 15 demo: $C15"
+```
+Expected: comments posted on #4, #8, #9, #11 and #12 containing the real agreed outcomes, not a shared placeholder.
+
 ### Task 7: Close issue #2
 
 **Files:**
@@ -640,7 +676,7 @@ Expected: the design-partner Done-when box is checked in issue #2.
 - No new files.
 
 **Interfaces:**
-- Consumes: validated statuses from Tasks 4, 5 and 6, the two repository-side artifacts from Tasks 2 and 3 (already validated in the Track 1 PR), and the owner-agreement outcomes recorded on #4, #8, #9 and #11 by Task 6.
+- Consumes: validated statuses from Tasks 4, 5 and 6, the two repository-side artifacts from Tasks 2 and 3 (already validated in the Track 1 PR), the two repo-side Done-when boxes ticked after the Track 1 PR merges, and the owner-agreement outcomes recorded on #4, #8, #9, #11 and #12 by Task 6, Step 9.
 - Produces: closed issue #2 with all five Done-when items checked.
 
 - [ ] **Step 1: Write the failing check**

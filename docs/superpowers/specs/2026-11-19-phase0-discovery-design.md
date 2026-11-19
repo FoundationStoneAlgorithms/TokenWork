@@ -110,7 +110,7 @@ Deadlines use repository milestones:
 | Marketing and distribution scope per investor class | Before issue #2 closes |
 | Payment, FX and stablecoin permissions and provider availability | Before issue #8 (Week 5) starts |
 | Tax treatment and reporting obligations | Before issue #2 closes |
-| Registry, identity, accounting and banking integration availability | Before issue #5 (Week 2) starts |
+| Availability and reliability of business registry, identity, accounting and banking integrations | Before issue #5 (Week 2) starts |
 | Commercial willingness of SMEs, investors and institutions | Before issue #2 closes |
 | Production hosting, custody and security architecture | Before issue #11 (Week 7) security review |
 
