@@ -14,6 +14,7 @@
 
 - This is Nze's task. Every commit MUST be authored AND committed by `Nze Ndi Wamanyi <nzendiwamanyi@gmail.com>`. Use the explicit identity frontmatter shown in every commit step below; do not rely on global or local git config.
 - Before any `gh` command, confirm the active account is `NzeNdiWamanyi` with `gh api user --jq .login`; if not, run `gh auth switch -u NzeNdiWamanyi`.
+- PR #26 is the Track 1 PR covering Tasks 1–3. It uses `Refs #2` and intentionally does not close issue #2; the three evidence PRs follow in Track 2.
 - Work on branch `issue-2-phase0-discovery-design` for Track 1 only; each evidence artifact uses its own fresh branch from merged `main` (see below). `main` is protected: changes land by PR, one CODEOWNERS approval required, authors cannot self-approve. Nze authors, Yod approves.
 - Status values are exactly `planned`, `awaiting evidence`, `in review`, `blocked`, `validated`. Evidence documents start at `awaiting evidence` and never use `planned`.
 - Each evidence artifact uses a fresh branch cut from merged `main` (`issue-2-phase0-<artifact>`); never continue on an earlier artifact's branch. Set final `validated` text before opening the PR and push no commits after approval, because `dismiss_stale_reviews` would dismiss it and the merged diff would differ from the reviewed one.
@@ -397,16 +398,15 @@ Verification:
 - Section-sign scan: no matches"
 ```
 
-- [ ] **Step 5: Tick the MVP scope Done-when box after the Track 1 PR merges**
+- [ ] **Step 5: Push the Track 1 branch and open its PR**
 
-After Yod approves and merges the Track 1 PR, tick the matching box in issue #2:
+Tasks 1–3 form Track 1. In this run the PR is #26 (`issue-2-phase0-discovery-design` → `main`, `Refs #2`); it deliberately does not close #2. Push the branch and open the PR with Yod requested as reviewer:
 
 ```bash
-gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body > /tmp/issue-2-body.md
-sed -i 's/^- \[ \] MVP scope and acceptance criteria/- [x] MVP scope and acceptance criteria/' /tmp/issue-2-body.md
-gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issue-2-body.md
+git push -u origin issue-2-phase0-discovery-design
+gh pr create --base main --head issue-2-phase0-discovery-design --title "Phase 0: Discovery repo-side artifacts and validation framework (issue #2)" --body-file .superpowers/sdd/2026-11-19-phase0-discovery/pr-body-draft.md --reviewer YodHeVauHe
 ```
-Expected: the "MVP scope and acceptance criteria are agreed and reflected in #3–#12" Done-when box is checked in issue #2.
+Expected: the Track 1 PR open on the pushed head with Yod as reviewer. The tracked-decisions Done-when box (Task 2, Step 5) is ticked only after this PR is approved and merged; the MVP-scope box is deliberately deferred to Task 6, Step 9, after the three gaps are agreed.
 
 ### Task 4: Ingest interview synthesis evidence
 
@@ -669,6 +669,17 @@ gh issue comment 12 --repo FoundationStoneAlgorithms/TokenWork --body "Phase 0 o
 ```
 Expected: comments posted on #4, #8, #9, #11 and #12 containing the real agreed outcomes, not a shared placeholder.
 
+- [ ] **Step 10: Tick the MVP-scope Done-when box after the outcomes are posted**
+
+Only now that the three gaps have real Nze + Yod outcomes recorded on the owning issues, tick the matching box in issue #2:
+
+```bash
+gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body > /tmp/issue-2-body.md
+sed -i 's/^- \[ \] MVP scope and acceptance criteria/- [x] MVP scope and acceptance criteria/' /tmp/issue-2-body.md
+gh issue edit 2 --repo FoundationStoneAlgorithms/TokenWork --body-file /tmp/issue-2-body.md
+```
+Expected: the "MVP scope and acceptance criteria are agreed and reflected in #3–#12" Done-when box is checked in issue #2. Do not run this step before Step 9 has posted the real agreed outcomes — ticking it earlier would assert an agreement that does not yet exist.
+
 ### Task 7: Close issue #2
 
 **Files:**
@@ -676,7 +687,7 @@ Expected: comments posted on #4, #8, #9, #11 and #12 containing the real agreed 
 - No new files.
 
 **Interfaces:**
-- Consumes: validated statuses from Tasks 4, 5 and 6, the two repository-side artifacts from Tasks 2 and 3 (already validated in the Track 1 PR), the two repo-side Done-when boxes ticked after the Track 1 PR merges, and the owner-agreement outcomes recorded on #4, #8, #9, #11 and #12 by Task 6, Step 9.
+- Consumes: validated statuses from Tasks 4, 5 and 6, the two repository-side artifacts from Tasks 2 and 3 (already validated in the Track 1 PR), the tracked-decisions Done-when box ticked after the Track 1 PR merges, the MVP-scope Done-when box ticked in Task 6, Step 10 after the gaps are agreed, and the owner-agreement outcomes recorded on #4, #8, #9, #11 and #12 by Task 6, Step 9.
 - Produces: closed issue #2 with all five Done-when items checked.
 
 - [ ] **Step 1: Write the failing check**
@@ -721,9 +732,9 @@ box was updated — use `gh issue edit` with the real body as that step specifie
 
 Run:
 ```bash
-gh pr view --repo FoundationStoneAlgorithms/TokenWork --json reviewDecision,state --jq '{state,reviewDecision}'
+gh pr view issue-2-phase0-design-partners --repo FoundationStoneAlgorithms/TokenWork --json reviewDecision,state --jq '{state,reviewDecision}'
 ```
-Expected: `APPROVED` and `MERGED` for the final Phase 0 PR. If the PR is not merged, do not close the issue.
+Expected: `APPROVED` and `MERGED` for the final Phase 0 PR (the Task 6 `issue-2-phase0-design-partners` PR). If the PR is not merged, do not close the issue.
 
 - [ ] **Step 5: Close the issue**
 
