@@ -4,7 +4,7 @@
 
 **Goal:** Publish four short Tally surveys — one per respondent group — and record the links and evidence map needed to gather Phase 0 evidence for issue #2.
 
-**Architecture:** A single internal evidence map lives in `docs/phase0/survey-instrument.md`. Four Tally forms are generated from that map, each with plain-language questions. Raw answers stay in Tally — no external database — and only links, counts and redacted synthesis enter the repo.
+**Architecture:** A single internal evidence map lives in `docs/phase0/survey-instrument.md`. Four Tally forms are generated from that map, each with plain-language questions. Raw answers stay in Tally; form metadata is registered in a Notion database via Composio; only links, counts and redacted synthesis enter the repo.
 
 **Tech Stack:** Composio MCP tool (`tally`), GitHub CLI, Markdown.
 
@@ -15,7 +15,7 @@
 - Owner: @NzeNdiWamanyi; reviewer: @YodHeVauHe. Verify `gh api user --jq .login` returns `NzeNdiWamanyi` before any `gh` command.
 - Commits MUST be authored and committed as Nze Ndi Wamanyi via explicit `GIT_AUTHOR_NAME`, `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`, `GIT_COMMITTER_EMAIL` environment values.
 - `main` is protected: all changes land by PR with one CODEOWNERS approval. Never push directly to `main`.
-- No names, emails, phone numbers, employer identifiers or raw response text in the repository. No external database.
+- No names, emails, phone numbers, employer identifiers or raw response text in the repository. Notion holds form metadata only — no responses or personal data.
 - Composio meta calls use session id `song`. Never execute a toolkit tool without an ACTIVE connection.
 - Issue #2 stays OPEN until real responses are received and synthesized. Creating forms never ticks a Done-when box.
 - Use the repository PR body structure: Summary, Related issue, Verification, Notes.
@@ -25,7 +25,7 @@
 - **Inactive connection:** Task 1 checks the Tally connection before any creation.
 - **Tally form stuck in BLANK:** `TALLY_CREATE_FORM` requires `status: "PUBLISHED"`; verify with `TALLY_GET_FORM_DETAILS`.
 - **Invalid block structure:** Tally rejects group types (`CHECKBOXES`, `QUESTION`) as `type`; use `TITLE` with `groupType: "QUESTION"` for labels and concrete input/option blocks. `LINEAR_SCALE` requires `start`, `end` and `step`, with `hasLeftLabel`/`leftLabel` and `hasRightLabel`/`rightLabel` for labelled endpoints. A payload containing only `isRequired` renders no answer control.
-- **Question counts:** Task 3 verifies 12 / 8 / 7 / 12 questions for founders, investors, institutions and counsel.
+- **Question counts:** Task 3 verifies 13 / 9 / 8 / 13 questions for founders, investors, institutions and counsel.
 - **PII in repo:** Task 3 runs a PII pattern scan over the diff and stops on any match.
 
 ---
@@ -50,7 +50,7 @@ Call `COMPOSIO_MANAGE_CONNECTIONS` with `{"toolkits":[{"name":"tally","action":"
 
 - [ ] **Step 3: Write the initial survey document**
 
-Write `docs/phase0/survey-instrument.md` with `Status: in review`, `@NzeNdiWamanyi` as owner, no external database, four pending links and the response gate. Verify with `grep -n '^Status:'` and `git diff --check`, then commit.
+Write `docs/phase0/survey-instrument.md` with `Status: in review`, `@NzeNdiWamanyi` as owner, the approved title and disclaimer, four pending links, the Notion registry and the response gate. Verify with `grep -n '^Status:'` and `git diff --check`, then commit.
 
 ---
 
@@ -62,14 +62,14 @@ Write `docs/phase0/survey-instrument.md` with `Status: in review`, `@NzeNdiWaman
 
 - [ ] **Step 1: Build each form**
 
-Call `TALLY_CREATE_FORM` four times with `status: "PUBLISHED"`. Each form has a `FORM_TITLE` block with title and description, an introductory `TEXT` block, an `About you` `HEADING_1`, the common block, role-specific `HEADING_1` sections and questions, and a closing `TEXT` block.
+Call `TALLY_CREATE_FORM` four times with `status: "PUBLISHED"`. Each form has a `FORM_TITLE` block using the exact title **TokenWork Uganda Market Research — SME, Investor & Partner Discovery**, an audience-specific `TEXT` line, four `TEXT` blocks carrying the approved research disclaimer, an `About you` `HEADING_1`, the common block, role-specific `HEADING_1` sections and questions, a `Follow-up (optional)` section with separate consent then optional contact, and a closing `TEXT` block.
 
 | Form | Title | Questions |
 |---|---|---|
-| Founders | TokenWork Stakeholder Survey — Founders & Issuers | 12 |
-| Investors | TokenWork Stakeholder Survey — Investors | 8 |
-| Institutions | TokenWork Stakeholder Survey — Institutions & Partners | 7 |
-| Counsel | TokenWork Stakeholder Survey — Legal Counsel | 12 |
+| Founders | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Founders & Issuers | 13 |
+| Investors | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Investors | 9 |
+| Institutions | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Institutions & Partners | 8 |
+| Counsel | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Legal Counsel | 13 |
 
 Use `TITLE` blocks with `groupType: "QUESTION"` for question text. Use concrete input blocks (`INPUT_TEXT`, `TEXTAREA`, `INPUT_DATE`, `LINEAR_SCALE`) and option blocks (`CHECKBOX`, `DROPDOWN_OPTION`, `MULTIPLE_CHOICE_OPTION`, `MULTI_SELECT_OPTION`) with sequential `index` and `isFirst`/`isLast` flags. Configure scale blocks with `{isRequired, start: 1, end: 5, step: 1, hasLeftLabel: true, leftLabel: "Not willing", hasRightLabel: true, rightLabel: "Very willing"}`. `rangeStart`/`rangeEnd` are rejected by the API.
 
@@ -81,6 +81,10 @@ Call `TALLY_GET_FORM_DETAILS` and `TALLY_LIST_FORM_QUESTIONS` for all four IDs, 
 
 If an earlier single-form survey exists, call `TALLY_DELETE_FORM` for that ID so only the four role-specific forms remain.
 
+- [ ] **Step 4: Register the forms in Notion**
+
+With an Active Notion connection, call `NOTION_CREATE_DATABASE` under the *TokenWork | Market Research Hub* page (ID `41e351a2-ab6a-8136-bbe8-f00006e07c59`), titled **TokenWork Uganda Market Research — SME, Investor & Partner Discovery**, with properties Form, Audience, Tally link, Form ID, Questions, Evidence IDs, Respondent brief, Status and Owner. Insert one `NOTION_INSERT_ROW_DATABASE` row per form with its link, ID, question count and `Q01`–`Q33` evidence IDs. Never write responses or personal data to Notion.
+
 ---
 
 ### Task 3: Verify, scan and open the PR
@@ -91,7 +95,7 @@ If an earlier single-form survey exists, call `TALLY_DELETE_FORM` for that ID so
 
 - [ ] **Step 1: Re-verify forms**
 
-Call `TALLY_LIST_FORM_QUESTIONS`, `TALLY_GET_FORM_DETAILS` and `TALLY_GET_FORM_RESPONSES` for all four IDs. Expected: published, 12/8/7/12 questions, response reads succeed (empty arrays acceptable).
+Call `TALLY_LIST_FORM_QUESTIONS`, `TALLY_GET_FORM_DETAILS` and `TALLY_GET_FORM_RESPONSES` for all four IDs. Expected: published, 13/9/8/13 questions, response reads succeed (empty arrays acceptable), and each public link renders the exact title and disclaimer plus a working answer control on every question.
 
 - [ ] **Step 2: Repo verification**
 

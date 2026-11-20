@@ -14,7 +14,7 @@ Replace live interviews with four short online surveys so Phase 0 evidence can b
 - Four respondent groups are in scope: SME/issuer, investor, financial institution/professional partner and qualified counsel.
 - A response from qualified Ugandan counsel is sufficient to support the legal-analysis instrument; a separate counsel memo is not required for this batch. This is an exception to the plan's counsel-memo stop condition for this survey batch only.
 - Four short, role-specific forms replace the original single 33-question form. Each asks only questions its audience can answer and uses plain language, with no internal IDs shown to respondents.
-- No external database is used: raw answers stay in Tally. @NzeNdiWamanyi circulates each link to its intended audience; the repo receives only links, form IDs, the evidence map, response counts and redacted synthesis.
+- Raw answers stay in Tally. Published form metadata is registered in a Notion database via Composio, but no responses or personal data are written to Notion. @NzeNdiWamanyi circulates each link to its intended audience; the repo receives only links, form IDs, the evidence map, response counts and redacted synthesis.
 - Forms alone do not complete issue #2. Done-when boxes are ticked only after responses arrive and are synthesized.
 
 ## Architecture and data flow
@@ -23,12 +23,15 @@ Replace live interviews with four short online surveys so Phase 0 evidence can b
 2. Connect Composio toolkit `tally`. No form is created before the connection is Active.
 3. Create four `PUBLISHED` Tally forms, one per respondent group, each with an introduction, a time estimate, a privacy note and two or three headed sections.
 4. Add `docs/phase0/survey-instrument.md` with all four share links, form IDs and the internal `Q01`–`Q33` evidence map.
-5. @NzeNdiWamanyi circulates each link. When responses exist, read them from Tally, redact them, and update the three evidence instruments in a follow-up PR. Raw responses are never exported to a database or committed to the repo.
-6. Issue #2 stays OPEN until the synthesized evidence supports its Done-when items.
+5. Register the four forms as rows in the Notion database **TokenWork Uganda Market Research — SME, Investor & Partner Discovery** under the *TokenWork | Market Research Hub* page. Store only form metadata: audience, Tally link, form ID, question count, evidence IDs and owner.
+6. @NzeNdiWamanyi circulates each link. When responses exist, read them from Tally, redact them, and update the three evidence instruments in a follow-up PR. Raw responses are never exported to Notion or committed to the repo.
+7. Issue #2 stays OPEN until the synthesized evidence supports its Done-when items.
 
 ## Questionnaire structure
 
-Every form opens with a common block: consent, anonymized response code, sector or practice area with geography or jurisdiction, permission for anonymous quotes, and optional follow-up contact. Tally supplies the submission timestamp, so no separate date question is needed.
+Every form uses the exact title **TokenWork Uganda Market Research — SME, Investor & Partner Discovery**, followed by one audience-specific line and the approved research disclaimer supplied by the owner: independent exploratory market research, neutral and not a securities offer, investment solicitation or fundraising initiative; voluntary participation; no confidential documents or sensitive personal data; contact details optional; consent by proceeding. Follow-up consent is asked separately at the end, before optional contact details.
+
+Each form then contains a common block: consent, anonymized response code, sector or practice area with geography or jurisdiction, and permission for anonymous quotes. Tally supplies the submission timestamp, so no separate date question is needed.
 
 - **Founders & Issuers:** capital raise attempt and blocker, financing options considered, documents requested, trust requirements, records readiness, simulated-workflow willingness, feedback window. This form also carries the design-partner readiness evidence.
 - **Investors:** evidence, rights and exit expectations; simulated eligibility; willingness to review and subscribe.
@@ -51,4 +54,4 @@ Every form opens with a common block: consent, anonymized response code, sector 
 
 ## Scope boundary
 
-No production issuance, real-money flow, KYC/AML or regulatory approval. The surveys are evidence gathering for Phase 0 only; raw personal data never enters the repository, and no external database is introduced.
+No production issuance, real-money flow, KYC/AML or regulatory approval. The surveys are evidence gathering for Phase 0 only; raw personal data never enters the repository, and the only external store is the Notion form registry, which contains no personal data.
