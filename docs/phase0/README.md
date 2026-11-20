@@ -4,9 +4,9 @@ Owner: NzeNdiWamanyi
 
 | Done-when item | Artifact | Status | Private evidence reference |
 |---|---|---|---|
-| Interview synthesis and validated problem statement | [interview-synthesis.md](interview-synthesis.md) | awaiting evidence | Recorded by Nze in the private store |
-| Written legal analysis summary | [legal-analysis-summary.md](legal-analysis-summary.md) | awaiting evidence | Recorded by Nze in the private store |
-| Prioritized design-partner shortlist | [design-partner-shortlist.md](design-partner-shortlist.md) | awaiting evidence | Recorded by Nze in the private store |
+| Interview synthesis and validated problem statement | [interview-synthesis.md](interview-synthesis.md) | in review | Public desk research; no interviews held |
+| Written legal analysis summary | [legal-analysis-summary.md](legal-analysis-summary.md) | in review | Public statutes/regulations; no counsel memo held |
+| Prioritized design-partner shortlist | [design-partner-shortlist.md](design-partner-shortlist.md) | in review | Public sector sources; no candidates assessed |
 | MVP scope and acceptance criteria in #3–#12 | [mvp-scope-mapping.md](mvp-scope-mapping.md) | validated | Not evidence-dependent |
 | PRD `#18` items tracked | [decisions-register.md](decisions-register.md) | validated | Not evidence-dependent |
 
