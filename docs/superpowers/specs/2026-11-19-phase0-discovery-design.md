@@ -77,7 +77,8 @@ pass.
 **Track 2 — evidence-side (one branch and PR per artifact).** For each evidence doc, Nze
 cuts a fresh `issue-2-phase0-<artifact>` branch from `main` **after the previous PR has
 merged**, so each PR contains only that artifact's diff. Continuing on the Track 1 branch
-would re-present already-merged commits in every later PR.
+would re-present already-merged commits in every later PR. The cited-research batch below
+is a recorded owner exception to this rule; evidence gathered later still follows it.
 
 For each artifact, Nze gathers the source privately, writes only redacted conclusions plus a
 reference to the private source, and sets the document and README row to their final
@@ -123,6 +124,19 @@ Deadlines use repository milestones:
 - **Ownership and deadlines.** Assigning every Done-when item and every PRD `#18` decision
   to Nze, and expressing deadlines as issue milestones rather than dates, are judgment calls.
   Yod's review of PR #26 accepted both at this stage.
+- **Cited public research as the evidence basis (2026-11-20).** Nze directed that, for the
+  sake of product progress, cited public research from authoritative institutions (CMA
+  Uganda, World Bank) is an acceptable evidence basis for the three Phase 0 instruments in
+  place of private interviews, a counsel memo and assessed candidate information. Those
+  instruments are set to `in review` and stay there until @YodHeVauHe accepts the citations;
+  they are not promoted to `validated` on desk research alone. This supersedes the
+  "Evidence does not arrive" failure mode for this batch only — later evidence still
+  follows the stop condition. Recorded at @YodHeVauHe's request in the PR #27 review.
+- **Consolidated desk-research PR.** The three instruments above land in one PR
+  (`issue-2-phase0-desk-research`), not three per-artifact PRs. The reason is that the human
+  evidence never arrived, so the final-text flow could not run for any of them; it is not a
+  README merge conflict, since the index rows are distinct. Evidence-backed artifacts
+  gathered later keep the one-fresh-branch/one-PR-per-artifact rule above.
 
 ## Failure modes and sensitive-data handling
 
@@ -133,6 +147,8 @@ Deadlines use repository milestones:
   scope; raise a follow-up issue under the epic if a different structure is required.
 - **Evidence does not arrive:** the artifact remains `awaiting evidence`, its Done-when box
   stays unchecked, and issue #2 stays open. No placeholder is promoted to `validated`.
+  The cited-research batch is the recorded exception above and remains `in review`, not
+  `validated`, pending @YodHeVauHe's acceptance of the citations.
 - **Sensitive data reaches a commit:** treat as exposure — remove it in a follow-up commit,
   purge history where feasible, and handle disclosure privately per `SECURITY.md` rather
   than in a public issue.
@@ -150,7 +166,9 @@ Before each PR, check locally:
 2. All 21 PRD `#19` criteria are mapped to issues #3–#12 or explicitly deferred with a reason.
 3. README statuses match the Done-when checkboxes in issue #2.
 4. No personal identifiers, partner contacts or counsel text appear in the diff.
-5. Evidence references point to private sources, not public repository files.
+5. Evidence references point to private sources, not public repository files. For the
+   recorded cited-research batch, references point to public institutional pages and are
+   checked against the live pages.
 6. Markdown links resolve and no section-sign characters remain.
 
 `docs-and-repo-checks` must be green, and both CODEOWNERS review: Nze authors, Yod
