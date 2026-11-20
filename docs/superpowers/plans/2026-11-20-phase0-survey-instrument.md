@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Publish one shared survey on Tally and Google Forms, and record the links and question map needed to gather Phase 0 evidence for issue #2.
+**Goal:** Publish one Tally survey and record the link and question map needed to gather Phase 0 evidence for issue #2.
 
-**Architecture:** A single canonical question map lives in `docs/phase0/survey-instrument.md`. Tally blocks and Google Form items are generated from that map via Composio tools. Raw answers stay on the form platforms; only links, counts and redacted synthesis enter the repo.
+**Architecture:** A single canonical question map lives in `docs/phase0/survey-instrument.md`. Tally blocks are generated from that map via Composio tools. Raw answers stay in Tally — no external database — and only the link, counts and redacted synthesis enter the repo.
 
-**Tech Stack:** Composio MCP tools (`tally`, `googleforms`, `googledrive`), GitHub CLI, Markdown.
+**Tech Stack:** Composio MCP tool (`tally`), GitHub CLI, Markdown.
 
 **Spec:** `docs/superpowers/specs/2026-11-20-phase0-survey-instrument-design.md`
 
@@ -15,29 +15,28 @@
 - Owner: @NzeNdiWamanyi; reviewer: @YodHeVauHe. Verify `gh api user --jq .login` returns `NzeNdiWamanyi` before any `gh` command.
 - Commits MUST be authored and committed as Nze Ndi Wamanyi via explicit `GIT_AUTHOR_NAME`, `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`, `GIT_COMMITTER_EMAIL` environment values.
 - `main` is protected: all changes land by PR with one CODEOWNERS approval. Never push directly to `main`.
-- No names, emails, phone numbers, employer identifiers or raw response text in the repository.
+- No names, emails, phone numbers, employer identifiers or raw response text in the repository. No external database.
 - Composio meta calls use session id `song`. Never execute a toolkit tool without an ACTIVE connection.
-- Issue #2 stays OPEN until real responses are received and synthesized. Creating forms never ticks a Done-when box.
+- Issue #2 stays OPEN until real responses are received and synthesized. Creating a form never ticks a Done-when box.
 - Use the repository PR template body structure: Summary, Related issue, Verification, Notes.
 
 ## Review Focus
 
-- **Inactive connection:** a toolkit tool call without an ACTIVE connection fails. Task 1 checks all three connections with `COMPOSIO_MANAGE_CONNECTIONS(action="list")` before any creation.
-- **Google Form not accepting answers:** API-created forms can be unpublished. Task 4 verifies publish state with `GOOGLEFORMS_GET_FORM` and sets link access with `GOOGLEDRIVE_CREATE_PERMISSION(type="anyone", role="reader")`.
-- **Tally form stuck in BLANK:** `TALLY_CREATE_FORM` requires `status`. Task 3 creates with `status: "PUBLISHED"` and verifies with `TALLY_GET_FORM_DETAILS`.
-- **Question mismatch across platforms:** Task 5 compares `TALLY_LIST_FORM_QUESTIONS` and `GOOGLEFORMS_GET_FORM` item counts against the 33 questions in Task 2.
-- **PII in repo:** Task 5 runs a PII pattern scan over the diff and stops on any match.
+- **Inactive connection:** a toolkit tool call without an ACTIVE connection fails. Task 1 checks the Tally connection with `COMPOSIO_MANAGE_CONNECTIONS(action="list")` before any creation.
+- **Tally form stuck in BLANK:** `TALLY_CREATE_FORM` requires `status`. Task 2 creates with `status: "PUBLISHED"` and verifies with `TALLY_GET_FORM_DETAILS`.
+- **Question mismatch:** Task 3 compares `TALLY_LIST_FORM_QUESTIONS` against the 33 questions in Task 1.
+- **PII in repo:** Task 3 runs a PII pattern scan over the diff and stops on any match.
 
 ---
 
-### Task 1: Connections and repository scaffold
+### Task 1: Connection, repository scaffold and canonical question map
 
 **Files:**
 - Create: `docs/phase0/survey-instrument.md`
 
 **Interfaces:**
 - Consumes: merged PR #28 on `main`.
-- Produces: branch `issue-2-phase0-survey`, Active states for `tally`, `googleforms`, `googledrive`, and the initial survey document.
+- Produces: branch `issue-2-phase0-survey`, Active `tally` connection, and a survey document with 33 canonical questions `Q01`–`Q33`.
 
 - [ ] **Step 1: Prepare branch and identity**
 
@@ -49,80 +48,40 @@ git status --short --branch
 ```
 Expected: `NzeNdiWamanyi`; branch `issue-2-phase0-survey`; clean tree.
 
-- [ ] **Step 2: Check all three Composio connections**
+- [ ] **Step 2: Check the Tally connection**
 
 Call `tools.composio.COMPOSIO_MANAGE_CONNECTIONS` with:
 ```json
-{"toolkits":[{"name":"tally","action":"list"},{"name":"googleforms","action":"list"},{"name":"googledrive","action":"list"}],"session_id":"song"}
+{"toolkits":[{"name":"tally","action":"list"}],"session_id":"song"}
 ```
-Expected: each entry reports an Active account.
+Expected: the `tally` entry reports an Active account.
 
-- [ ] **Step 3: If any toolkit is not connected, stop**
+- [ ] **Step 3: If Tally is not connected, stop**
 
-For each missing toolkit, call `COMPOSIO_MANAGE_CONNECTIONS` with `action: "add"`, the exact toolkit name, and `session_id: "song"`. Show each returned `redirect_url` as a Markdown link and ask @NzeNdiWamanyi to finish authentication. Do not proceed until Step 2 reports Active for all three.
+Call `COMPOSIO_MANAGE_CONNECTIONS` with `action: "add"`, name `tally`, and `session_id: "song"`. Show the returned `redirect_url` as a Markdown link and ask @NzeNdiWamanyi to finish authentication. Do not proceed until Step 2 reports Active.
 
-- [ ] **Step 4: Write the initial survey document**
+- [ ] **Step 4: Write the survey document with the canonical question map**
 
-Write `docs/phase0/survey-instrument.md` with exactly:
+Write `docs/phase0/survey-instrument.md` with the following content. Scale questions use 1–5 with labels `Not willing` and `Very willing`. Multiselect questions include `N/A`. Every question shows its ID prefix on the Tally form.
+
 ```markdown
 # Phase 0 survey instrument (issue #2)
 
 Status: in review
 Owner: @NzeNdiWamanyi
-Evidence basis: online survey replacing live interviews; no responses collected yet.
+Evidence basis: online survey replacing live interviews; no responses collected yet. No external database — raw answers stay in Tally.
 
 ## Share links
 
 - Tally: pending
-- Google Forms: pending
 
 ## Response status
 
 No responses collected. Issue #2 stays OPEN until responses are received and synthesized.
-```
 
-- [ ] **Step 5: Verify and commit**
-
-Run:
-```bash
-grep -n '^Status:' docs/phase0/survey-instrument.md
-git diff --check
-git status --short
-```
-Expected: `Status: in review`, clean diff check.
-
-```bash
-git add docs/phase0/survey-instrument.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: scaffold Phase 0 survey instrument record
-
-Changes:
-- Add survey-instrument.md with in-review status, pending links and response gate
-- Record @NzeNdiWamanyi as owner
-
-Verification:
-- Status line: in review
-- git diff --check: clean"
-```
-
----
-
-### Task 2: Canonical question map
-
-**Files:**
-- Modify: `docs/phase0/survey-instrument.md`
-
-**Interfaces:**
-- Consumes: scaffold from Task 1.
-- Produces: 33 canonical questions with IDs `Q01`–`Q33`, used verbatim by Tasks 3 and 4 and by the response map in Task 6.
-
-- [ ] **Step 1: Append the canonical question table**
-
-Append this exact section to `docs/phase0/survey-instrument.md`:
-
-```markdown
 ## Canonical questions
 
-Both platforms use these question IDs and texts. Scale questions use 1–5 with labels `Not willing` and `Very willing`. Multiselect questions include `N/A`.
+Tally uses these question IDs and texts. Scale questions use 1–5 with labels `Not willing` and `Very willing`. Multiselect questions include `N/A`.
 
 | ID | Text | Type | Block |
 |---|---|---|---|
@@ -133,7 +92,7 @@ Both platforms use these question IDs and texts. Scale questions use 1–5 with 
 | Q05 | Geography (district/city) | short text | common |
 | Q06 | Response date | date | common |
 | Q07 | May we quote your answers anonymously? | yes/no | common |
-| Q08 | Private follow-up contact (stored in the form platform only, never in the repo) | optional short text | common |
+| Q08 | Private follow-up contact (stored in Tally only, never in the repo) | optional short text | common |
 | Q09 | Describe your last capital raise attempt: amount, timeline, outcome. | paragraph | sme_issuer |
 | Q10 | What was the main blocker? | paragraph | sme_issuer |
 | Q11 | Which financing options did you consider, and why were they rejected or accepted? | paragraph | sme_issuer |
@@ -161,40 +120,41 @@ Both platforms use these question IDs and texts. Scale questions use 1–5 with 
 | Q33 | Are you willing to test the simulated workflow, and when can you give feedback? | paragraph | design_partner |
 ```
 
-- [ ] **Step 2: Verify the map**
+- [ ] **Step 5: Verify and commit**
 
 Run:
 ```bash
+grep -n '^Status:' docs/phase0/survey-instrument.md
 grep -c '^| Q[0-9][0-9] |' docs/phase0/survey-instrument.md
-grep -n 'Q01\|Q33' docs/phase0/survey-instrument.md
 git diff --check
+git status --short
 ```
-Expected: `33`; both IDs present; clean diff check.
-
-- [ ] **Step 3: Commit**
+Expected: `Status: in review`; question count `33`; clean diff check.
 
 ```bash
 git add docs/phase0/survey-instrument.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: define canonical Phase 0 survey questions
+GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "docs: scaffold Phase 0 survey instrument record
 
 Changes:
-- Add 33 question IDs, texts, types and blocks shared by Tally and Google Forms
-- Cover SME/issuer, investor, institution, counsel and design-partner evidence
+- Add survey-instrument.md with in-review status, pending Tally link and response gate
+- Add 33 canonical questions Q01-Q33 used to build the Tally form
+- Record @NzeNdiWamanyi as owner and no external database
 
 Verification:
+- Status line: in review
 - Question count: 33
 - git diff --check: clean"
 ```
 
 ---
 
-### Task 3: Create the Tally form
+### Task 2: Create the Tally form
 
 **Files:**
 - Modify: `docs/phase0/survey-instrument.md`
 
 **Interfaces:**
-- Consumes: question IDs `Q01`–`Q33` from Task 2.
+- Consumes: question IDs `Q01`–`Q33` from Task 1.
 - Produces: Tally `formId`, published status, share link, and verified question list.
 
 - [ ] **Step 1: Find the workspace**
@@ -217,7 +177,7 @@ For each of `Q01`–`Q33`, emit one input block plus its option blocks. Use `typ
 | yes/no | `MULTIPLE_CHOICE` | `MULTIPLE_CHOICE` | `{"text":"<ID> <question text>"}` then `MULTIPLE_CHOICE_OPTION` for Yes index 0 and No index 1 |
 | required checkbox | `CHECKBOXES` | `CHECKBOXES` | `{"text":"Q01 I consent...","required":true}` then one `CHECKBOX` with `{"text":"I consent","index":0}` |
 
-Every block needs a valid UUID v4 `uuid` and `groupUuid`; option blocks share the parent block's `groupUuid`. The first block MUST be a `FORM_TITLE` block with `payload: {}` and `groupType: "FORM_TITLE"`. Generate UUIDs fresh with `crypto.randomUUID()` or equivalent; never reuse them between platforms.
+Every block needs a valid UUID v4 `uuid` and `groupUuid`; option blocks share the parent block's `groupUuid`. The first block MUST be a `FORM_TITLE` block with `payload: {}` and `groupType: "FORM_TITLE"`. Generate UUIDs fresh with `crypto.randomUUID()` or equivalent; never reuse them.
 
 - [ ] **Step 3: Create the form**
 
@@ -253,93 +213,20 @@ Verification:
 
 ---
 
-### Task 4: Create and publish the Google Form
-
-**Files:**
-- Modify: `docs/phase0/survey-instrument.md`
-
-**Interfaces:**
-- Consumes: question IDs `Q01`–`Q33` from Task 2.
-- Produces: Google `formId`, `responderUri`, published state, and 33 verified items.
-
-- [ ] **Step 1: Load the publish-settings schema**
-
-Call `COMPOSIO_GET_TOOL_SCHEMAS` with `{"tool_slugs":["GOOGLEFORMS_SET_PUBLISH_SETTINGS"],"session_id":"song"}`. Use the returned schema for Step 5.
-
-- [ ] **Step 2: Create the form**
-
-Call `GOOGLEFORMS_CREATE_FORM` with:
-```json
-{"info":{"title":"TokenWork Phase 0 Evidence Survey","description":"Online survey replacing live interviews for issue #2. Do not include names or private documents."},"unpublished":true}
-```
-Expected: `formId` captured.
-
-- [ ] **Step 3: Fetch baseline structure**
-
-Call `GOOGLEFORMS_GET_FORM` with `{"formId":"<formId>"}` and record `revisionId`.
-
-- [ ] **Step 4: Add all questions**
-
-Call `GOOGLEFORMS_BATCH_UPDATE_FORM` with `formId`, `writeControl: {"targetRevisionId":"<revisionId>"}`, and one `createItem` request per question:
-
-| Question type | Google `questionItem.question.requiredQuestion` fields |
-|---|---|
-| short text | `{"questionText":{"text":"<ID> <text>"},"textAnswers":{"answers":[]},"required":true}` |
-| paragraph | `{"questionText":{"text":"<ID> <text>"},"textAnswers":{"answers":[],"paragraph":true},"required":true}` |
-| date | `{"questionText":{"text":"<ID> <text>"},"dateAnswers":{},"required":true}` |
-| dropdown | `{"questionText":{"text":"<ID> <text>"},"choiceAnswers":{"choices":[{"value":"<choice>"},...]},"required":true}` |
-| checkboxes | `{"questionText":{"text":"<ID> <text>"},"checkboxAnswers":{"choices":[{"value":"<choice>"},...]},"required":true}` |
-| multiselect | `{"questionText":{"text":"<ID> <text>"},"choiceAnswers":{"choices":[{"value":"<choice>"},...],"type":"MULTIPLE_SELECT"},"required":true}` |
-| scale 1–5 | `{"questionText":{"text":"<ID> <text>"},"scaleAnswers":{"low":1,"high":5,"labelLeft":"Not willing","labelRight":"Very willing"},"required":true}` |
-| yes/no | `{"questionText":{"text":"<ID> <text>"},"choiceAnswers":{"choices":[{"value":"Yes"},{"value":"No"}]},"required":true}` |
-
-Each `createItem` request is `{"createItem":{"item":{"title":"<ID>","questionItem":{"question":<fields above>}},"location":{"index":<0-based position>}}}`. Q08 uses `required:false`. If the batch returns 400, split into smaller batches and isolate the invalid request.
-
-- [ ] **Step 5: Publish and share**
-
-Call `GOOGLEFORMS_SET_PUBLISH_SETTINGS` using the schema from Step 1 so the form accepts responses. Then call `GOOGLEDRIVE_CREATE_PERMISSION` with:
-```json
-{"file_id":"<formId>","type":"anyone","role":"reader","allow_file_discovery":false}
-```
-Expected: publish state allows responses; link access granted.
-
-- [ ] **Step 6: Verify and record**
-
-Call `GOOGLEFORMS_GET_FORM` with `{"formId":"<formId>"}`.
-
-Expected: 33 items, title correct, `responderUri` present, publish state allows responses. Replace the Google pending line in `docs/phase0/survey-instrument.md` with `responderUri` and add `Google Form ID: <formId>`.
-
-```bash
-grep -n 'Google' docs/phase0/survey-instrument.md
-git add docs/phase0/survey-instrument.md
-GIT_AUTHOR_NAME='Nze Ndi Wamanyi' GIT_AUTHOR_EMAIL='nzendiwamanyi@gmail.com' GIT_COMMITTER_NAME='Nze Ndi Wamanyi' GIT_COMMITTER_EMAIL='nzendiwamanyi@gmail.com' git commit -m "feat: publish Google Forms Phase 0 evidence survey
-
-Changes:
-- Create Google Form with 33 canonical questions
-- Enable responses and grant anyone-with-link reader access
-- Record form ID and responder URI in survey-instrument.md
-
-Verification:
-- GOOGLEFORMS_GET_FORM: 33 items, responder URI present
-- GOOGLEDRIVE_CREATE_PERMISSION: anyone reader"
-```
-
----
-
-### Task 5: Verify, scan and open the PR
+### Task 3: Verify, scan and open the PR
 
 **Files:**
 - Modify: `docs/phase0/survey-instrument.md` if verification finds a mismatch.
 
 **Interfaces:**
-- Consumes: both form IDs from Tasks 3 and 4.
+- Consumes: Tally form ID from Task 2.
 - Produces: PR with CI green and @YodHeVauHe requested.
 
-- [ ] **Step 1: Re-verify both forms**
+- [ ] **Step 1: Re-verify the form and response access**
 
-Call `TALLY_LIST_FORM_QUESTIONS`, `TALLY_GET_FORM_DETAILS`, `GOOGLEFORMS_GET_FORM` and `GOOGLEFORMS_LIST_RESPONSES` (with `form_id`, `page_size: 1`) for both form IDs.
+Call `TALLY_LIST_FORM_QUESTIONS`, `TALLY_GET_FORM_DETAILS` and `TALLY_GET_FORM_RESPONSES` (with `formId`, `page: 1`, `limit: 1`) for the Tally form ID.
 
-Expected: 33 Tally questions, Tally status `PUBLISHED`, 33 Google items, response reads succeed (empty arrays are acceptable now).
+Expected: 33 questions, status `PUBLISHED`, response read succeeds (empty array acceptable now).
 
 - [ ] **Step 2: Repo verification**
 
@@ -363,20 +250,20 @@ Run `gh pr checks <number> --watch --interval 5`. Expected: `docs-and-repo-check
 
 ---
 
-### Task 6: Synthesize responses (gated on real submissions)
+### Task 4: Synthesize responses (gated on real submissions)
 
 **Files:**
 - Modify: `docs/phase0/interview-synthesis.md`, `docs/phase0/legal-analysis-summary.md`, `docs/phase0/design-partner-shortlist.md`, `docs/superpowers/specs/2026-11-20-phase0-survey-instrument-design.md`.
 
 **Interfaces:**
-- Consumes: form IDs from Tasks 3 and 4; question IDs `Q01`–`Q33` from Task 2.
+- Consumes: Tally form ID from Task 2; question IDs `Q01`–`Q33` from Task 1.
 - Produces: redacted evidence in the three instruments and a recorded owner decision for counsel-survey evidence.
 
 - [ ] **Step 1: Check whether responses exist**
 
-Call `TALLY_GET_FORM_RESPONSES` with `{"formId":"<tally formId>","page":1,"limit":100}` and `GOOGLEFORMS_LIST_RESPONSES` with `{"form_id":"<google formId>","page_size":100}`. Paginate until no `nextPageToken` or further page remains.
+Call `TALLY_GET_FORM_RESPONSES` with `{"formId":"<tally formId>","page":1,"limit":100}`. Paginate until no further page remains.
 
-Expected: if both are empty, STOP. Report that links must be circulated; do not tick any Done-when box.
+Expected: if empty, STOP. Report that the link must be circulated; do not tick any Done-when box.
 
 - [ ] **Step 2: Redact and map responses**
 
