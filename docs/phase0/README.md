@@ -2,7 +2,7 @@
 
 Owner: NzeNdiWamanyi
 
-| Done-when item | Artifact | Status | Private evidence reference |
+| Done-when item | Artifact | Status | Evidence basis / reference |
 |---|---|---|---|
 | Interview synthesis and validated problem statement | [interview-synthesis.md](interview-synthesis.md) | in review | Public desk research; no interviews held |
 | Written legal analysis summary | [legal-analysis-summary.md](legal-analysis-summary.md) | in review | Public statutes/regulations; no counsel memo held |

@@ -17,7 +17,7 @@ Evidence basis: public statutes, regulations and regulator publications only. No
 
 ## Findings summary
 
-**Desk-research findings from public sources — not a counsel opinion.** Source index: [CMA Acts](https://cmauganda.co.ug/acts/), [CMA Regulations](https://cmauganda.co.ug/regulations/), [CMA Issuer/Regulatorinformation](https://cmauganda.co.ug/).
+**Desk-research findings from public sources — not a counsel opinion.** Source index: [CMA Acts](https://cmauganda.co.ug/acts/), [CMA Regulations](https://cmauganda.co.ug/regulations/), [CMA homepage](https://cmauganda.co.ug/).
 
 - **Instrument classification / offer process:** offers of securities are governed by the Capital Markets Authority Act (Cap. 64) and the **CMA (Offer of Securities) Regulations 2025**; book building by the Capital Markets (Book Building) Regulations 2016. Instrument form is addressed by the CMA (Prescription of Securities Instrument) Regulations 2022.
 - **Custody:** the Securities Central Depositories Act (Cap. 60) and Securities Central Depositories Regulations 2009 govern central depositories. CMA reports 2 licensed CSDs and 2 approved stock exchanges.
