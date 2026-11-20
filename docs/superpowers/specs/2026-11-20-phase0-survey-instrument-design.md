@@ -29,7 +29,7 @@ Replace live interviews with four short online surveys so Phase 0 evidence can b
 
 ## Questionnaire structure
 
-Every form uses the exact title **TokenWork Uganda Market Research — SME, Investor & Partner Discovery**, followed by one audience-specific line and the approved research disclaimer supplied by the owner: independent exploratory market research, neutral and not a securities offer, investment solicitation or fundraising initiative; voluntary participation; no confidential documents or sensitive personal data; contact details optional; consent by proceeding. Follow-up consent is asked separately at the end, before optional contact details.
+Every form uses the exact title **TokenWork Uganda Market Research — SME, Investor & Partner Discovery**, followed by a visible audience header (**Who this survey is for: …**), one audience-specific line and the approved research disclaimer supplied by the owner: independent exploratory market research, neutral and not a securities offer, investment solicitation or fundraising initiative; voluntary participation; no confidential documents or sensitive personal data; contact details optional; consent by proceeding. Follow-up consent is asked separately at the end, before three optional contact fields: Name, Email and Phone number.
 
 Each form then contains a common block: consent, anonymized response code, sector or practice area with geography or jurisdiction, and permission for anonymous quotes. Tally supplies the submission timestamp, so no separate date question is needed.
 

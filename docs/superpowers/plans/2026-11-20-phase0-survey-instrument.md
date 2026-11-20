@@ -25,7 +25,7 @@
 - **Inactive connection:** Task 1 checks the Tally connection before any creation.
 - **Tally form stuck in BLANK:** `TALLY_CREATE_FORM` requires `status: "PUBLISHED"`; verify with `TALLY_GET_FORM_DETAILS`.
 - **Invalid block structure:** Tally rejects group types (`CHECKBOXES`, `QUESTION`) as `type`; use `TITLE` with `groupType: "QUESTION"` for labels and concrete input/option blocks. `LINEAR_SCALE` requires `start`, `end` and `step`, with `hasLeftLabel`/`leftLabel` and `hasRightLabel`/`rightLabel` for labelled endpoints. A payload containing only `isRequired` renders no answer control.
-- **Question counts:** Task 3 verifies 13 / 9 / 8 / 13 questions for founders, investors, institutions and counsel.
+- **Question counts:** Task 3 verifies 15 / 11 / 10 / 15 questions for founders, investors, institutions and counsel.
 - **PII in repo:** Task 3 runs a PII pattern scan over the diff and stops on any match.
 
 ---
@@ -62,14 +62,14 @@ Write `docs/phase0/survey-instrument.md` with `Status: in review`, `@NzeNdiWaman
 
 - [ ] **Step 1: Build each form**
 
-Call `TALLY_CREATE_FORM` four times with `status: "PUBLISHED"`. Each form has a `FORM_TITLE` block using the exact title **TokenWork Uganda Market Research — SME, Investor & Partner Discovery**, an audience-specific `TEXT` line, four `TEXT` blocks carrying the approved research disclaimer, an `About you` `HEADING_1`, the common block, role-specific `HEADING_1` sections and questions, a `Follow-up (optional)` section with separate consent then optional contact, and a closing `TEXT` block.
+Call `TALLY_CREATE_FORM` four times with `status: "PUBLISHED"`. Each form has a `FORM_TITLE` block using the exact title **TokenWork Uganda Market Research — SME, Investor & Partner Discovery**, a `HEADING_2` audience header (**Who this survey is for: …**), an audience-specific `TEXT` line, four `TEXT` blocks carrying the approved research disclaimer, an `About you` `HEADING_1`, the common block, role-specific `HEADING_1` sections and questions, a `Follow-up (optional)` section with separate consent followed by optional Name (`INPUT_TEXT`), Email (`INPUT_EMAIL`) and Phone number (`INPUT_PHONE_NUMBER`, `internationalFormat: true`, `defaultCountryCode: "UG"`) fields, and a closing `TEXT` block.
 
 | Form | Title | Questions |
 |---|---|---|
-| Founders | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Founders & Issuers | 13 |
-| Investors | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Investors | 9 |
-| Institutions | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Institutions & Partners | 8 |
-| Counsel | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Legal Counsel | 13 |
+| Founders | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Founders & Issuers | 15 |
+| Investors | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Investors | 11 |
+| Institutions | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Institutions & Partners | 10 |
+| Counsel | TokenWork Uganda Market Research — SME, Investor & Partner Discovery — Legal Counsel | 15 |
 
 Use `TITLE` blocks with `groupType: "QUESTION"` for question text. Use concrete input blocks (`INPUT_TEXT`, `TEXTAREA`, `INPUT_DATE`, `LINEAR_SCALE`) and option blocks (`CHECKBOX`, `DROPDOWN_OPTION`, `MULTIPLE_CHOICE_OPTION`, `MULTI_SELECT_OPTION`) with sequential `index` and `isFirst`/`isLast` flags. Configure scale blocks with `{isRequired, start: 1, end: 5, step: 1, hasLeftLabel: true, leftLabel: "Not willing", hasRightLabel: true, rightLabel: "Very willing"}`. `rangeStart`/`rangeEnd` are rejected by the API.
 
@@ -95,7 +95,7 @@ With an Active Notion connection, call `NOTION_CREATE_DATABASE` under the *Token
 
 - [ ] **Step 1: Re-verify forms**
 
-Call `TALLY_LIST_FORM_QUESTIONS`, `TALLY_GET_FORM_DETAILS` and `TALLY_GET_FORM_RESPONSES` for all four IDs. Expected: published, 13/9/8/13 questions, response reads succeed (empty arrays acceptable), and each public link renders the exact title and disclaimer plus a working answer control on every question.
+Call `TALLY_LIST_FORM_QUESTIONS`, `TALLY_GET_FORM_DETAILS` and `TALLY_GET_FORM_RESPONSES` for all four IDs. Expected: published, 15/11/10/15 questions, response reads succeed (empty arrays acceptable), and each public link renders the exact title, audience header, disclaimer, follow-up contact fields and a working answer control on every question.
 
 - [ ] **Step 2: Repo verification**
 
