@@ -15,7 +15,7 @@ No responses collected. Issue #2 stays OPEN until responses are received and syn
 
 ## Canonical questions
 
-Tally uses these question IDs and texts. Scale questions use 1–5 with labels `Not willing` and `Very willing`. Multiselect questions include `N/A`.
+Tally uses these question IDs and texts. Q15 and Q19 use Tally's default linear scale — the API does not accept custom range labels. Multiselect questions include `N/A`.
 
 | ID | Text | Type | Block |
 |---|---|---|---|
@@ -33,11 +33,11 @@ Tally uses these question IDs and texts. Scale questions use 1–5 with labels `
 | Q12 | What documents, verification and reporting were requested by investors or institutions? | paragraph | sme_issuer |
 | Q13 | What would make a digital issuance workflow trustworthy enough to use? | paragraph | sme_issuer |
 | Q14 | Which records do you already have? | checkboxes: registration, ownership evidence, 12-month bank statement, 6-month mobile-money statement, GPS/LC1 location, N/A | sme_issuer |
-| Q15 | Willingness to test a simulated issuance workflow | scale 1–5 | sme_issuer |
+| Q15 | Willingness to test a simulated issuance workflow | linear scale | sme_issuer |
 | Q16 | When could you give feedback? | short text | sme_issuer |
 | Q17 | What evidence, rights and exit expectations would you require as an investor? | paragraph | investor |
 | Q18 | How do you view simulated investor eligibility? | paragraph | investor |
-| Q19 | Willingness to review and subscribe in a simulation | scale 1–5 | investor |
+| Q19 | Willingness to review and subscribe in a simulation | linear scale | investor |
 | Q20 | Which roles could your institution perform? | multiselect: issuer, platform operator, placement agent, custodian, payment provider, N/A | institution |
 | Q21 | What licensing or other constraints apply? | paragraph | institution |
 | Q22 | How is each proposed instrument classified under current Uganda law? | paragraph | counsel |
