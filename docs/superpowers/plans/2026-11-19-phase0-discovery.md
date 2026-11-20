@@ -22,7 +22,7 @@
 - PRD references are written as PRD `#13` (the PRD section number in a code span, not a GitHub issue number). The section-sign character is not used anywhere.
 - Every PR uses `.github/PULL_REQUEST_TEMPLATE.md` with real verification output, evidence for each Done-when item, and the no-secrets/no-PII box checked after scanning the diff.
 - `docs-and-repo-checks` must pass before merge. No new automation is added.
-- If real evidence is unavailable, the owning document stays at `awaiting evidence`, its Done-when box stays unchecked, and issue #2 stays open. No conclusion is invented.
+- If real evidence is unavailable, the owning document stays at `awaiting evidence`, its Done-when box stays unchecked, and issue #2 stays open. No conclusion is invented. The cited-research batch recorded in the spec's "Owner decisions recorded" section is the sole exception and stays `in review`, not `validated`.
 
 ## Review Focus
 
@@ -432,7 +432,7 @@ Run:
 ```bash
 gh issue view 2 --repo FoundationStoneAlgorithms/TokenWork --json body --jq .body | grep -n 'Interview notes'
 ```
-Expected: the Done-when line for interview notes is unchecked (`- [ ]`). Ask Nze for the real, anonymized interview set. If it is not available, stop this task, leave the document at `awaiting evidence` and report the blocker in issue #2. Do not write a synthesis from assumption.
+Expected: the Done-when line for interview notes is unchecked (`- [ ]`). Ask Nze for the real, anonymized interview set. If it is not available, stop this task, leave the document at `awaiting evidence` and report the blocker in issue #2. Do not write a synthesis from assumption. The already-landed cited-research batch is the recorded exception in the spec's "Owner decisions recorded" section (`in review`, not `validated`); it does not change this stop condition for later interview evidence.
 
 - [ ] **Step 3: Write the redacted synthesis**
 
@@ -507,7 +507,7 @@ Expected: `not validated`.
 
 - [ ] **Step 2: Check the stop condition**
 
-Ask Nze for the qualified counsel memo. If it is not available, stop this task and leave the document at `awaiting evidence`. Do not summarize law from general knowledge or from the PRD.
+Ask Nze for the qualified counsel memo. If it is not available, stop this task and leave the document at `awaiting evidence`. Do not summarize law from general knowledge or from the PRD. The already-landed cited-research batch is the recorded exception in the spec's "Owner decisions recorded" section (`in review`, not `validated`); it does not change this stop condition for later counsel evidence.
 
 - [ ] **Step 3: Write the redacted findings**
 
@@ -590,7 +590,7 @@ Expected: `not validated`.
 
 - [ ] **Step 2: Check the stop condition**
 
-Ask Nze for real candidate information. If no candidates have been assessed, stop this task and leave the document at `awaiting evidence`. Do not invent pilot issuers or readiness notes.
+Ask Nze for real candidate information. If no candidates have been assessed, stop this task and leave the document at `awaiting evidence`. Do not invent pilot issuers or readiness notes. The already-landed cited-research batch is the recorded exception in the spec's "Owner decisions recorded" section (`in review`, not `validated`); it does not change this stop condition for later candidate information.
 
 - [ ] **Step 3: Fill the shortlist**
 
