@@ -39,11 +39,11 @@ No responses collected. Issue #2 stays OPEN until responses are received and syn
 | Q12 | Documents, verification and reporting requested | Founders & Issuers |
 | Q13 | What makes a digital issuance workflow trustworthy | Founders & Issuers |
 | Q14 | Records and disclosure readiness | Founders & Issuers |
-| Q15 | Willingness to test a simulated workflow | Founders & Issuers (Tally default linear scale) |
+| Q15 | Willingness to test a simulated workflow | Founders & Issuers (1–5 linear scale: Not willing → Very willing) |
 | Q16 | Feedback window | Founders & Issuers |
 | Q17 | Investor evidence, rights and exit expectations | Investors |
 | Q18 | View of simulated investor eligibility | Investors |
-| Q19 | Willingness to review and subscribe in a simulation | Investors (Tally default linear scale) |
+| Q19 | Willingness to review and subscribe in a simulation | Investors (1–5 linear scale: Not willing → Very willing) |
 | Q20 | Roles the institution could perform | Institutions & Partners |
 | Q21 | Licensing and other constraints | Institutions & Partners |
 | Q22 | Instrument classification under Uganda law | Legal Counsel |
