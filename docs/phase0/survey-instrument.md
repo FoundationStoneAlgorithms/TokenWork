@@ -10,7 +10,7 @@ All four forms use this exact title:
 
 > TokenWork Uganda Market Research — SME, Investor & Partner Discovery
 
-Each form opens with one audience-specific line, followed by this common disclaimer:
+Each form opens with a visible header — **Who this survey is for: Founders and Issuers / Investors / Institutions and Professional Partners / Qualified Legal Counsel** — then one audience-specific line and this common disclaimer:
 
 > TokenWork is conducting independent exploratory research to understand business financing needs, investor preferences, and institutional considerations. This survey is for neutral market research only and is not a securities offer, investment solicitation, or fundraising initiative.
 >
@@ -20,7 +20,7 @@ Each form opens with one audience-specific line, followed by this common disclai
 >
 > By proceeding, you consent to participate in this anonymous market research survey.
 
-Follow-up consent is a separate optional question at the end of every form; contact details are requested only after that consent.
+Follow-up consent is a separate optional question at the end of every form. Contact details are requested only after that consent, using three separate optional fields: Name (short text), Email and Phone number.
 
 ## Share links
 
@@ -28,10 +28,10 @@ Every form has the title above, with the audience appended in the Tally form nam
 
 | Audience | Form | Link | ID | Questions |
 |---|---|---|---|---|
-| Founders and issuers | … — Founders & Issuers | https://tally.so/r/zEMpZ1 | `zEMpZ1` | 13 |
-| Investors | … — Investors | https://tally.so/r/2jAqLp | `2jAqLp` | 9 |
-| Institutions and professional partners | … — Institutions & Partners | https://tally.so/r/jeodLR | `jeodLR` | 8 |
-| Qualified counsel | … — Legal Counsel | https://tally.so/r/xVDk2G | `xVDk2G` | 13 |
+| Founders and issuers | … — Founders & Issuers | https://tally.so/r/zEMpZ1 | `zEMpZ1` | 15 |
+| Investors | … — Investors | https://tally.so/r/2jAqLp | `2jAqLp` | 11 |
+| Institutions and professional partners | … — Institutions & Partners | https://tally.so/r/jeodLR | `jeodLR` | 10 |
+| Qualified counsel | … — Legal Counsel | https://tally.so/r/xVDk2G | `xVDk2G` | 15 |
 
 Circulate each link only to its intended audience. All four forms are published and open for responses.
 
@@ -61,7 +61,7 @@ No responses collected. Issue #2 stays OPEN until responses are received and syn
 | Q05 | Geography or jurisdiction | Merged into the identity question in each form |
 | Q06 | Response date | Tally submission timestamp |
 | Q07 | Permission for anonymous quotes | All four forms |
-| Q08 | Follow-up consent and optional private contact | All four forms, at the end; stored in Tally only |
+| Q08 | Follow-up consent and optional Name, Email and Phone number | All four forms, at the end; stored in Tally only |
 | Q09 | Last capital raise: amount, timeline, outcome | Founders & Issuers |
 | Q10 | Main blocker to raising capital | Founders & Issuers (merged with Q09) |
 | Q11 | Financing options considered and why | Founders & Issuers |
