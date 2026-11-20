@@ -24,7 +24,7 @@
 
 - **Inactive connection:** Task 1 checks the Tally connection before any creation.
 - **Tally form stuck in BLANK:** `TALLY_CREATE_FORM` requires `status: "PUBLISHED"`; verify with `TALLY_GET_FORM_DETAILS`.
-- **Invalid block structure:** Tally rejects group types (`CHECKBOXES`, `QUESTION`) as `type`; use `TITLE` with `groupType: "QUESTION"` for labels and concrete input/option blocks. `LINEAR_SCALE` accepts only `isRequired` in its payload.
+- **Invalid block structure:** Tally rejects group types (`CHECKBOXES`, `QUESTION`) as `type`; use `TITLE` with `groupType: "QUESTION"` for labels and concrete input/option blocks. `LINEAR_SCALE` requires `start`, `end` and `step`, with `hasLeftLabel`/`leftLabel` and `hasRightLabel`/`rightLabel` for labelled endpoints. A payload containing only `isRequired` renders no answer control.
 - **Question counts:** Task 3 verifies 12 / 8 / 7 / 12 questions for founders, investors, institutions and counsel.
 - **PII in repo:** Task 3 runs a PII pattern scan over the diff and stops on any match.
 
@@ -71,7 +71,7 @@ Call `TALLY_CREATE_FORM` four times with `status: "PUBLISHED"`. Each form has a 
 | Institutions | TokenWork Stakeholder Survey — Institutions & Partners | 7 |
 | Counsel | TokenWork Stakeholder Survey — Legal Counsel | 12 |
 
-Use `TITLE` blocks with `groupType: "QUESTION"` for question text. Use concrete input blocks (`INPUT_TEXT`, `TEXTAREA`, `INPUT_DATE`, `LINEAR_SCALE`) and option blocks (`CHECKBOX`, `DROPDOWN_OPTION`, `MULTIPLE_CHOICE_OPTION`, `MULTI_SELECT_OPTION`) with sequential `index` and `isFirst`/`isLast` flags. Do not put `rangeStart`/`rangeEnd` in a `LINEAR_SCALE` payload.
+Use `TITLE` blocks with `groupType: "QUESTION"` for question text. Use concrete input blocks (`INPUT_TEXT`, `TEXTAREA`, `INPUT_DATE`, `LINEAR_SCALE`) and option blocks (`CHECKBOX`, `DROPDOWN_OPTION`, `MULTIPLE_CHOICE_OPTION`, `MULTI_SELECT_OPTION`) with sequential `index` and `isFirst`/`isLast` flags. Configure scale blocks with `{isRequired, start: 1, end: 5, step: 1, hasLeftLabel: true, leftLabel: "Not willing", hasRightLabel: true, rightLabel: "Very willing"}`. `rangeStart`/`rangeEnd` are rejected by the API.
 
 - [ ] **Step 2: Verify and record**
 
