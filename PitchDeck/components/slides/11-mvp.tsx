@@ -6,29 +6,54 @@ import { SectionLabel } from "@/components/presentation/section-label";
 import { Reveal } from "@/components/presentation/reveal";
 import { Badge } from "@/components/ui/badge";
 
-const CRITERIA = [
-  "Business registers and creates a verified profile",
-  "Reviewer records verification status and evidence",
-  "Business creates equity offering with versioned terms",
-  "Authorized reviewer approves or rejects demo offering",
-  "Investor registers and completes simulated eligibility",
-  "Investor reviews offering and acknowledges disclosures",
-  "Investor submits simulated subscription",
-  "Allocation recorded and linked to investor and offering",
-  "Test token representation issued on Solana Devnet",
-  "Chain transaction reconciled with allocation record",
-  "Dashboards show consistent holdings and offering data",
-  "Investor report or corporate action created and recorded",
-  "Material actions auditable",
-  "Automated tests cover state transitions and authorization",
-  "Demo distinguishes simulated from production activity",
-  "Business Onboarding Agent guides profile completion",
-  "Financial Analysis Agent extracts figures with sources",
-  "Due Diligence Assistant runs checklist and flags issues",
-  "Agent tools enforce role and tenant permissions server-side",
-  "Agent prompts, calls, outputs and corrections auditable",
-  "No MVP agent approves offerings or executes transactions",
+const CRITERIA_GROUPS: { title: string; criteria: string[] }[] = [
+  {
+    title: "Core equity flow",
+    criteria: [
+      "Verified business profile",
+      "Reviewer evidence recorded",
+      "Versioned equity offering",
+      "Reviewer approves / rejects",
+      "Investor eligibility simulated",
+      "Disclosures acknowledged",
+      "Subscription submitted",
+      "Allocation linked to investor",
+    ],
+  },
+  {
+    title: "Devnet & data integrity",
+    criteria: [
+      "Test token on Solana Devnet",
+      "Chain tx reconciled to allocation",
+      "Dashboards show consistent data",
+    ],
+  },
+  {
+    title: "Audit & assurance",
+    criteria: [
+      "Report / corporate action recorded",
+      "Material actions auditable",
+      "Tests cover transitions & authZ",
+      "Simulated vs. production marked",
+      "Agent activity auditable",
+    ],
+  },
+  {
+    title: "Bounded AI agents",
+    criteria: [
+      "Onboarding Agent guides profile",
+      "Analysis Agent cites figures",
+      "Diligence Assistant flags issues",
+      "Server-side role / tenant authZ",
+      "No agent approvals or transactions",
+    ],
+  },
 ];
+
+const TOTAL_CRITERIA = CRITERIA_GROUPS.reduce(
+  (total, group) => total + group.criteria.length,
+  0
+);
 
 export default function MVPSlide() {
   return (
@@ -41,10 +66,15 @@ export default function MVPSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
-          <span className="font-mono tabular-nums">21</span> acceptance criteria.{" "}
-          <span className="text-emerald-accent">One demonstrable product.</span>
-        </h2>
+        <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+          <h2 className="font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
+            <span className="font-mono tabular-nums">{TOTAL_CRITERIA}</span> acceptance criteria.{" "}
+            <span className="text-emerald-accent">One demonstrable product.</span>
+          </h2>
+          <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-smoke uppercase">
+            {TOTAL_CRITERIA}/{TOTAL_CRITERIA} covered
+          </span>
+        </div>
       </Reveal>
 
       <Reveal delay={220}>
@@ -57,12 +87,37 @@ export default function MVPSlide() {
       </Reveal>
 
       <Reveal delay={340}>
-        <div className="mt-7 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {CRITERIA.map((c, i) => (
-            <div key={i} className="editorial-card flex items-start gap-2.5 rounded-lg px-3.5 py-2.5">
-              <Check className="mt-0.5 size-3.5 shrink-0 text-gold" />
-              <span className="text-xs leading-snug text-fog">{c}</span>
-            </div>
+        <div className="mt-7 grid gap-3 sm:grid-cols-2">
+          {CRITERIA_GROUPS.map((group, groupIndex) => (
+            <Reveal
+              key={group.title}
+              delay={340 + groupIndex * 90}
+              className="h-full"
+            >
+              <div className="editorial-card h-full rounded-lg p-4">
+                <div className="flex items-baseline justify-between gap-3 border-b border-line pb-2.5">
+                  <h3 className="font-mono text-[10px] tracking-[0.18em] text-gold uppercase">
+                    {group.title}
+                  </h3>
+                  <span className="font-mono text-[10px] tabular-nums text-smoke">
+                    {String(group.criteria.length).padStart(2, "0")}
+                  </span>
+                </div>
+                <ul className="mt-2.5 grid gap-x-4 gap-y-1.5 sm:grid-cols-2">
+                  {group.criteria.map((criterion) => (
+                    <li key={criterion} className="flex items-start gap-2">
+                      <Check
+                        className="mt-0.5 size-3 shrink-0 text-gold"
+                        strokeWidth={2}
+                      />
+                      <span className="text-[11px] leading-snug text-fog md:text-xs">
+                        {criterion}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
           ))}
         </div>
       </Reveal>
