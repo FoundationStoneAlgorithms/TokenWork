@@ -51,9 +51,9 @@ export default function RoadmapSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
           Focused MVP.{" "}
-          <span className="text-gold-metal italic">Phased expansion. No shortcuts.</span>
+          <span className="text-emerald-accent">Phased expansion. No shortcuts.</span>
         </h2>
       </Reveal>
 
@@ -69,7 +69,7 @@ export default function RoadmapSlide() {
                 <span
                   className={
                     phase.active
-                      ? "relative z-10 mb-4 hidden size-3 rotate-45 border border-gold bg-gold shadow-[0_0_12px_rgba(201,164,92,0.5)] md:block"
+                      ? "relative z-10 mb-4 hidden size-3 rotate-45 border border-gold bg-gold shadow-[0_0_12px_rgba(140,168,199,0.45)] md:block"
                       : "relative z-10 mb-4 hidden size-3 rotate-45 border border-smoke bg-ink md:block"
                   }
                 />
@@ -77,28 +77,28 @@ export default function RoadmapSlide() {
                   className={
                     phase.active
                       ? "corner-frame h-full rounded-lg border border-gold-line bg-gold/[0.06] p-4"
-                      : "h-full rounded-lg border border-line bg-raise/60 p-4"
+                      : "editorial-card h-full rounded-lg p-4"
                   }
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span
                       className={
                         phase.active
-                          ? "font-mono text-[9px] tracking-[0.26em] text-gold-bright uppercase"
-                          : "font-mono text-[9px] tracking-[0.26em] text-smoke uppercase"
+                          ? "font-mono text-[9px] tabular-nums tracking-[0.26em] text-gold-bright uppercase"
+                          : "font-mono text-[9px] tabular-nums tracking-[0.26em] text-smoke uppercase"
                       }
                     >
                       {phase.tag}
                     </span>
                     <phase.icon
                       className={phase.active ? "size-3.5 text-gold" : "size-3.5 text-fog"}
-                      strokeWidth={1.5}
+                      strokeWidth={1.6}
                     />
                   </div>
-                  <h3 className="mt-3 font-display text-sm leading-snug text-cream">
+                  <h3 className="mt-3 font-display text-sm font-medium leading-snug text-cream">
                     {phase.title}
                   </h3>
-                  <p className="mt-2 text-[11px] leading-relaxed text-fog">{phase.note}</p>
+                  <p className="mt-2 text-xs leading-relaxed text-fog">{phase.note}</p>
                 </div>
               </div>
             </Reveal>
@@ -109,9 +109,9 @@ export default function RoadmapSlide() {
       <Reveal delay={900}>
         <div className="mt-10 flex items-center justify-center gap-4">
           <span aria-hidden className="gold-hairline w-12 md:w-20" />
-          <p className="max-w-2xl text-center font-display text-sm leading-snug text-fog italic md:text-base">
+          <p className="max-w-2xl text-center font-display text-sm leading-snug text-fog md:text-base">
             From equity MVP to{" "}
-            <span className="text-gold-bright not-italic">
+            <span className="text-gold-bright">
               African capital markets infrastructure.
             </span>
           </p>

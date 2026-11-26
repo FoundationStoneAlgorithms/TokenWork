@@ -4,8 +4,8 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const KEYS: { keys: string[]; action: string }[] = [
-  { keys: ["↑", "↓"], action: "Previous / next slide" },
   { keys: ["←", "→"], action: "Previous / next slide" },
+  { keys: ["↑", "↓"], action: "Previous / next slide" },
   { keys: ["PgUp", "PgDn"], action: "Previous / next slide" },
   { keys: ["Space"], action: "Next (Shift + Space to go back)" },
   { keys: ["Home", "End"], action: "First / last slide" },
@@ -17,7 +17,7 @@ const KEYS: { keys: string[]; action: string }[] = [
 
 function Kbd({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-sm border border-line-strong bg-raise px-1.5 font-mono text-[10px] text-cream/90">
+    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-sm border border-line-strong bg-ink-soft px-1.5 font-mono text-[10px] text-cream">
       {children}
     </kbd>
   );
@@ -37,17 +37,17 @@ export function KeyboardHelp({
       aria-modal="true"
       aria-label="Keyboard shortcuts"
       onClick={onClose}
-      className="absolute inset-0 z-50 flex items-center justify-center bg-ink/75 p-6 backdrop-blur-[2px]"
+      className="absolute inset-0 z-50 flex items-center justify-center bg-ink/80 p-6 backdrop-blur-xs"
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "w-full max-w-md rounded-lg border border-gold-line bg-ink-soft p-6",
+          "editorial-card w-full max-w-md rounded-xl p-6",
           "rise-soft"
         )}
       >
         <div className="mb-5 flex items-center justify-between">
-          <div className="font-mono text-[11px] tracking-[0.3em] text-gold uppercase">
+          <div className="font-mono text-[11px] tracking-[0.24em] text-gold uppercase">
             Presentation Controls
           </div>
           <button
@@ -60,7 +60,7 @@ export function KeyboardHelp({
         </div>
         <ul className="flex flex-col divide-y divide-line">
           {KEYS.map((row) => (
-            <li key={row.action} className="flex items-center justify-between gap-4 py-2.5">
+            <li key={row.keys.join("+")} className="flex items-center justify-between gap-4 py-2.5">
               <span className="text-sm text-fog">{row.action}</span>
               <span className="flex shrink-0 items-center gap-1.5">
                 {row.keys.map((k) => (
@@ -70,7 +70,7 @@ export function KeyboardHelp({
             </li>
           ))}
         </ul>
-        <p className="mt-5 text-center font-mono text-[10px] tracking-[0.25em] text-smoke uppercase">
+        <p className="mt-5 text-center font-mono text-[10px] tracking-[0.2em] text-smoke uppercase">
           TokenWork — Seed Investment Presentation
         </p>
       </div>

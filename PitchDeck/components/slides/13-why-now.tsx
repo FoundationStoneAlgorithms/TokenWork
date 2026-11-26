@@ -36,9 +36,9 @@ export default function WhyNowSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
           Regulations, capital, and infrastructure{" "}
-          <span className="text-gold-metal italic">aligned for the first time.</span>
+          <span className="text-emerald-accent">aligned for the first time.</span>
         </h2>
       </Reveal>
 
@@ -46,12 +46,12 @@ export default function WhyNowSlide() {
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
           {REASONS.map((r, i) => (
             <Reveal key={r.heading} delay={250 + i * 110}>
-              <div className="h-full rounded-lg border border-line bg-raise/60 p-6">
-                <r.icon className="size-5 text-gold" strokeWidth={1.5} />
-                <h3 className="mt-4 font-display text-lg leading-snug text-cream">
+              <div className="editorial-card h-full rounded-lg p-6">
+                <r.icon className="size-5 text-gold" strokeWidth={1.6} />
+                <h3 className="mt-4 font-display text-lg font-medium leading-snug text-cream">
                   {r.heading}
                 </h3>
-                <p className="mt-2.5 text-[13px] leading-relaxed text-fog">{r.body}</p>
+                <p className="mt-2.5 text-xs leading-relaxed text-fog md:text-sm">{r.body}</p>
               </div>
             </Reveal>
           ))}

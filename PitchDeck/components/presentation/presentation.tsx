@@ -16,11 +16,8 @@ import { KeyboardHelp } from "./keyboard-help";
 import { TWMark } from "@/components/brand/tw-mark";
 
 export type SlideMeta = {
-  /** Anchor id, e.g. "03-the-problem" */
   id: string;
-  /** Two-digit display number, e.g. "03" */
   num: string;
-  /** Short title for the progress rail tooltip */
   title: string;
   component: () => ReactNode;
 };
@@ -40,7 +37,7 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const lockUntilRef = useRef(0);
   const wheelAccRef = useRef(0);
-  const touchYRef = useRef<number | null>(null);
+  const touchXRef = useRef<number | null>(null);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goTo = useCallback(
@@ -59,7 +56,6 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
 
-  /* Deep-linking */
   useEffect(() => {
     const fromSeg = window.location.pathname
       .split("/")
@@ -83,7 +79,6 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* Keep URL in sync */
   useEffect(() => {
     if (typeof window === "undefined") return;
     const path = current === 0 ? "/" : `/${slides[current].id}`;
@@ -92,7 +87,6 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
     }
   }, [current, slides]);
 
-  /* Fullscreen */
   const toggleFullscreen = useCallback(() => {
     if (document.fullscreenElement) {
       void document.exitFullscreen().catch(() => {});
@@ -107,7 +101,6 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
     return () => document.removeEventListener("fullscreenchange", onChange);
   }, []);
 
-  /* Keyboard navigation */
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -154,33 +147,32 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [next, prev, goTo, total, toggleFullscreen, helpOpen]);
 
-  /* Wheel navigation */
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
       const now = Date.now();
       if (now < lockUntilRef.current) return;
-      wheelAccRef.current += Math.abs(e.deltaY);
+      wheelAccRef.current += Math.abs(e.deltaY) + Math.abs(e.deltaX);
       if (wheelAccRef.current < WHEEL_THRESHOLD) return;
       wheelAccRef.current = 0;
       lockUntilRef.current = now + WHEEL_LOCK_MS;
-      if (e.deltaY > 0) next();
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (delta > 0) next();
       else prev();
     };
     window.addEventListener("wheel", onWheel, { passive: true });
     return () => window.removeEventListener("wheel", onWheel);
   }, [next, prev]);
 
-  /* Touch navigation */
   useEffect(() => {
     const onStart = (e: TouchEvent) => {
-      touchYRef.current = e.touches[0]?.clientY ?? null;
+      touchXRef.current = e.touches[0]?.clientX ?? null;
     };
     const onEnd = (e: TouchEvent) => {
-      if (touchYRef.current === null) return;
-      const dy = touchYRef.current - (e.changedTouches[0]?.clientY ?? 0);
-      touchYRef.current = null;
-      if (Math.abs(dy) < 40) return;
-      if (dy > 0) next();
+      if (touchXRef.current === null) return;
+      const dx = touchXRef.current - (e.changedTouches[0]?.clientX ?? 0);
+      touchXRef.current = null;
+      if (Math.abs(dx) < 40) return;
+      if (dx > 0) next();
       else prev();
     };
     window.addEventListener("touchstart", onStart, { passive: true });
@@ -191,7 +183,6 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
     };
   }, [next, prev]);
 
-  /* Chrome auto-hide */
   useEffect(() => {
     const wake = () => {
       setChromeVisible(true);
@@ -244,18 +235,18 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
         );
       })}
 
-      {/* Brand mark, top-left */}
+      {/* Brand pill, top-left */}
       <div
         className={cn(
-          "chrome pointer-events-none absolute top-5 left-6 z-30 md:top-6 md:left-8",
+          "chrome pointer-events-none absolute top-4 left-6 z-30 md:top-5 md:left-8",
           !chromeVisible && "chrome-hidden"
         )}
       >
-        <div className="flex items-center gap-2.5 font-mono text-[10px] tracking-[0.3em] uppercase">
-          <TWMark className="size-4 shrink-0 text-gold" />
-          <span className="text-cream/80">TokenWork</span>
-          <span className="text-smoke">/</span>
-          <span className="text-smoke">Seed Pitch</span>
+        <div className="inline-flex items-center gap-2.5 rounded-full border border-line bg-raise/90 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.22em] uppercase shadow-2xs backdrop-blur-sm">
+          <TWMark className="size-3.5 shrink-0 text-gold" />
+          <span className="font-semibold text-cream">TokenWork</span>
+          <span className="text-smoke">·</span>
+          <span className="text-fog">Capital Markets</span>
         </div>
       </div>
 

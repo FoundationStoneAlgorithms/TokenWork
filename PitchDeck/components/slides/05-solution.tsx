@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowRight,
   BookOpen,
   Briefcase,
   CheckCircle,
@@ -18,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 const LAYERS = [
   { icon: Users, label: "Business identity & verification" },
   { icon: FileText, label: "Legal instruments & disclosures" },
-  { icon: Briefcase, label: "Capital formation & offering" },
+  { icon: Briefcase, label: "Capital formation & offering distribution" },
   { icon: CheckCircle, label: "Investor eligibility & subscription" },
   { icon: Coins, label: "Settlement & ownership records" },
   { icon: BookOpen, label: "Servicing & corporate actions" },
@@ -31,76 +30,81 @@ export default function SolutionSlide() {
       <Reveal>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <SectionLabel index="05" title="The Solution" />
-          <Badge variant="outline">Uganda-first · global by design</Badge>
+          <Badge variant="outline">Uganda-first · multi-jurisdiction by design</Badge>
         </div>
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 max-w-4xl font-display text-[clamp(1.9rem,4.2vw,3.5rem)] leading-[1.1] text-cream">
-          An integrated infrastructure layer connecting{" "}
-          <span className="text-gold-metal italic">
+        <h2 className="mt-6 max-w-4xl font-display text-[clamp(1.9rem,4vw,3.3rem)] leading-[1.08] font-medium text-cream">
+          One connected layer for{" "}
+          <span className="text-emerald-accent">
             businesses, investors, and institutions.
           </span>
         </h2>
       </Reveal>
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
-        <Reveal delay={250}>
-          <div className="rounded-lg border border-line bg-raise/60 p-5">
-            <div className="font-mono text-[9px] tracking-[0.28em] text-smoke uppercase">
-              Platform layers
+      <div className="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <Reveal delay={240}>
+          <div className="editorial-card rounded-xl p-6">
+            <div className="font-mono text-[10px] tracking-[0.22em] text-gold uppercase">
+              Seven-layer platform stack
             </div>
-            <div className="mt-4 flex flex-col gap-2">
+            <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
               {LAYERS.map((layer, i) => (
-                <div key={layer.label} className="flex items-center gap-3">
-                  <layer.icon
-                    className={`size-4 shrink-0 ${i === 0 || i === 2 ? "text-gold" : "text-fog"}`}
-                    strokeWidth={1.5}
-                  />
-                  <span className="text-sm text-cream/90">{layer.label}</span>
+                <div
+                  key={layer.label}
+                  className="flex items-center gap-3 rounded-lg bg-ink-soft/70 px-3.5 py-2.5"
+                >
+                  <span className="font-mono text-[10px] font-semibold text-gold">
+                    0{i + 1}
+                  </span>
+                  <layer.icon className="size-4 shrink-0 text-fog" strokeWidth={1.6} />
+                  <span className="text-xs font-medium text-cream">{layer.label}</span>
                 </div>
               ))}
             </div>
           </div>
         </Reveal>
 
-        <Reveal delay={360} className="hidden lg:flex lg:items-center">
-          <ArrowRight className="size-6 text-gold/40" />
-        </Reveal>
-
-        <Reveal delay={410}>
+        <Reveal delay={360}>
           <div className="flex h-full flex-col gap-4">
-            <div className="rounded-lg border border-gold-line bg-gold/[0.05] p-5">
-              <div className="font-mono text-[9px] tracking-[0.28em] text-gold uppercase">
+            <div className="editorial-card rounded-xl border-gold-line/60 p-6">
+              <div className="font-mono text-[10px] tracking-[0.22em] text-gold-bright uppercase">
                 Four instrument families
               </div>
-              <div className="mt-3.5 flex flex-col gap-2">
+              <div className="mt-4 space-y-2.5">
                 {[
-                  "Business equity",
-                  "Business debt",
-                  "Revenue-sharing",
-                  "Asset-backed investments",
+                  { name: "Business equity", tag: "Phase 1" },
+                  { name: "Business debt", tag: "Phase 3" },
+                  { name: "Revenue-sharing", tag: "Phase 3" },
+                  { name: "Asset-backed", tag: "Phase 3" },
                 ].map((inst, i) => (
-                  <div key={inst} className="flex items-center gap-2.5">
-                    <span className={`size-1.5 rotate-45 ${i === 0 ? "bg-gold" : "bg-gold/40"}`} />
-                    <span className="font-mono text-[11px] tracking-wider text-cream">
-                      {inst}
+                  <div
+                    key={inst.name}
+                    className="flex items-center justify-between rounded-lg bg-ink-soft/80 px-3.5 py-2"
+                  >
+                    <span className="text-sm font-medium text-cream">{inst.name}</span>
+                    <span
+                      className={`rounded-full px-2.5 py-0.5 font-mono text-[9px] tabular-nums uppercase ${
+                        i === 0
+                          ? "bg-gold text-ink font-semibold"
+                          : "bg-raise-2 text-fog"
+                      }`}
+                    >
+                      {inst.tag}
                     </span>
-                    {i === 0 && (
-                      <Badge variant="gold">first</Badge>
-                    )}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-lg border border-line bg-raise/50 p-5">
-              <div className="font-mono text-[9px] tracking-[0.28em] text-smoke uppercase">
-                AI agent layer
+            <div className="editorial-card rounded-xl border-l-4 border-l-gold p-5">
+              <div className="font-mono text-[10px] tracking-[0.22em] text-gold uppercase">
+                AI Agent Infrastructure
               </div>
-              <p className="mt-3 text-[13px] leading-relaxed text-fog">
-                Onboarding, financial analysis, and due diligence — agents assist,
-                deterministic systems decide.
+              <p className="mt-2 text-xs leading-relaxed text-fog">
+                Bounded assistants for onboarding, financial extraction, and due-diligence
+                prep — deterministic systems and authorized humans decide.
               </p>
             </div>
           </div>

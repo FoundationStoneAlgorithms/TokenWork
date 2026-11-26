@@ -41,15 +41,15 @@ export default function MVPSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
-          21 acceptance criteria.{" "}
-          <span className="text-gold-metal italic">One demonstrable product.</span>
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
+          <span className="font-mono tabular-nums">21</span> acceptance criteria.{" "}
+          <span className="text-emerald-accent">One demonstrable product.</span>
         </h2>
       </Reveal>
 
       <Reveal delay={220}>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
-          The 8-week Bridge programme delivers a working MVP demonstrating an
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
+          The <span className="font-mono tabular-nums text-cream">8</span>-week Bridge programme delivers a working MVP demonstrating an
           end-to-end simulated SME equity capital formation workflow — test data,
           Solana Devnet. No live settlement, no legally effective issuance, no
           secondary market.
@@ -57,11 +57,11 @@ export default function MVPSlide() {
       </Reveal>
 
       <Reveal delay={340}>
-        <div className="mt-7 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-7 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {CRITERIA.map((c, i) => (
-            <div key={i} className="flex items-start gap-2.5 rounded-md border border-line bg-raise/50 px-3 py-2.5">
-              <Check className="mt-0.5 size-3.5 shrink-0 text-gold/70" />
-              <span className="text-[12px] leading-snug text-fog">{c}</span>
+            <div key={i} className="editorial-card flex items-start gap-2.5 rounded-lg px-3.5 py-2.5">
+              <Check className="mt-0.5 size-3.5 shrink-0 text-gold" />
+              <span className="text-xs leading-snug text-fog">{c}</span>
             </div>
           ))}
         </div>

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/** Eyebrow label: "03 — THE PROBLEM" */
+/** Pill eyebrow label: "03 / THE OPPORTUNITY" */
 export function SectionLabel({
   index,
   title,
@@ -13,12 +13,12 @@ export function SectionLabel({
   return (
     <div
       className={cn(
-        "flex items-center gap-3 font-mono text-[11px] tracking-[0.35em] uppercase",
+        "inline-flex items-center gap-2.5 rounded-full border border-line bg-raise px-3 py-1 font-mono text-[10px] tracking-[0.24em] uppercase shadow-2xs",
         className
       )}
     >
-      <span className="text-gold">{index}</span>
-      <span aria-hidden className="h-px w-10 bg-gold/45" />
+      <span className="font-semibold text-gold">{index}</span>
+      <span aria-hidden className="text-smoke">/</span>
       <span className="text-fog">{title}</span>
     </div>
   );

@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <!-- TokenWork TW monogram mark -->
-  <rect width="256" height="256" fill="#08080a"/>
-  <!-- T bar -->
-  <rect x="44" y="56" width="168" height="20" fill="#c9a45c"/>
-  <!-- T stem -->
-  <rect x="114" y="76" width="28" height="80" fill="#c9a45c"/>
-  <!-- W base -->
-  <polygon points="44,172 68,200 100,160 128,200 156,160 188,200 212,172 196,172 172,196 156,172 128,196 100,172 84,196 60,172" fill="#8f6e31"/>
-  <!-- W top highlight -->
-  <rect x="44" y="168" width="168" height="4" fill="#e9d096" opacity="0.5"/>
+  <title>TokenWork</title>
+  <rect width="256" height="256" rx="56" fill="#080A0E"/>
+  <path
+    fill="#556F8C"
+    d="M44 52h168v32h-68v120h-32V84H44V52Z"
+  />
+  <path
+    fill="#C5D6EA"
+    d="M44 108h44v96H44v-96Zm124 0h44v96h-44v-96ZM96 52h64v32H96V52Z"
+  />
 </svg>

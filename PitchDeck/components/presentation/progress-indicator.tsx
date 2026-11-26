@@ -17,23 +17,23 @@ export function ProgressIndicator({
 }) {
   return (
     <>
-      {/* Mobile: thin progress hairline at the top edge */}
+      {/* Top progress bar */}
       <div
-        className={cn(chromeClass, "absolute inset-x-0 top-0 z-30 h-px bg-line md:hidden")}
+        className={cn(chromeClass, "absolute inset-x-0 top-0 z-30 h-[3px] bg-line")}
         aria-hidden
       >
         <div
-          className="h-full bg-gradient-to-r from-gold-deep via-gold to-gold-bright transition-all duration-500"
+          className="h-full bg-gradient-to-r from-gold via-gold to-gold-deep transition-all duration-500"
           style={{ width: `${((current + 1) / slides.length) * 100}%` }}
         />
       </div>
 
-      {/* Desktop: clickable diamond rail on the right edge */}
+      {/* Bottom-left chapter pill strip (desktop) */}
       <nav
         aria-label="Slide progress"
         className={cn(
           chromeClass,
-          "absolute top-1/2 right-5 z-30 hidden -translate-y-1/2 flex-col items-center gap-2 md:flex lg:right-7"
+          "absolute bottom-5 left-6 z-30 hidden items-center gap-1.5 rounded-full border border-line bg-raise/90 px-3 py-1.5 backdrop-blur-sm md:flex lg:left-8"
         )}
       >
         {slides.map((slide, i) => {
@@ -44,29 +44,19 @@ export function ProgressIndicator({
               onClick={() => onSelect(i)}
               aria-label={`Go to slide ${slide.num}: ${slide.title}`}
               aria-current={active ? "true" : undefined}
-              className="group relative flex cursor-pointer items-center justify-center p-1 outline-none focus-visible:ring-1 focus-visible:ring-gold/50"
-            >
-              <span
-                className={cn(
-                  "block size-1.5 rotate-45 border transition-all duration-300",
-                  active
-                    ? "scale-125 border-gold bg-gold shadow-[0_0_10px_rgba(201,164,92,0.5)]"
-                    : "border-smoke/70 bg-transparent group-hover:border-gold/70 group-hover:bg-gold/30"
-                )}
-              />
-              <span
-                className={cn(
-                  "pointer-events-none absolute right-5 rounded-sm border border-line-strong bg-ink-soft px-2.5 py-1 font-mono text-[10px] tracking-[0.2em] whitespace-nowrap text-fog uppercase transition-all duration-200",
-                  active ? "text-gold-bright" : "group-hover:text-cream",
-                  "translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100",
-                  active && "opacity-100"
-                )}
-              >
-                {slide.num} · {slide.title}
-              </span>
-            </button>
+              title={`${slide.num} · ${slide.title}`}
+              className={cn(
+                "group relative cursor-pointer rounded-full transition-all duration-300 outline-none focus-visible:ring-1 focus-visible:ring-gold/50",
+                active
+                  ? "h-2 w-6 bg-gold"
+                  : "size-2 bg-line-strong hover:bg-gold/60"
+              )}
+            />
           );
         })}
+        <span className="ml-2 border-l border-line pl-2.5 font-mono text-[10px] tracking-[0.18em] text-fog uppercase">
+          {slides[current].num} · {slides[current].title}
+        </span>
       </nav>
     </>
   );

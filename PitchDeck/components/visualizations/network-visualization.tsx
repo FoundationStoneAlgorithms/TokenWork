@@ -14,16 +14,15 @@ function mulberry32(seed: number) {
   };
 }
 
-type Node = { x: number; y: number; vx: number; vy: number; gold: boolean; r: number };
+type Node = { x: number; y: number; vx: number; vy: number; accent: boolean; r: number };
 
 /**
- * Animated node network — same canvas technique as AuditChain.
- * Represents the capital formation network connecting SMEs and investors.
+ * Ambient emerald & copper capital lattice on deep forest obsidian.
  */
 export function NetworkVisualization({
-  density = 28,
+  density = 26,
   seed = 7,
-  opacity = 1,
+  opacity = 0.75,
   linkDistance = 0.22,
   className,
 }: {
@@ -46,10 +45,10 @@ export function NetworkVisualization({
     const nodes: Node[] = Array.from({ length: density }, () => ({
       x: 0.06 + rand() * 0.88,
       y: 0.08 + rand() * 0.84,
-      vx: (rand() - 0.5) * 0.006,
-      vy: (rand() - 0.5) * 0.006,
-      gold: rand() < 0.18,
-      r: rand() < 0.82 ? 1 : 1.6,
+      vx: (rand() - 0.5) * 0.005,
+      vy: (rand() - 0.5) * 0.005,
+      accent: rand() < 0.25,
+      r: rand() < 0.78 ? 1.3 : 2.1,
     }));
 
     type Pulse = { a: number; b: number; t: number; speed: number };
@@ -99,9 +98,9 @@ export function NetworkVisualization({
           const dy = (a.y - b.y) * height;
           const dist = Math.hypot(dx, dy);
           if (dist < linkPx) {
-            const alpha = (1 - dist / linkPx) * 0.14;
-            ctx.strokeStyle = `rgba(201, 164, 92, ${alpha.toFixed(3)})`;
-            ctx.lineWidth = 0.7;
+            const alpha = (1 - dist / linkPx) * 0.16;
+            ctx.strokeStyle = `rgba(140, 168, 199, ${alpha.toFixed(3)})`;
+            ctx.lineWidth = 0.75;
             ctx.beginPath();
             ctx.moveTo(a.x * width, a.y * height);
             ctx.lineTo(b.x * width, b.y * height);
@@ -115,14 +114,14 @@ export function NetworkVisualization({
         const py = n.y * height;
         ctx.beginPath();
         ctx.arc(px, py, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = n.gold
-          ? "rgba(222, 190, 122, 0.75)"
-          : "rgba(243, 238, 226, 0.34)";
+        ctx.fillStyle = n.accent
+          ? "rgba(197, 214, 234, 0.72)"
+          : "rgba(238, 241, 246, 0.24)";
         ctx.fill();
-        if (n.gold) {
+        if (n.accent) {
           ctx.beginPath();
-          ctx.arc(px, py, n.r + 2.5, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(201, 164, 92, 0.18)";
+          ctx.arc(px, py, n.r + 2.8, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(140, 168, 199, 0.24)";
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
@@ -137,7 +136,7 @@ export function NetworkVisualization({
             (nodes[a].y - nodes[b].y) * height
           );
           if (dist > 0 && dist < linkPx) {
-            pulse = { a, b, t: 0, speed: 0.35 + rand() * 0.25 };
+            pulse = { a, b, t: 0, speed: 0.4 + rand() * 0.25 };
             break;
           }
         }
@@ -146,15 +145,15 @@ export function NetworkVisualization({
         pulse.t += pulse.speed * dt;
         if (pulse.t >= 1) {
           pulse = null;
-          nextPulseAt = now + 1800 + rand() * 2600;
+          nextPulseAt = now + 1800 + rand() * 2400;
         } else {
           const a = nodes[pulse.a];
           const b = nodes[pulse.b];
           const px = (a.x + (b.x - a.x) * pulse.t) * width;
           const py = (a.y + (b.y - a.y) * pulse.t) * height;
           const grad = ctx.createRadialGradient(px, py, 0, px, py, 7);
-          grad.addColorStop(0, "rgba(233, 208, 150, 0.85)");
-          grad.addColorStop(1, "rgba(233, 208, 150, 0)");
+          grad.addColorStop(0, "rgba(197, 214, 234, 0.85)");
+          grad.addColorStop(1, "rgba(197, 214, 234, 0)");
           ctx.fillStyle = grad;
           ctx.beginPath();
           ctx.arc(px, py, 7, 0, Math.PI * 2);

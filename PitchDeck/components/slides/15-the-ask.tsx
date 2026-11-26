@@ -44,17 +44,17 @@ export default function TheAskSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
           Seed capital to build the Bridge,{" "}
-          <span className="text-gold-metal italic">validate the market,</span>
+          <span className="text-emerald-accent">validate the market,</span>
           <br />
           and prepare for the pilot.
         </h2>
       </Reveal>
 
       <Reveal delay={250}>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
-          We are raising to fund the 8-week Bridge programme (working MVP), resolve
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
+          We are raising to fund the <span className="font-mono tabular-nums text-cream">8</span>-week Bridge programme (working MVP), resolve
           the open legal and regulatory decisions with qualified counsel, and establish
           design partnerships with pilot issuers and investors.
         </p>
@@ -64,16 +64,16 @@ export default function TheAskSlide() {
         <div className="mt-8 flex flex-col gap-3">
           {USES.map((u, i) => (
             <Reveal key={u.label} delay={360 + i * 100}>
-              <div className="flex items-center gap-4 rounded-lg border border-line bg-raise/60 p-4">
-                <u.icon className="size-5 shrink-0 text-gold" strokeWidth={1.5} />
+              <div className="editorial-card flex items-center gap-4 rounded-lg p-4">
+                <u.icon className="size-5 shrink-0 text-gold" strokeWidth={1.6} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-[11px] tracking-wider text-cream">
+                    <span className="text-sm font-medium text-cream">
                       {u.label}
                     </span>
-                    <span className="font-mono text-[10px] text-gold-bright">{u.pct}%</span>
+                    <span className="font-mono text-xs font-semibold tabular-nums text-gold-bright">{u.pct}%</span>
                   </div>
-                  <p className="mt-0.5 text-[12px] leading-relaxed text-fog">{u.note}</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-fog">{u.note}</p>
                 </div>
                 <div className="hidden shrink-0 items-center md:flex">
                   <div className="h-1.5 w-24 rounded-full bg-raise-2">

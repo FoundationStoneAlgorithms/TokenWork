@@ -7,18 +7,21 @@ import { Reveal } from "@/components/presentation/reveal";
 
 const INSIGHTS = [
   {
+    num: "01",
     icon: Scale,
     heading: "Rights before tokens",
     body:
       "A token is a technical representation. Legal rights, disclosures, and enforceability must come first — before any on-chain issuance.",
   },
   {
+    num: "02",
     icon: Shield,
     heading: "Compliance by design",
     body:
-      "Eligibility rules, jurisdiction restrictions, and regulated-role boundaries are product architecture — not an afterthought.",
+      "Eligibility rules, jurisdiction restrictions, and regulated-role boundaries are core product architecture — not an afterthought.",
   },
   {
+    num: "03",
     icon: Zap,
     heading: "Infrastructure, not a marketplace",
     body:
@@ -34,31 +37,34 @@ export default function InsightSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 max-w-4xl font-display text-[clamp(1.9rem,4.2vw,3.5rem)] leading-[1.1] text-cream">
-          Tokenization without legal structure is{" "}
-          <span className="text-gold-metal italic">theater.</span>
-        </h2>
+        <div className="mt-6 border-l-2 border-gold pl-6">
+          <h2 className="max-w-4xl font-display text-[clamp(1.9rem,4vw,3.3rem)] leading-[1.1] font-medium text-cream">
+            Tokenization without legal structure is{" "}
+            <span className="text-emerald-accent">theater.</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
+            Most &quot;tokenization&quot; projects mint tokens first and hope legal rights follow.
+            We start from the opposite direction: enforceable legal instruments and compliance
+            workflows come first; the token is the programmable record of what exists in law.
+          </p>
+        </div>
       </Reveal>
 
-      <Reveal delay={220}>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
-          Most &quot;tokenization&quot; projects mint tokens first and hope legal rights follow.
-          We start from the opposite direction — legal instruments, enforceable rights, and
-          compliance infrastructure come first. The token is simply the most efficient
-          record and transfer mechanism for what already exists on paper and in law.
-        </p>
-      </Reveal>
-
-      <Reveal delay={340}>
+      <Reveal delay={280}>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {INSIGHTS.map((item, i) => (
-            <Reveal key={item.heading} delay={340 + i * 120}>
-              <div className="h-full rounded-lg border border-line bg-raise/60 p-6">
-                <item.icon className="size-5 text-gold" strokeWidth={1.5} />
-                <h3 className="mt-4 font-display text-lg leading-snug text-cream">
+            <Reveal key={item.heading} delay={280 + i * 110}>
+              <div className="editorial-card h-full rounded-xl p-6">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-semibold text-gold">
+                    {item.num}
+                  </span>
+                  <item.icon className="size-5 text-gold-deep" strokeWidth={1.6} />
+                </div>
+                <h3 className="mt-5 font-display text-xl font-semibold text-cream">
                   {item.heading}
                 </h3>
-                <p className="mt-2.5 text-[13px] leading-relaxed text-fog">
+                <p className="mt-2.5 text-sm leading-relaxed text-fog">
                   {item.body}
                 </p>
               </div>

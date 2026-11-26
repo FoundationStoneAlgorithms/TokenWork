@@ -13,12 +13,12 @@ import { SectionLabel } from "@/components/presentation/section-label";
 import { Reveal } from "@/components/presentation/reveal";
 
 const BARRIERS = [
-  { icon: Lock, name: "Collateral", risk: "unattainable for most SMEs" },
-  { icon: FileX, name: "No records", risk: "limited financial history" },
-  { icon: Clock, name: "Delays", risk: "months of approval process" },
-  { icon: Banknote, name: "High cost", risk: "22%+ loan rates" },
-  { icon: Users, name: "Network", risk: "capital behind closed doors" },
-  { icon: AlertTriangle, name: "Opacity", risk: "informal gatekeeping" },
+  { icon: Lock, name: "Collateral", risk: "Unattainable for most SMEs" },
+  { icon: FileX, name: "Thin records", risk: "Limited formal credit history" },
+  { icon: Clock, name: "Slow cycles", risk: "Months of manual underwriting" },
+  { icon: Banknote, name: "High cost", risk: "Loan rates up to 22%+" },
+  { icon: Users, name: "Closed networks", risk: "Capital gated by relationships" },
+  { icon: AlertTriangle, name: "Opacity", risk: "Informal gatekeeping" },
 ];
 
 export default function ProblemSlide() {
@@ -28,69 +28,66 @@ export default function ProblemSlide() {
         <SectionLabel index="02" title="The Problem" />
       </Reveal>
 
-      <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2.2rem,5vw,4.25rem)] leading-[1.04] text-cream">
-          2.57 million Ugandan enterprises.
-        </h2>
-        <p className="mt-4 font-display text-[clamp(1.5rem,3.2vw,2.6rem)] leading-[1.1] text-fog italic">
-          Only 25% have access to credit.
-        </p>
-      </Reveal>
+      <div className="mt-6 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12">
+        <div>
+          <Reveal delay={100}>
+            <h2 className="font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
+              Viable businesses are{" "}
+              <span className="text-emerald-accent">starved of patient capital.</span>
+            </h2>
+          </Reveal>
 
-      <Reveal delay={250}>
-        <p className="mt-7 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
-          Bank financing is short-term, expensive, and collateral-heavy. Uganda&apos;s
-          capital markets remain largely untapped for SMEs despite rapid growth —
-          the structural financing gap blocks value creation at scale.
-        </p>
-      </Reveal>
+          <Reveal delay={220}>
+            <p className="mt-4 text-sm leading-relaxed text-fog md:text-base">
+              Bank financing is short-term, expensive, and collateral-heavy. Uganda&apos;s
+              capital markets remain largely untapped for SMEs despite rapid growth.
+            </p>
+          </Reveal>
 
-      <Reveal delay={380}>
-        <div className="mt-10">
-          <div className="flex flex-wrap items-stretch justify-center gap-2 md:flex-nowrap md:gap-0">
-            {BARRIERS.map((b, i) => (
-              <div key={b.name} className="flex items-center">
-                <div className="flex w-28 flex-col items-center rounded-md border border-line bg-raise/70 px-2 py-4 text-center md:w-32">
-                  <b.icon
-                    className={`size-5 ${i === 0 ? "text-gold" : "text-fog"}`}
-                    strokeWidth={1.5}
-                  />
-                  <span className="mt-2.5 font-mono text-[10px] tracking-wider text-cream">
-                    {b.name}
-                  </span>
-                  <span className="mt-1 font-mono text-[8.5px] tracking-[0.14em] text-smoke uppercase">
-                    {b.risk}
-                  </span>
+          <Reveal delay={320}>
+            <div className="mt-7 grid grid-cols-2 gap-3">
+              <div className="editorial-card rounded-lg p-5">
+                <div className="font-mono text-4xl font-semibold tracking-tight tabular-nums text-cream md:text-5xl">
+                  2.57M
                 </div>
-                {i < BARRIERS.length - 1 ? (
-                  <span
-                    aria-hidden
-                    className="mx-0.5 size-1.5 shrink-0 rotate-45 bg-smoke/30 md:mx-1"
-                  />
-                ) : null}
+                <div className="mt-2 text-xs text-fog">Ugandan enterprises</div>
+              </div>
+              <div className="editorial-card rounded-lg border-l-2 border-l-gold p-5">
+                <div className="font-mono text-4xl font-semibold tracking-tight tabular-nums text-gold-bright md:text-5xl">
+                  25%
+                </div>
+                <div className="mt-2 text-xs text-fog">With formal credit access</div>
+              </div>
+            </div>
+            <p className="mt-3 font-mono text-[10px] tracking-wider text-smoke">
+              Raising access to 44% could unlock USD 277.6M in financial-sector revenue (GROW / MGLSD, 2025).
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal delay={360}>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {BARRIERS.map((b, i) => (
+              <div
+                key={b.name}
+                className="editorial-card flex items-start gap-3.5 rounded-xl p-4"
+              >
+                <div
+                  className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${
+                    i === 0 ? "bg-teal-soft text-teal" : "bg-ink-soft text-fog"
+                  }`}
+                >
+                  <b.icon className="size-4" strokeWidth={1.75} />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-cream">{b.name}</div>
+                  <div className="mt-0.5 text-xs leading-snug text-fog">{b.risk}</div>
+                </div>
               </div>
             ))}
           </div>
-          <div className="mt-4 flex items-center justify-center gap-3">
-            <span aria-hidden className="gold-hairline w-14" />
-            <span className="font-mono text-[9px] tracking-[0.3em] text-smoke uppercase">
-              six barriers — one structural gap
-            </span>
-            <span aria-hidden className="gold-hairline w-14" />
-          </div>
-        </div>
-      </Reveal>
-
-      <Reveal delay={520}>
-        <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-fog md:text-base">
-          Raising access from 25% to 44% could unlock{" "}
-          <span className="text-cream">USD 277.6M in financial-sector revenue.</span>
-          <br />
-          <span className="mt-1 block font-mono text-[10px] tracking-wider text-smoke">
-            Source: GROW / MGLSD, 2025
-          </span>
-        </p>
-      </Reveal>
+        </Reveal>
+      </div>
     </Slide>
   );
 }

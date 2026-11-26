@@ -11,22 +11,25 @@ const AGENTS = [
     icon: Bot,
     name: "Business Onboarding Agent",
     description:
-      "Guides businesses through profile completion, document collection, and verification readiness. Never approves — only assists.",
-    constraints: ["Read-only suggestions", "No document signing", "Human reviews all outputs"],
+      "Guides businesses through profile completion, document collection, and verification readiness.",
+    allowed: "Profile guidance & drafts",
+    blocked: "Cannot approve issuers",
   },
   {
     icon: Brain,
     name: "Financial Analysis Agent",
     description:
-      "Extracts and structures financial figures from submitted documents with explicit source references. Labels all AI-generated output.",
-    constraints: ["Source-linked output", "AI-labelled always", "Human correction route"],
+      "Extracts and structures financial figures from submitted documents with explicit source citations.",
+    allowed: "Source-linked extraction",
+    blocked: "Cannot certify valuations",
   },
   {
     icon: ClipboardCheck,
     name: "Due Diligence Assistant",
     description:
-      "Runs structured checklists, flags inconsistencies, and assembles review packets. All findings are labelled as draft aids.",
-    constraints: ["Draft aids only", "No valuations certified", "Reviewer queue required"],
+      "Runs structured checklists, flags inconsistencies, and assembles reviewer packets.",
+    allowed: "Checklist & flag drafts",
+    blocked: "Cannot execute transactions",
   },
 ];
 
@@ -41,45 +44,46 @@ export default function AIAgentsSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
           Agents assist.{" "}
-          <span className="text-gold-metal italic">Humans and systems decide.</span>
+          <span className="text-emerald-accent">Humans and systems decide.</span>
         </h2>
       </Reveal>
 
-      <Reveal delay={220}>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
-          AI agents are a first-class product capability — not a chatbot. Each agent
-          operates within typed tool permissions, server-side authorization, and a
-          complete audit trail. No agent approves offerings, certifies valuations,
-          or moves client funds.
+      <Reveal delay={200}>
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
+          Every agent operates inside a typed tool registry with server-side authorization
+          and a full audit trail of prompts, calls, outputs, and human corrections.
         </p>
       </Reveal>
 
-      <Reveal delay={340}>
+      <Reveal delay={320}>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {AGENTS.map((agent, i) => (
-            <Reveal key={agent.name} delay={340 + i * 120}>
-              <div className="h-full rounded-lg border border-gold-line bg-gold/[0.04] p-6">
-                <agent.icon className="size-5 text-gold" strokeWidth={1.5} />
-                <h3 className="mt-4 font-display text-base leading-snug text-cream">
+          {AGENTS.map((agent) => (
+            <div key={agent.name} className="editorial-card flex flex-col justify-between rounded-xl p-6">
+              <div>
+                <div className="inline-flex size-10 items-center justify-center rounded-lg bg-ok-soft text-gold">
+                  <agent.icon className="size-5" strokeWidth={1.6} />
+                </div>
+                <h3 className="mt-4 font-display text-lg font-semibold text-cream">
                   {agent.name}
                 </h3>
-                <p className="mt-2.5 text-[13px] leading-relaxed text-fog">
+                <p className="mt-2 text-xs leading-relaxed text-fog">
                   {agent.description}
                 </p>
-                <ul className="mt-4 flex flex-col gap-1.5">
-                  {agent.constraints.map((c) => (
-                    <li
-                      key={c}
-                      className="font-mono text-[9px] tracking-[0.18em] text-smoke uppercase"
-                    >
-                      · {c}
-                    </li>
-                  ))}
-                </ul>
               </div>
-            </Reveal>
+
+              <div className="mt-5 space-y-2 border-t border-line pt-4 font-mono text-[10px]">
+                <div className="flex items-center gap-2 text-ok">
+                  <span className="size-1.5 rounded-full bg-ok" />
+                  {agent.allowed}
+                </div>
+                <div className="flex items-center gap-2 text-fail">
+                  <span className="size-1.5 rounded-full bg-fail" />
+                  {agent.blocked}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </Reveal>

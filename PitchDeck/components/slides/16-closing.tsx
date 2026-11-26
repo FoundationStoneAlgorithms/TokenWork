@@ -17,7 +17,7 @@ export default function ClosingSlide() {
           <NetworkVisualization density={26} seed={99} opacity={0.55} />
           <div
             aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,#08080a_90%)]"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,#080a0e_90%)]"
           />
         </>
       }
@@ -29,10 +29,10 @@ export default function ClosingSlide() {
 
         <div className="mt-10 text-center">
           <Reveal>
-            <p className="mx-auto max-w-3xl font-display text-[clamp(1.7rem,4.2vw,3.5rem)] leading-[1.12] text-cream">
+            <p className="mx-auto max-w-3xl font-display text-[clamp(1.7rem,4.2vw,3.5rem)] leading-[1.12] font-medium text-cream">
               African SMEs deserve access to capital markets
               <br />
-              <span className="text-fog italic">without asking permission from gatekeepers.</span>
+              <span className="text-fog">without asking permission from gatekeepers.</span>
             </p>
           </Reveal>
 

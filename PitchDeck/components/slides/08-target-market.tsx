@@ -7,34 +7,24 @@ import { Reveal } from "@/components/presentation/reveal";
 
 const SEGMENTS = [
   {
-    icon: Sprout,
-    label: "Agro-processors",
-    note: "Export-ready coffee, tea, cocoa — working-capital gap before payment",
-    priority: true,
-  },
-  {
     icon: Factory,
     label: "Manufacturing SMEs",
-    note: "NDP IV targets industrialisation; IFC agribusiness + manufacturing portfolio",
-    priority: false,
+    note: "NDP IV industrialisation targets; IFC agribusiness & manufacturing focus",
   },
   {
     icon: Truck,
     label: "Trade & distribution",
     note: "Raw materials, transport, quality standards — CMA-documented financing need",
-    priority: false,
   },
   {
     icon: Building2,
     label: "Listed company pipeline",
     note: "11 domestic + 8 cross-border listed firms; proven disclosure readiness",
-    priority: false,
   },
   {
     icon: Store,
     label: "Women-owned enterprises",
-    note: "GROW priority sectors: agri, ICT/STEM, manufacturing — same disclosure requirements",
-    priority: false,
+    note: "GROW priority sectors: agri, ICT/STEM, manufacturing",
   },
 ];
 
@@ -46,58 +36,48 @@ export default function TargetMarketSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
           Uganda first.{" "}
-          <span className="text-gold-metal italic">East Africa next. Africa-wide ambition.</span>
+          <span className="text-emerald-accent">East Africa next.</span>
         </h2>
       </Reveal>
 
-      <Reveal delay={220}>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
-          Our initial commercial product targets established Ugandan SMEs seeking
-          equity capital. The platform is designed for multiple jurisdictions from
-          day one — activating countries only after legal, regulatory, operational,
-          and partner readiness.
-        </p>
-      </Reveal>
-
-      <Reveal delay={340}>
-        <div className="mt-8 flex flex-col gap-3">
-          {SEGMENTS.map((seg, i) => (
-            <Reveal key={seg.label} delay={340 + i * 90}>
-              <div
-                className={
-                  seg.priority
-                    ? "corner-frame rounded-lg border border-gold-line bg-gold/[0.05] p-4"
-                    : "rounded-lg border border-line bg-raise/60 p-4"
-                }
-              >
-                <div className="flex items-start gap-4">
-                  <seg.icon
-                    className={`mt-0.5 size-4 shrink-0 ${seg.priority ? "text-gold" : "text-fog"}`}
-                    strokeWidth={1.5}
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`font-mono text-[11px] tracking-wider ${seg.priority ? "text-cream" : "text-cream/80"}`}
-                      >
-                        {seg.label}
-                      </span>
-                      {seg.priority && (
-                        <span className="font-mono text-[9px] tracking-[0.26em] text-gold uppercase">
-                          primary focus
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-1 text-[12px] leading-relaxed text-fog">{seg.note}</p>
-                  </div>
-                </div>
+      <div className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+        <Reveal delay={220}>
+          <div className="editorial-card flex h-full flex-col justify-between rounded-2xl border-gold-line/60 p-7">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-gold px-3 py-1 font-mono text-[10px] font-semibold tracking-[0.2em] text-ink uppercase">
+                <Sprout className="size-3.5" />
+                Primary focus
               </div>
-            </Reveal>
-          ))}
-        </div>
-      </Reveal>
+              <h3 className="mt-5 font-display text-2xl font-semibold text-cream">
+                Exporting Agro-Processors
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-fog">
+                Coffee, tea, and cocoa processors face a documented working-capital gap
+                between purchasing/processing and export payment (CMA illustrates a{" "}
+                <span className="font-mono font-semibold tabular-nums text-cream">UGX 10bn</span>{" "}
+                coffee order cycle).
+              </p>
+            </div>
+            <div className="mt-8 border-t border-line pt-4 font-mono text-[10px] tracking-[0.18em] text-smoke uppercase">
+              Jurisdictions activate only after legal & partner readiness
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={320}>
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            {SEGMENTS.map((seg) => (
+              <div key={seg.label} className="editorial-card rounded-xl p-5">
+                <seg.icon className="size-5 text-gold-deep" strokeWidth={1.6} />
+                <h3 className="mt-3.5 text-sm font-semibold text-cream">{seg.label}</h3>
+                <p className="mt-1.5 text-xs leading-relaxed text-fog">{seg.note}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </div>
     </Slide>
   );
 }

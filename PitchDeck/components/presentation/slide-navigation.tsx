@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, ChevronUp, Keyboard, Maximize, Minimize } from "lucide-react";
+import { ChevronLeft, ChevronRight, Keyboard, Maximize, Minimize } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -27,27 +27,27 @@ export function SlideNavigation({
     <div
       className={cn(
         chromeClass,
-        "absolute right-4 bottom-4 z-30 flex items-center gap-3 md:right-7 md:bottom-6"
+        "absolute right-4 bottom-4 z-30 flex items-center gap-2.5 rounded-full border border-line bg-raise/90 px-3 py-1.5 backdrop-blur-sm md:right-7 md:bottom-5"
       )}
     >
-      <div className="hidden items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-smoke uppercase sm:flex">
-        <span className="text-cream/70">
+      <div className="hidden items-center gap-1.5 pr-1 font-mono text-[10px] tracking-[0.2em] text-smoke uppercase sm:flex">
+        <span className="font-semibold text-cream">
           {String(current + 1).padStart(2, "0")}
         </span>
         <span aria-hidden>/</span>
         <span>{String(total).padStart(2, "0")}</span>
       </div>
 
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1">
         <Button
           variant="outline"
           size="icon"
           onClick={onPrev}
           disabled={current === 0}
           aria-label="Previous slide"
-          className="rounded-full"
+          className="size-8 rounded-full border-transparent bg-transparent"
         >
-          <ChevronUp className="size-4" />
+          <ChevronLeft className="size-4" />
         </Button>
         <Button
           variant="outline"
@@ -55,30 +55,30 @@ export function SlideNavigation({
           onClick={onNext}
           disabled={current === total - 1}
           aria-label="Next slide"
-          className="rounded-full"
+          className="size-8 rounded-full border-transparent bg-transparent"
         >
-          <ChevronDown className="size-4" />
+          <ChevronRight className="size-4" />
         </Button>
         <Button
           variant="outline"
           size="icon"
           onClick={onOpenHelp}
           aria-label="Keyboard shortcuts"
-          className="hidden rounded-full sm:inline-flex"
+          className="hidden size-8 rounded-full border-transparent bg-transparent sm:inline-flex"
         >
-          <Keyboard className="size-4" />
+          <Keyboard className="size-3.5" />
         </Button>
         <Button
           variant="outline"
           size="icon"
           onClick={onToggleFullscreen}
           aria-label={isFullscreen ? "Exit fullscreen" : "Enter presentation mode"}
-          className="rounded-full"
+          className="size-8 rounded-full border-transparent bg-transparent"
         >
           {isFullscreen ? (
-            <Minimize className="size-4" />
+            <Minimize className="size-3.5" />
           ) : (
-            <Maximize className="size-4" />
+            <Maximize className="size-3.5" />
           )}
         </Button>
       </div>

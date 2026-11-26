@@ -39,15 +39,15 @@ export default function BusinessModelSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
           Infrastructure fees.{" "}
-          <span className="text-gold-metal italic">Shared with the ecosystem.</span>
+          <span className="text-emerald-accent">Shared with the ecosystem.</span>
         </h2>
       </Reveal>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8">
         <Reveal delay={260}>
-          <div className="h-full rounded-lg border border-line bg-raise/50 p-6">
+          <div className="editorial-card h-full rounded-lg p-6">
             <div className="font-mono text-[10px] tracking-[0.26em] text-gold uppercase">
               Customers
             </div>

@@ -60,17 +60,17 @@ export default function LegalSlide() {
       </Reveal>
 
       <Reveal delay={100}>
-        <h2 className="mt-7 font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] text-cream">
+        <h2 className="mt-6 font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.06] font-medium text-cream">
           Compliance is{" "}
-          <span className="text-gold-metal italic">product architecture.</span>
+          <span className="text-emerald-accent">product architecture.</span>
         </h2>
       </Reveal>
 
       <Reveal delay={220}>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-fog md:text-base">
           Uganda&apos;s capital markets are governed by a comprehensive regulatory
           framework. We will operate through licensed partners, not around them.
-          Ten open decisions (D1–D10) are tracked and require qualified counsel
+          Ten open decisions (<span className="font-mono tabular-nums text-cream">D1–D10</span>) are tracked and require qualified counsel
           before any live issuance.
         </p>
       </Reveal>
@@ -79,8 +79,8 @@ export default function LegalSlide() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {FRAMEWORK.map((block, i) => (
             <Reveal key={block.title} delay={340 + i * 100}>
-              <div className="h-full rounded-lg border border-line bg-raise/60 p-5">
-                <block.icon className="size-4 text-gold" strokeWidth={1.5} />
+              <div className="editorial-card h-full rounded-lg p-5">
+                <block.icon className="size-4 text-gold" strokeWidth={1.6} />
                 <h3 className="mt-3 font-mono text-[11px] tracking-[0.2em] text-cream uppercase">
                   {block.title}
                 </h3>
@@ -88,7 +88,7 @@ export default function LegalSlide() {
                   {block.items.map((item) => (
                     <li
                       key={item}
-                      className="font-mono text-[9px] leading-relaxed tracking-[0.12em] text-smoke"
+                      className="text-xs leading-relaxed text-fog"
                     >
                       · {item}
                     </li>
