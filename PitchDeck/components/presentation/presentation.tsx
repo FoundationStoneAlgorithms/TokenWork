@@ -6,9 +6,18 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type ReactNode,
 } from "react";
 import { cn } from "@/lib/utils";
+import {
+  DEFAULT_FONT_SELECTION,
+  applyFontVariables,
+  readFontSelection,
+  saveFontSelection,
+  type FontRole,
+  type FontSelection,
+} from "@/lib/font-options";
 import { SlideContext } from "./slide-context";
 import { ProgressIndicator } from "./progress-indicator";
 import { SlideNavigation } from "./slide-navigation";
@@ -33,6 +42,7 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
   const [helpOpen, setHelpOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [chromeVisible, setChromeVisible] = useState(true);
+  const [fonts, setFonts] = useState<FontSelection>(DEFAULT_FONT_SELECTION);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const lockUntilRef = useRef(0);
@@ -55,6 +65,21 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
 
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+
+  const changeFonts = useCallback((selection: FontSelection) => {
+    setFonts(selection);
+    applyFontVariables(selection);
+    saveFontSelection(window.localStorage, selection);
+  }, []);
+
+  const handleFontChange = useCallback(
+    (role: FontRole, value: string) => changeFonts({ ...fonts, [role]: value }),
+    [fonts, changeFonts]
+  );
+  const handleResetFonts = useCallback(
+    () => changeFonts(DEFAULT_FONT_SELECTION),
+    [changeFonts]
+  );
 
   useEffect(() => {
     const fromSeg = window.location.pathname
@@ -102,8 +127,22 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
   }, []);
 
   useEffect(() => {
+    const saved = readFontSelection(window.localStorage);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setFonts(saved);
+    applyFontVariables(saved);
+  }, []);
+
+  useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target instanceof HTMLElement ? e.target : null;
+      if (
+        target?.closest("select, input, textarea, [contenteditable='true']") &&
+        e.key !== "Escape"
+      ) {
+        return;
+      }
       switch (e.key) {
         case "ArrowDown":
         case "ArrowRight":
@@ -209,10 +248,17 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
     [chromeVisible]
   );
 
+  const fontStyle = {
+    "--font-heading": `var(${fonts.display})`,
+    "--font-body": `var(${fonts.body})`,
+    "--font-code": `var(${fonts.mono})`,
+  } as CSSProperties;
+
   return (
     <div
       ref={rootRef}
-      className="relative h-dvh w-full overflow-hidden bg-ink text-cream select-none"
+      style={fontStyle}
+      className="relative h-dvh w-full overflow-hidden bg-ink text-cream font-sans select-none"
     >
       {slides.map((slide, i) => {
         const state = i === current ? "active" : i < current ? "before" : "after";
@@ -268,7 +314,13 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
         chromeClass={chromeClass}
       />
 
-      <KeyboardHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
+      <KeyboardHelp
+        open={helpOpen}
+        onClose={() => setHelpOpen(false)}
+        fonts={fonts}
+        onFontChange={handleFontChange}
+        onResetFonts={handleResetFonts}
+      />
     </div>
   );
 }

@@ -1,24 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
+import { fontVariableClasses } from "./fonts";
 import "./globals.css";
-
-/* Same font triad as AuditLinkTrail: Geist (body), Geist Mono (numbers/meta), Ubuntu (display) */
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const ubuntu = Ubuntu({
-  variable: "--font-ubuntu",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  style: ["normal", "italic"],
-});
 
 export const metadata: Metadata = {
   title: "TokenWork — Seed Investment Pitch",
@@ -43,7 +25,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${ubuntu.variable} h-full antialiased`}
+      className={`${fontVariableClasses} h-full antialiased`}
     >
       <body className="h-full overflow-hidden bg-ink text-cream">{children}</body>
     </html>

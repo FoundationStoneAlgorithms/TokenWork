@@ -2,6 +2,8 @@
 
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { FontRole, FontSelection } from "@/lib/font-options";
+import { FontControls } from "./font-controls";
 
 const KEYS: { keys: string[]; action: string }[] = [
   { keys: ["←", "→"], action: "Previous / next slide" },
@@ -26,9 +28,15 @@ function Kbd({ children }: { children: React.ReactNode }) {
 export function KeyboardHelp({
   open,
   onClose,
+  fonts,
+  onFontChange,
+  onResetFonts,
 }: {
   open: boolean;
   onClose: () => void;
+  fonts: FontSelection;
+  onFontChange: (role: FontRole, value: string) => void;
+  onResetFonts: () => void;
 }) {
   if (!open) return null;
   return (
@@ -58,6 +66,12 @@ export function KeyboardHelp({
             <X className="size-4" />
           </button>
         </div>
+        <FontControls
+          selection={fonts}
+          onChange={onFontChange}
+          onReset={onResetFonts}
+        />
+
         <ul className="flex flex-col divide-y divide-line">
           {KEYS.map((row) => (
             <li key={row.keys.join("+")} className="flex items-center justify-between gap-4 py-2.5">

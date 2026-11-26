@@ -25,6 +25,13 @@ Then open [http://localhost:3000](http://localhost:3000).
 | ? | Keyboard help |
 | Scroll / Swipe | Navigate slides |
 
+## Typography
+
+Press `?` to open Presentation Controls. The Typography section lets you choose
+fonts independently for headings, body text, and labels/numbers. Choices apply to
+all slides immediately and are remembered in the browser; **Reset** restores the
+original Ubuntu / Geist / Geist Mono triad.
+
 ## Slides
 
 | # | Slide | Key content |
