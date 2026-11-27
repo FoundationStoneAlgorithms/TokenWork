@@ -43,7 +43,7 @@ deployments can be shared with a direct link to any slide.
 Press `?` to open Presentation Controls. The Typography section lets you choose
 fonts independently for headings, body text, and labels/numbers. Choices apply to
 all slides immediately and are remembered in the browser; **Reset** restores the
-original Ubuntu / Geist / Geist Mono triad.
+Fraunces / Geist / IBM Plex Mono triad.
 
 ## Slides
 
