@@ -1,0 +1,243 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   TokenWork — Institutional Slate Obsidian & Brushed Steel-Blue Design System
+   Default type triad (Geist, Geist Mono, Ubuntu) can be swapped per viewer
+   from the presentation controls, over a dark institutional slate palette.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* Surfaces */
+  --color-ink: #080a0e;        /* Primary canvas: deep obsidian slate */
+  --color-ink-soft: #0d1016;   /* Recessed surface */
+  --color-raise: #12161f;      /* Elevated card surface */
+  --color-raise-2: #181e29;    /* Subtle fill / track */
+
+  /* Typography */
+  --color-cream: #eef1f6;      /* Primary text: crisp institutional white */
+  --color-fog: #9aa3b2;        /* Secondary body text */
+  --color-smoke: #6e7787;      /* Muted metadata */
+
+  /* Brand accents: Restrained Brushed Steel-Blue & Platinum */
+  --color-gold: #8ca8c7;       /* Primary accent: brushed steel-blue */
+  --color-gold-bright: #c5d6ea;/* Light platinum-blue */
+  --color-gold-deep: #556f8c;  /* Deep slate-blue */
+
+  /* Status (muted, institutional) */
+  --color-fail: #c66b6b;
+  --color-fail-soft: rgba(198, 107, 107, 0.12);
+  --color-ok: #7ea896;
+  --color-ok-soft: rgba(126, 168, 150, 0.12);
+
+  /* Accent aliases */
+  --color-teal: #7ea896;
+  --color-teal-soft: rgba(126, 168, 150, 0.12);
+
+  /* Hairlines */
+  --color-line: rgba(238, 241, 246, 0.08);
+  --color-line-strong: rgba(238, 241, 246, 0.16);
+  --color-gold-line: rgba(140, 168, 199, 0.28);
+}
+
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-code), ui-monospace, "SF Mono", monospace;
+  --font-display: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* The deck root overrides these three aliases when a viewer picks new fonts. */
+:root {
+  --font-heading: var(--font-ubuntu);
+  --font-body: var(--font-geist-sans);
+  --font-code: var(--font-geist-mono);
+}
+
+/* --------------------------------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(140, 168, 199, 0.28);
+  color: #ffffff;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Brushed steel-silver metallic gradient text & rules
+--------------------------------------------------------------------------- */
+
+.text-emerald-accent {
+  background: linear-gradient(
+    105deg,
+    #556f8c 0%,
+    #8ca8c7 35%,
+    #dce6f2 52%,
+    #8ca8c7 70%,
+    #556f8c 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.editorial-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(140, 168, 199, 0.45) 0%,
+    rgba(197, 214, 234, 0.25) 50%,
+    rgba(238, 241, 246, 0) 100%
+  );
+}
+
+.gold-hairline {
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 168, 199, 0.45),
+    transparent
+  );
+}
+
+/* Convergence glow and travelling light strands shared by every slide. */
+.verification-glow {
+  animation: verification-breathe 16s ease-in-out infinite;
+}
+
+@keyframes verification-breathe {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.verification-flow {
+  fill: none;
+  stroke-dasharray: 130 870;
+  animation: verification-travel 18s linear infinite;
+}
+
+/* Wide translucent stroke gives the halo without an expensive blur filter. */
+.verification-flow-glow {
+  stroke-width: 9;
+  opacity: 0.3;
+}
+
+@keyframes verification-travel {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+.editorial-card {
+  background: var(--color-raise);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 1px 0 0 rgba(238, 241, 246, 0.03) inset;
+}
+
+.corner-frame {
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(140, 168, 199, 0.28);
+}
+.corner-frame::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(140, 168, 199, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Horizontal slide transitions
+--------------------------------------------------------------------------- */
+
+.slide-frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(32px);
+  pointer-events: none;
+  transition:
+    opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.slide-frame[data-state="before"] {
+  transform: translateX(-32px);
+}
+.slide-frame[data-state="active"] {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-run {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes rise-soft {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-soft {
+  animation: rise-soft 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.chrome {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+.chrome-hidden {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
