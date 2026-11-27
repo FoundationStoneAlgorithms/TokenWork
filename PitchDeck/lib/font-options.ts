@@ -42,9 +42,9 @@ export const FONT_OPTIONS: Record<FontRole, { value: string; label: string }[]> 
 };
 
 export const DEFAULT_FONT_SELECTION: FontSelection = {
-  display: FONT_VARIABLES.ubuntu,
+  display: FONT_VARIABLES.fraunces,
   body: FONT_VARIABLES.geist,
-  mono: FONT_VARIABLES.geistMono,
+  mono: FONT_VARIABLES.ibmPlexMono,
 };
 
 const FONT_STORAGE_KEY = "tokenwork:pitch-fonts";
