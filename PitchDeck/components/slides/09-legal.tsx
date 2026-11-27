@@ -79,7 +79,7 @@ export default function LegalSlide() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {FRAMEWORK.map((block, i) => (
             <Reveal key={block.title} delay={340 + i * 100}>
-              <div className="editorial-card h-full rounded-lg p-5">
+              <div className="editorial-card h-full rounded-none p-5">
                 <block.icon className="size-4 text-gold" strokeWidth={1.6} />
                 <h3 className="mt-3 font-mono text-[11px] tracking-[0.2em] text-cream uppercase">
                   {block.title}

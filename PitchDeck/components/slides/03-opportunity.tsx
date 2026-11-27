@@ -1,11 +1,21 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
+import { CircleArrowUp } from "lucide-react";
 import { Slide } from "@/components/presentation/slide";
 import { SectionLabel } from "@/components/presentation/section-label";
 import { Reveal } from "@/components/presentation/reveal";
 
-const STATS = [
+type Stat = {
+  label: string;
+  from: string;
+  to: string;
+  period: string;
+  multiplier: string;
+  barPct: number;
+  emphasis?: boolean;
+};
+
+const STATS: Stat[] = [
   {
     label: "Domestic market cap",
     from: "UGX 4.33tn",
@@ -29,6 +39,7 @@ const STATS = [
     period: "2021 → 2026",
     multiplier: "8.2×",
     barPct: 94,
+    emphasis: true,
   },
 ];
 
@@ -56,25 +67,41 @@ export default function OpportunitySlide() {
       <Reveal delay={320}>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {STATS.map((s) => (
-            <div key={s.label} className="editorial-card rounded-lg p-6">
+            <div key={s.label} className="editorial-card rounded-none p-6">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] tracking-[0.18em] text-smoke uppercase">
                   {s.label}
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-sm bg-ok-soft px-2 py-0.5 font-mono text-[11px] font-medium tabular-nums text-ok">
-                  <TrendingUp className="size-3" />
+                <span
+                  className={`inline-flex items-center gap-1 rounded-none bg-ok-soft px-2 py-0.5 font-mono font-medium tabular-nums text-ok ${
+                    s.emphasis ? "text-xs" : "text-[11px]"
+                  }`}
+                >
+                  <CircleArrowUp className="size-3.5" />
                   {s.multiplier}
                 </span>
               </div>
 
               <div className="mt-4 flex items-baseline gap-2.5">
-                <span className="font-mono text-xs tabular-nums text-smoke line-through">{s.from}</span>
-                <span className="font-mono text-2xl font-semibold tracking-tight tabular-nums text-cream">{s.to}</span>
+                <span
+                  className={`font-mono tabular-nums text-smoke line-through ${
+                    s.emphasis ? "text-sm" : "text-xs"
+                  }`}
+                >
+                  {s.from}
+                </span>
+                <span
+                  className={`font-mono font-semibold tracking-tight tabular-nums text-cream ${
+                    s.emphasis ? "text-[1.75rem]" : "text-2xl"
+                  }`}
+                >
+                  {s.to}
+                </span>
               </div>
 
-              <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-ink-soft">
+              <div className="mt-4 h-1.5 w-full overflow-hidden rounded-none bg-ink-soft">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-gold to-gold-deep"
+                  className="h-full rounded-none bg-gradient-to-r from-gold to-gold-deep"
                   style={{ width: `${s.barPct}%` }}
                 />
               </div>
@@ -86,7 +113,7 @@ export default function OpportunitySlide() {
       </Reveal>
 
       <Reveal delay={500}>
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-gold-line bg-ok-soft/60 px-6 py-4">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-none border border-gold-line bg-ok-soft/60 px-6 py-4">
           <p className="text-sm text-cream">
             Agriculture employs <span className="font-mono font-semibold">72%</span> of
             Uganda&apos;s labour force and contributes{" "}

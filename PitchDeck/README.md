@@ -13,6 +13,19 @@ npm run dev
 
 Then open [http://localhost:3000](http://localhost:3000).
 
+## Deploying to Vercel
+
+The app lives in the `PitchDeck` directory of this repository.
+
+1. Import the repository into Vercel.
+2. Set **Root Directory** to `PitchDeck` when prompted.
+3. Keep the detected Next.js preset. `vercel.json` pins `npm ci` for installs,
+   `npm run build` for builds, and `npm run dev` for local Vercel development.
+4. Deploy — no environment variables are required.
+
+Each slide has a stable route (`/cover`, `/problem`, and so on), so preview
+deployments can be shared with a direct link to any slide.
+
 ## Navigation
 
 | Input | Action |

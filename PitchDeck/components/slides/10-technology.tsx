@@ -58,7 +58,7 @@ export default function TechnologySlide() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STACK.map((item, i) => (
             <Reveal key={item.layer} delay={340 + i * 100}>
-              <div className="editorial-card h-full rounded-lg p-5">
+              <div className="editorial-card h-full rounded-none p-5">
                 <item.icon className="size-5 text-gold" strokeWidth={1.6} />
                 <div className="mt-3 font-mono text-[9px] tracking-[0.26em] text-smoke uppercase">
                   {item.layer}
@@ -76,7 +76,7 @@ export default function TechnologySlide() {
       </Reveal>
 
       <Reveal delay={760}>
-        <div className="editorial-card mt-8 rounded-lg p-5">
+        <div className="editorial-card mt-8 rounded-none p-5">
           <div className="grid gap-4 md:grid-cols-3">
             <div>
               <div className="font-mono text-[9px] tracking-[0.26em] text-smoke uppercase">Security</div>

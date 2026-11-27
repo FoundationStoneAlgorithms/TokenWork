@@ -3,29 +3,18 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-/**
- * Structural shell for every slide — carries the deep forest obsidian canvas,
- * subtle emerald/copper wash, and architectural grid across every slide.
- */
+/** Structural shell for every slide — sits above the shared animated canvas. */
 export function Slide({
   children,
-  background,
   className,
   ariaLabel,
 }: {
   children: ReactNode;
-  background?: ReactNode;
   className?: string;
   ariaLabel?: string;
 }) {
   return (
-    <div className="paper-grid relative h-full w-full" aria-label={ariaLabel}>
-      <div aria-hidden className="emerald-wash pointer-events-none absolute inset-0" />
-      {background ? (
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          {background}
-        </div>
-      ) : null}
+    <div className="relative h-full w-full" aria-label={ariaLabel}>
       <div
         data-slide-content
         className={cn(

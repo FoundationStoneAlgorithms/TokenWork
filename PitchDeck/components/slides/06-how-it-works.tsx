@@ -37,12 +37,12 @@ export default function HowItWorksSlide() {
           {STEPS.map((step, i) => (
             <div
               key={step.num}
-              className={`editorial-card rounded-xl p-5 ${
+              className={`editorial-card rounded-none p-5 ${
                 i === 6 ? "sm:col-span-2 lg:col-span-2 border-l-4 border-l-gold" : ""
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="inline-flex size-7 items-center justify-center rounded-md bg-ok-soft font-mono text-xs font-semibold text-gold-bright">
+                <span className="inline-flex size-7 items-center justify-center rounded-none bg-ok-soft font-mono text-xs font-semibold text-gold-bright">
                   {step.num}
                 </span>
                 <span className="font-mono text-[9px] tracking-[0.2em] text-smoke uppercase">

@@ -33,7 +33,7 @@ export function ProgressIndicator({
         aria-label="Slide progress"
         className={cn(
           chromeClass,
-          "absolute bottom-5 left-6 z-30 hidden items-center gap-1.5 rounded-full border border-line bg-raise/90 px-3 py-1.5 backdrop-blur-sm md:flex lg:left-8"
+          "absolute bottom-5 left-6 z-30 hidden items-center gap-1.5 rounded-none border border-line bg-raise/90 px-3 py-1.5 backdrop-blur-sm md:flex lg:left-8"
         )}
       >
         {slides.map((slide, i) => {
@@ -46,7 +46,7 @@ export function ProgressIndicator({
               aria-current={active ? "true" : undefined}
               title={`${slide.num} · ${slide.title}`}
               className={cn(
-                "group relative cursor-pointer rounded-full transition-all duration-300 outline-none focus-visible:ring-1 focus-visible:ring-gold/50",
+                "group relative cursor-pointer rounded-none transition-all duration-300 outline-none focus-visible:ring-1 focus-visible:ring-gold/50",
                 active
                   ? "h-2 w-6 bg-gold"
                   : "size-2 bg-line-strong hover:bg-gold/60"

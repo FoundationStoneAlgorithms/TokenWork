@@ -45,7 +45,7 @@ export default function SolutionSlide() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <Reveal delay={240}>
-          <div className="editorial-card rounded-xl p-6">
+          <div className="editorial-card rounded-none p-6">
             <div className="font-mono text-[10px] tracking-[0.22em] text-gold uppercase">
               Seven-layer platform stack
             </div>
@@ -53,7 +53,7 @@ export default function SolutionSlide() {
               {LAYERS.map((layer, i) => (
                 <div
                   key={layer.label}
-                  className="flex items-center gap-3 rounded-lg bg-ink-soft/70 px-3.5 py-2.5"
+                  className="flex items-center gap-3 rounded-none bg-ink-soft/70 px-3.5 py-2.5"
                 >
                   <span className="font-mono text-[10px] font-semibold text-gold">
                     0{i + 1}
@@ -68,7 +68,7 @@ export default function SolutionSlide() {
 
         <Reveal delay={360}>
           <div className="flex h-full flex-col gap-4">
-            <div className="editorial-card rounded-xl border-gold-line/60 p-6">
+            <div className="editorial-card rounded-none border-gold-line/60 p-6">
               <div className="font-mono text-[10px] tracking-[0.22em] text-gold-bright uppercase">
                 Four instrument families
               </div>
@@ -81,11 +81,11 @@ export default function SolutionSlide() {
                 ].map((inst, i) => (
                   <div
                     key={inst.name}
-                    className="flex items-center justify-between rounded-lg bg-ink-soft/80 px-3.5 py-2"
+                    className="flex items-center justify-between rounded-none bg-ink-soft/80 px-3.5 py-2"
                   >
                     <span className="text-sm font-medium text-cream">{inst.name}</span>
                     <span
-                      className={`rounded-full px-2.5 py-0.5 font-mono text-[9px] tabular-nums uppercase ${
+                      className={`rounded-none px-2.5 py-0.5 font-mono text-[9px] tabular-nums uppercase ${
                         i === 0
                           ? "bg-gold text-ink font-semibold"
                           : "bg-raise-2 text-fog"
@@ -98,7 +98,7 @@ export default function SolutionSlide() {
               </div>
             </div>
 
-            <div className="editorial-card rounded-xl border-l-4 border-l-gold p-5">
+            <div className="editorial-card rounded-none border-l-4 border-l-gold p-5">
               <div className="font-mono text-[10px] tracking-[0.22em] text-gold uppercase">
                 AI Agent Infrastructure
               </div>

@@ -60,9 +60,9 @@ export default function AIAgentsSlide() {
       <Reveal delay={320}>
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {AGENTS.map((agent) => (
-            <div key={agent.name} className="editorial-card flex flex-col justify-between rounded-xl p-6">
+            <div key={agent.name} className="editorial-card flex flex-col justify-between rounded-none p-6">
               <div>
-                <div className="inline-flex size-10 items-center justify-center rounded-lg bg-ok-soft text-gold">
+                <div className="inline-flex size-10 items-center justify-center rounded-none bg-ok-soft text-gold">
                   <agent.icon className="size-5" strokeWidth={1.6} />
                 </div>
                 <h3 className="mt-4 font-display text-lg font-semibold text-cream">
@@ -75,11 +75,11 @@ export default function AIAgentsSlide() {
 
               <div className="mt-5 space-y-2 border-t border-line pt-4 font-mono text-[10px]">
                 <div className="flex items-center gap-2 text-ok">
-                  <span className="size-1.5 rounded-full bg-ok" />
+                  <span className="size-1.5 rounded-none bg-ok" />
                   {agent.allowed}
                 </div>
                 <div className="flex items-center gap-2 text-fail">
-                  <span className="size-1.5 rounded-full bg-fail" />
+                  <span className="size-1.5 rounded-none bg-fail" />
                   {agent.blocked}
                 </div>
               </div>

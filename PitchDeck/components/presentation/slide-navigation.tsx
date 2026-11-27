@@ -27,7 +27,7 @@ export function SlideNavigation({
     <div
       className={cn(
         chromeClass,
-        "absolute right-4 bottom-4 z-30 flex items-center gap-2.5 rounded-full border border-line bg-raise/90 px-3 py-1.5 backdrop-blur-sm md:right-7 md:bottom-5"
+        "absolute right-4 bottom-4 z-30 flex items-center gap-2.5 rounded-none border border-line bg-raise/90 px-3 py-1.5 backdrop-blur-sm md:right-7 md:bottom-5"
       )}
     >
       <div className="hidden items-center gap-1.5 pr-1 font-mono text-[10px] tracking-[0.2em] text-smoke uppercase sm:flex">
@@ -45,7 +45,7 @@ export function SlideNavigation({
           onClick={onPrev}
           disabled={current === 0}
           aria-label="Previous slide"
-          className="size-8 rounded-full border-transparent bg-transparent"
+          className="size-8 rounded-none border-transparent bg-transparent"
         >
           <ChevronLeft className="size-4" />
         </Button>
@@ -55,7 +55,7 @@ export function SlideNavigation({
           onClick={onNext}
           disabled={current === total - 1}
           aria-label="Next slide"
-          className="size-8 rounded-full border-transparent bg-transparent"
+          className="size-8 rounded-none border-transparent bg-transparent"
         >
           <ChevronRight className="size-4" />
         </Button>
@@ -64,7 +64,7 @@ export function SlideNavigation({
           size="icon"
           onClick={onOpenHelp}
           aria-label="Keyboard shortcuts"
-          className="hidden size-8 rounded-full border-transparent bg-transparent sm:inline-flex"
+          className="hidden size-8 rounded-none border-transparent bg-transparent sm:inline-flex"
         >
           <Keyboard className="size-3.5" />
         </Button>
@@ -73,7 +73,7 @@ export function SlideNavigation({
           size="icon"
           onClick={onToggleFullscreen}
           aria-label={isFullscreen ? "Exit fullscreen" : "Enter presentation mode"}
-          className="size-8 rounded-full border-transparent bg-transparent"
+          className="size-8 rounded-none border-transparent bg-transparent"
         >
           {isFullscreen ? (
             <Minimize className="size-3.5" />

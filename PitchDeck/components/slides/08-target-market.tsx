@@ -44,9 +44,9 @@ export default function TargetMarketSlide() {
 
       <div className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
         <Reveal delay={220}>
-          <div className="editorial-card flex h-full flex-col justify-between rounded-2xl border-gold-line/60 p-7">
+          <div className="editorial-card flex h-full flex-col justify-between rounded-none border-gold-line/60 p-7">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-gold px-3 py-1 font-mono text-[10px] font-semibold tracking-[0.2em] text-ink uppercase">
+              <div className="inline-flex items-center gap-2 rounded-none bg-gold px-3 py-1 font-mono text-[10px] font-semibold tracking-[0.2em] text-ink uppercase">
                 <Sprout className="size-3.5" />
                 Primary focus
               </div>
@@ -69,7 +69,7 @@ export default function TargetMarketSlide() {
         <Reveal delay={320}>
           <div className="grid gap-3.5 sm:grid-cols-2">
             {SEGMENTS.map((seg) => (
-              <div key={seg.label} className="editorial-card rounded-xl p-5">
+              <div key={seg.label} className="editorial-card rounded-none p-5">
                 <seg.icon className="size-5 text-gold-deep" strokeWidth={1.6} />
                 <h3 className="mt-3.5 text-sm font-semibold text-cream">{seg.label}</h3>
                 <p className="mt-1.5 text-xs leading-relaxed text-fog">{seg.note}</p>

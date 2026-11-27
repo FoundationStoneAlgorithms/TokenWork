@@ -19,7 +19,7 @@ const KEYS: { keys: string[]; action: string }[] = [
 
 function Kbd({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-sm border border-line-strong bg-ink-soft px-1.5 font-mono text-[10px] text-cream">
+    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-none border border-line-strong bg-ink-soft px-1.5 font-mono text-[10px] text-cream">
       {children}
     </kbd>
   );
@@ -50,7 +50,7 @@ export function KeyboardHelp({
       <div
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          "editorial-card w-full max-w-md rounded-xl p-6",
+          "editorial-card w-full max-w-md rounded-none p-6",
           "rise-soft"
         )}
       >
@@ -61,7 +61,7 @@ export function KeyboardHelp({
           <button
             onClick={onClose}
             aria-label="Close"
-            className="cursor-pointer rounded-sm p-1 text-fog transition-colors hover:text-cream"
+            className="cursor-pointer rounded-none p-1 text-fog transition-colors hover:text-cream"
           >
             <X className="size-4" />
           </button>

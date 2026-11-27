@@ -76,8 +76,8 @@ export default function RoadmapSlide() {
                 <div
                   className={
                     phase.active
-                      ? "corner-frame h-full rounded-lg border border-gold-line bg-gold/[0.06] p-4"
-                      : "editorial-card h-full rounded-lg p-4"
+                      ? "corner-frame h-full rounded-none border border-gold-line bg-gold/[0.06] p-4"
+                      : "editorial-card h-full rounded-none p-4"
                   }
                 >
                   <div className="flex items-center justify-between gap-2">

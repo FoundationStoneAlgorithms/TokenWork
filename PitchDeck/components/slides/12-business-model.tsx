@@ -47,7 +47,7 @@ export default function BusinessModelSlide() {
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8">
         <Reveal delay={260}>
-          <div className="editorial-card h-full rounded-lg p-6">
+          <div className="editorial-card h-full rounded-none p-6">
             <div className="font-mono text-[10px] tracking-[0.26em] text-gold uppercase">
               Customers
             </div>
@@ -68,7 +68,7 @@ export default function BusinessModelSlide() {
         </Reveal>
 
         <Reveal delay={360}>
-          <div className="h-full rounded-lg border border-gold-line bg-gold/[0.04] p-6">
+          <div className="h-full rounded-none border border-gold-line bg-gold/[0.04] p-6">
             <div className="font-mono text-[10px] tracking-[0.26em] text-gold uppercase">
               Revenue streams
             </div>

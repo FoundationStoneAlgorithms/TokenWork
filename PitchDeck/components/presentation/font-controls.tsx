@@ -31,7 +31,7 @@ export function FontControls({
         <button
           type="button"
           onClick={onReset}
-          className="cursor-pointer rounded-sm font-mono text-[10px] tracking-[0.14em] text-smoke uppercase transition-colors hover:text-cream focus-visible:ring-2 focus-visible:ring-gold/40 focus-visible:outline-none"
+          className="cursor-pointer rounded-none font-mono text-[10px] tracking-[0.14em] text-smoke uppercase transition-colors hover:text-cream focus-visible:ring-2 focus-visible:ring-gold/40 focus-visible:outline-none"
         >
           Reset
         </button>
@@ -52,7 +52,7 @@ export function FontControls({
                 <select
                   value={selection[role]}
                   onChange={(event) => onChange(role, event.target.value)}
-                  className="w-full cursor-pointer appearance-none rounded-sm border border-line-strong bg-ink-soft py-1.5 pr-7 pl-2 font-mono text-[11px] text-cream outline-none transition-colors [color-scheme:dark] hover:border-gold/50 focus-visible:border-gold focus-visible:ring-2 focus-visible:ring-gold/30"
+                  className="w-full cursor-pointer appearance-none rounded-none border border-line-strong bg-ink-soft py-1.5 pr-7 pl-2 font-mono text-[11px] text-cream outline-none transition-colors [color-scheme:dark] hover:border-gold/50 focus-visible:border-gold focus-visible:ring-2 focus-visible:ring-gold/30"
                 >
                   {FONT_OPTIONS[role].map((option) => (
                     <option
@@ -69,7 +69,7 @@ export function FontControls({
                   className="pointer-events-none absolute top-1/2 right-2 size-3.5 -translate-y-1/2 text-smoke"
                 />
               </span>
-              <span className="flex items-center gap-2 rounded-sm border border-line bg-ink/60 px-2 py-1 font-mono text-[9px] text-smoke">
+              <span className="flex items-center gap-2 rounded-none border border-line bg-ink/60 px-2 py-1 font-mono text-[9px] text-smoke">
                 <span
                   aria-hidden
                   className="text-[15px] leading-none text-cream"

@@ -4,24 +4,11 @@ import { Slide } from "@/components/presentation/slide";
 import { SectionLabel } from "@/components/presentation/section-label";
 import { Reveal } from "@/components/presentation/reveal";
 import { GoldDivider } from "@/components/presentation/gold-divider";
-import { NetworkVisualization } from "@/components/visualizations/network-visualization";
 import { TWMark } from "@/components/brand/tw-mark";
 
 export default function ClosingSlide() {
   return (
-    <Slide
-      ariaLabel="Closing — TokenWork"
-      background={
-        <>
-          <div className="gold-aura absolute inset-0" />
-          <NetworkVisualization density={26} seed={99} opacity={0.55} />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,#080a0e_90%)]"
-          />
-        </>
-      }
-    >
+    <Slide ariaLabel="Closing — TokenWork">
       <div className="w-full">
         <Reveal>
           <SectionLabel index="16" title="Closing" />

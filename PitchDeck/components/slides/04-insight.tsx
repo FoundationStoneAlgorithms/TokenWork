@@ -54,7 +54,7 @@ export default function InsightSlide() {
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {INSIGHTS.map((item, i) => (
             <Reveal key={item.heading} delay={280 + i * 110}>
-              <div className="editorial-card h-full rounded-xl p-6">
+              <div className="editorial-card h-full rounded-none p-6">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-semibold text-gold">
                     {item.num}

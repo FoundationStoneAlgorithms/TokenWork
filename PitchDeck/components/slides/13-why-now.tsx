@@ -46,7 +46,7 @@ export default function WhyNowSlide() {
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
           {REASONS.map((r, i) => (
             <Reveal key={r.heading} delay={250 + i * 110}>
-              <div className="editorial-card h-full rounded-lg p-6">
+              <div className="editorial-card h-full rounded-none p-6">
                 <r.icon className="size-5 text-gold" strokeWidth={1.6} />
                 <h3 className="mt-4 font-display text-lg font-medium leading-snug text-cream">
                   {r.heading}

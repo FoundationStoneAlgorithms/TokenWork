@@ -19,10 +19,10 @@ import {
   type FontSelection,
 } from "@/lib/font-options";
 import { SlideContext } from "./slide-context";
+import { VerificationFlowBackground } from "./verification-flow-background";
 import { ProgressIndicator } from "./progress-indicator";
 import { SlideNavigation } from "./slide-navigation";
 import { KeyboardHelp } from "./keyboard-help";
-import { TWMark } from "@/components/brand/tw-mark";
 
 export type SlideMeta = {
   id: string;
@@ -260,6 +260,10 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
       style={fontStyle}
       className="relative h-dvh w-full overflow-hidden bg-ink text-cream font-sans select-none"
     >
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <VerificationFlowBackground />
+      </div>
+
       {slides.map((slide, i) => {
         const state = i === current ? "active" : i < current ? "before" : "after";
         const shouldRender = Math.abs(i - current) <= 1 || visited.has(i);
@@ -280,21 +284,6 @@ export function Presentation({ slides }: { slides: SlideMeta[] }) {
           </SlideContext.Provider>
         );
       })}
-
-      {/* Brand pill, top-left */}
-      <div
-        className={cn(
-          "chrome pointer-events-none absolute top-4 left-6 z-30 md:top-5 md:left-8",
-          !chromeVisible && "chrome-hidden"
-        )}
-      >
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-line bg-raise/90 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.22em] uppercase shadow-2xs backdrop-blur-sm">
-          <TWMark className="size-3.5 shrink-0 text-gold" />
-          <span className="font-semibold text-cream">TokenWork</span>
-          <span className="text-smoke">·</span>
-          <span className="text-fog">Capital Markets</span>
-        </div>
-      </div>
 
       <ProgressIndicator
         slides={slides.map(({ id, num, title }) => ({ id, num, title }))}

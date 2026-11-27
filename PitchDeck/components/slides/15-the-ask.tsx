@@ -64,7 +64,7 @@ export default function TheAskSlide() {
         <div className="mt-8 flex flex-col gap-3">
           {USES.map((u, i) => (
             <Reveal key={u.label} delay={360 + i * 100}>
-              <div className="editorial-card flex items-center gap-4 rounded-lg p-4">
+              <div className="editorial-card flex items-center gap-4 rounded-none p-4">
                 <u.icon className="size-5 shrink-0 text-gold" strokeWidth={1.6} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
@@ -76,9 +76,9 @@ export default function TheAskSlide() {
                   <p className="mt-0.5 text-xs leading-relaxed text-fog">{u.note}</p>
                 </div>
                 <div className="hidden shrink-0 items-center md:flex">
-                  <div className="h-1.5 w-24 rounded-full bg-raise-2">
+                  <div className="h-1.5 w-24 rounded-none bg-raise-2">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-gold-deep to-gold"
+                      className="h-full rounded-none bg-gradient-to-r from-gold-deep to-gold"
                       style={{ width: `${u.pct}%` }}
                     />
                   </div>

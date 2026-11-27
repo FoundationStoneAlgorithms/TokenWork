@@ -94,7 +94,7 @@ export default function MVPSlide() {
               delay={340 + groupIndex * 90}
               className="h-full"
             >
-              <div className="editorial-card h-full rounded-lg p-4">
+              <div className="editorial-card h-full rounded-none p-4">
                 <div className="flex items-baseline justify-between gap-3 border-b border-line pb-2.5">
                   <h3 className="font-mono text-[10px] tracking-[0.18em] text-gold uppercase">
                     {group.title}

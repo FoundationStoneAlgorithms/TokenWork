@@ -46,13 +46,13 @@ export default function ProblemSlide() {
 
           <Reveal delay={320}>
             <div className="mt-7 grid grid-cols-2 gap-3">
-              <div className="editorial-card rounded-lg p-5">
+              <div className="editorial-card rounded-none p-5">
                 <div className="font-mono text-4xl font-semibold tracking-tight tabular-nums text-cream md:text-5xl">
                   2.57M
                 </div>
                 <div className="mt-2 text-xs text-fog">Ugandan enterprises</div>
               </div>
-              <div className="editorial-card rounded-lg border-l-2 border-l-gold p-5">
+              <div className="editorial-card rounded-none border-l-2 border-l-gold p-5">
                 <div className="font-mono text-4xl font-semibold tracking-tight tabular-nums text-gold-bright md:text-5xl">
                   25%
                 </div>
@@ -70,10 +70,10 @@ export default function ProblemSlide() {
             {BARRIERS.map((b, i) => (
               <div
                 key={b.name}
-                className="editorial-card flex items-start gap-3.5 rounded-xl p-4"
+                className="editorial-card flex items-start gap-3.5 rounded-none p-4"
               >
                 <div
-                  className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${
+                  className={`flex size-9 shrink-0 items-center justify-center rounded-none ${
                     i === 0 ? "bg-teal-soft text-teal" : "bg-ink-soft text-fog"
                   }`}
                 >

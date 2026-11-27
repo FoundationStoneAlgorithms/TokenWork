@@ -120,40 +120,37 @@ body {
   );
 }
 
-.paper-grid {
-  background-image:
-    linear-gradient(to right, rgba(238, 241, 246, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(238, 241, 246, 0.025) 1px, transparent 1px);
-  background-size: 56px 56px;
+/* Convergence glow and travelling light strands shared by every slide. */
+.verification-glow {
+  animation: verification-breathe 16s ease-in-out infinite;
 }
 
-.emerald-wash {
-  background:
-    radial-gradient(
-      ellipse 65% 50% at 82% 18%,
-      rgba(140, 168, 199, 0.07),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 55% 45% at 15% 85%,
-      rgba(85, 111, 140, 0.06),
-      transparent 70%
-    );
+@keyframes verification-breathe {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.verification-flow {
+  fill: none;
+  stroke-dasharray: 130 870;
+  animation: verification-travel 18s linear infinite;
+}
+
+/* Wide translucent stroke gives the halo without an expensive blur filter. */
+.verification-flow-glow {
+  stroke-width: 9;
+  opacity: 0.3;
+}
+
+@keyframes verification-travel {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
 }
 
 .editorial-card {
   background: var(--color-raise);
   border: 1px solid var(--color-line);
   box-shadow: 0 1px 0 0 rgba(238, 241, 246, 0.03) inset;
-}
-
-.gold-aura {
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 55%,
-    rgba(140, 168, 199, 0.07),
-    transparent 75%
-  );
-  pointer-events: none;
 }
 
 .corner-frame {
