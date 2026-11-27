@@ -18,7 +18,7 @@ import {
 /*
  * Next's font transform requires literal option values, so these names are
  * duplicated from lib/font-options.ts (FONT_VARIABLES). Keep the two in sync.
- * The default triad is preloaded; optional choices load only when selected.
+ * The original triad is preloaded; optional choices load only when selected.
  */
 const geistSans = Geist({
   subsets: ["latin"],
@@ -27,19 +27,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
-  preload: false,
 });
 const ubuntu = Ubuntu({
   subsets: ["latin"],
   variable: "--font-ubuntu",
   weight: ["300", "400", "500", "700"],
   style: ["normal", "italic"],
-  preload: false,
 });
 
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",
+  preload: false,
 });
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -80,6 +79,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-ibm-plex-mono",
   weight: ["400", "500", "600", "700"],
+  preload: false,
 });
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],

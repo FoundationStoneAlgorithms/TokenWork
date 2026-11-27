@@ -1,21 +1,6 @@
-<div align="center">
-
-<img src="tokenwork-logo.svg" alt="TokenWork logo" width="140" />
-
 # TokenWork
 
 **Business capital markets infrastructure — legally structured equity issuance for African SMEs.**
-
-Built by [Foundation Stone Algorithms](https://www.foundationstonealgorithms.shop) — intelligent systems studio.
-
-[![Website](https://img.shields.io/badge/Website-foundationstonealgorithms.shop-2b3aed?style=for-the-badge&logo=googlechrome&logoColor=white)](https://www.foundationstonealgorithms.shop)
-[![GitHub](https://img.shields.io/badge/GitHub-TokenWork-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FoundationStoneAlgorithms/TokenWork)
-[![X](https://img.shields.io/badge/%40fsalgorithm-181717?style=for-the-badge&logo=x&logoColor=white)](https://x.com/fsalgorithm)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge&logo=apache&logoColor=white)](./LICENSE)
-
-</div>
-
----
 
 > **Status: planning / prototype.** This repository is in the discovery and architecture stage. Nothing here is production-ready, regulated, or a live fundraising product. Live offerings, payments, custody and legally effective issuance require jurisdiction-specific legal structuring, licensed partners and regulatory approvals. Any demonstration flows are simulated and use test data / Solana Devnet unless explicitly stated otherwise.
 
@@ -53,14 +38,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). This project follows the [Contributor Co
 ## License
 
 Licensed under the [Apache License 2.0](LICENSE). © 2026 Foundation Stone Algorithms.
-
----
-
-<div align="center">
-
-[![Website](https://img.shields.io/badge/Website-foundationstonealgorithms.shop-2b3aed?style=for-the-badge&logo=googlechrome&logoColor=white)](https://www.foundationstonealgorithms.shop)
-[![GitHub](https://img.shields.io/badge/GitHub-TokenWork-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FoundationStoneAlgorithms/TokenWork)
-[![X](https://img.shields.io/badge/%40fsalgorithm-181717?style=for-the-badge&logo=x&logoColor=white)](https://x.com/fsalgorithm)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge&logo=apache&logoColor=white)](./LICENSE)
-
-</div>

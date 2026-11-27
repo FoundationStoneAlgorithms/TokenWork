@@ -2,7 +2,7 @@
 
 /* ---------------------------------------------------------------------------
    TokenWork — Institutional Slate Obsidian & Brushed Steel-Blue Design System
-   Default type triad (Fraunces, Geist, IBM Plex Mono) can be swapped per viewer
+   Default type triad (Geist, Geist Mono, Ubuntu) can be swapped per viewer
    from the presentation controls, over a dark institutional slate palette.
 --------------------------------------------------------------------------- */
 
@@ -47,9 +47,9 @@
 
 /* The deck root overrides these three aliases when a viewer picks new fonts. */
 :root {
-  --font-heading: var(--font-fraunces);
+  --font-heading: var(--font-ubuntu);
   --font-body: var(--font-geist-sans);
-  --font-code: var(--font-ibm-plex-mono);
+  --font-code: var(--font-geist-mono);
 }
 
 /* --------------------------------------------------------------------------- */
